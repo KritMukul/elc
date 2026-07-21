@@ -85,6 +85,9 @@ def main():
     print(spice_netlist)
     print("-------------------------------\n")
     
+    with open("generated_spice.net", "w") as f:
+        f.write(spice_netlist)
+    
     # --- Step 2: SPICE to KiCad Schematic ---
     print("=====================================")
     print("--- Phase 2: SPICE to KiCad Schematic ---")
