@@ -1,6 +1,11 @@
 {
     "nets": [
         {
+            "name": "N1",
+            "role": "internal",
+            "external": false
+        },
+        {
             "name": "N2",
             "role": "internal",
             "external": false
@@ -18,13 +23,13 @@
     ],
     "devices": [
         {
-            "name": "C1",
-            "type": "cap",
-            "model": "",
+            "name": "V0",
+            "type": "vsource",
+            "model": "Battery",
             "pins": [
                 {
                     "role": "P",
-                    "net": "N3"
+                    "net": "N1"
                 },
                 {
                     "role": "N",
@@ -32,13 +37,31 @@
                 }
             ],
             "params": {
-                "value": ""
+                "value": "9V"
             }
         },
         {
-            "name": "X2",
-            "type": "unknown",
-            "model": "",
+            "name": "R0",
+            "type": "res",
+            "model": "R",
+            "pins": [
+                {
+                    "role": "P",
+                    "net": "N1"
+                },
+                {
+                    "role": "N",
+                    "net": "N2"
+                }
+            ],
+            "params": {
+                "value": "1k"
+            }
+        },
+        {
+            "name": "C0",
+            "type": "cap",
+            "model": "C",
             "pins": [
                 {
                     "role": "P",
@@ -50,13 +73,13 @@
                 }
             ],
             "params": {
-                "value": ""
+                "value": "22u"
             }
         },
         {
             "name": "R1",
             "type": "res",
-            "model": "",
+            "model": "R",
             "pins": [
                 {
                     "role": "P",
@@ -64,65 +87,29 @@
                 },
                 {
                     "role": "N",
+                    "net": "N3"
+                }
+            ],
+            "params": {
+                "value": "2.2k"
+            }
+        },
+        {
+            "name": "D0",
+            "type": "diode",
+            "model": "LED",
+            "pins": [
+                {
+                    "role": "A",
+                    "net": "N3"
+                },
+                {
+                    "role": "K",
                     "net": "N4"
                 }
             ],
             "params": {
-                "value": ""
-            }
-        },
-        {
-            "name": "V1",
-            "type": "vsource",
-            "model": "",
-            "pins": [
-                {
-                    "role": "P",
-                    "net": "N2"
-                },
-                {
-                    "role": "N",
-                    "net": "N3"
-                }
-            ],
-            "params": {
-                "value": ""
-            }
-        },
-        {
-            "name": "V2",
-            "type": "vsource",
-            "model": "",
-            "pins": [
-                {
-                    "role": "P",
-                    "net": "N2"
-                },
-                {
-                    "role": "N",
-                    "net": "N3"
-                }
-            ],
-            "params": {
-                "value": ""
-            }
-        },
-        {
-            "name": "X3",
-            "type": "unknown",
-            "model": "",
-            "pins": [
-                {
-                    "role": "P",
-                    "net": "N2"
-                },
-                {
-                    "role": "N",
-                    "net": "N3"
-                }
-            ],
-            "params": {
-                "value": ""
+                "value": "LED"
             }
         }
     ]

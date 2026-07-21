@@ -663,10 +663,10 @@ def main():
                     
                     sym_override = None
                     if det["class"] == "inductor":
-                        sym_override = {"lib": "Device", "sym": "L", "pins": {"P": "1", "N": "2"}}
+                        sym_override = {"lib": "Device", "sym": "L", "pins": {"P": "1", "N": "2"}, "prefix": "L"}
                     elif det["class"] == "voltage.dc" or det["class"] == "probe.voltage":
                         if dev_type == "unknown": # X3
-                            sym_override = {"lib": "Device", "sym": "Battery", "pins": {"P": "+", "N": "-"}}
+                            sym_override = {"lib": "Device", "sym": "Battery", "pins": {"P": "+", "N": "-"}, "prefix": "BT"}
                     
                     device_pos[dev_name] = {
                         "x": det["kx"],
@@ -706,7 +706,7 @@ def main():
     code = generate_layout_code(graph, device_pos, power_pos, args)
 
     script = "output_layout_script.py"
-    with open(script, "w") as f:
+    with open(script, "w", encoding="utf-8") as f:
         f.write(code)
 
     print("\n─── Generated Layout Script ───")
