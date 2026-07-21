@@ -1,0 +1,257 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1250" viewBox="0 0 1900 1250">
+
+<rect width="100%" height="100%" fill="white"/>
+
+<style>
+text {
+    font-family: Arial, Helvetica, sans-serif;
+    fill: #111;
+}
+
+.wire {
+    stroke: #111;
+    stroke-width: 3;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.symbol {
+    stroke: #111;
+    stroke-width: 3;
+    fill: none;
+}
+
+.node {
+    fill: #111;
+}
+
+.name {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.value {
+    font-size: 16px;
+}
+
+.netlabel {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: bold;
+}
+</style>
+
+<text x="950.0" y="42" class="title" text-anchor="middle">Schematic reconstructed from generated SPICE</text>
+<line x1="685.0" y1="310.0" x2="685.0" y2="370.0" class="symbol"/>
+<line x1="685.0" y1="288.0" x2="685.0" y2="310.0" class="symbol"/>
+<line x1="685.0" y1="370.0" x2="685.0" y2="392.0" class="symbol"/>
+<line x1="643.0" y1="310.0" x2="643.0" y2="370.0" class="symbol"/>
+<line x1="613.0" y1="340.0" x2="643.0" y2="340.0" class="symbol"/>
+<line x1="697.0" y1="340.0" x2="745.0" y2="340.0" class="symbol"/>
+<circle cx="651.0" cy="340.0" r="7" fill="white" stroke="#111" stroke-width="3"/>
+<text x="765.0" y="330.0" class="name" text-anchor="start">XM3</text>
+<text x="765.0" y="355.0" class="value" text-anchor="start">PFET</text>
+<text x="765.0" y="378.0" class="value" text-anchor="start">W = 13.3650</text>
+<text x="765.0" y="400.0" class="value" text-anchor="start">L = 0.404603</text>
+<line x1="1315.0" y1="310.0" x2="1315.0" y2="370.0" class="symbol"/>
+<line x1="1315.0" y1="288.0" x2="1315.0" y2="310.0" class="symbol"/>
+<line x1="1315.0" y1="370.0" x2="1315.0" y2="392.0" class="symbol"/>
+<line x1="1273.0" y1="310.0" x2="1273.0" y2="370.0" class="symbol"/>
+<line x1="1243.0" y1="340.0" x2="1273.0" y2="340.0" class="symbol"/>
+<line x1="1327.0" y1="340.0" x2="1375.0" y2="340.0" class="symbol"/>
+<circle cx="1281.0" cy="340.0" r="7" fill="white" stroke="#111" stroke-width="3"/>
+<text x="1395.0" y="330.0" class="name" text-anchor="start">XM0</text>
+<text x="1395.0" y="355.0" class="value" text-anchor="start">PFET</text>
+<text x="1395.0" y="378.0" class="value" text-anchor="start">W = 13.3650</text>
+<text x="1395.0" y="400.0" class="value" text-anchor="start">L = 0.404603</text>
+<line x1="685.0" y1="730.0" x2="685.0" y2="790.0" class="symbol"/>
+<line x1="685.0" y1="708.0" x2="685.0" y2="730.0" class="symbol"/>
+<line x1="685.0" y1="790.0" x2="685.0" y2="812.0" class="symbol"/>
+<line x1="643.0" y1="730.0" x2="643.0" y2="790.0" class="symbol"/>
+<line x1="613.0" y1="760.0" x2="643.0" y2="760.0" class="symbol"/>
+<line x1="697.0" y1="760.0" x2="745.0" y2="760.0" class="symbol"/>
+<text x="765.0" y="750.0" class="name" text-anchor="start">XM1</text>
+<text x="765.0" y="775.0" class="value" text-anchor="start">NFET</text>
+<text x="765.0" y="798.0" class="value" text-anchor="start">W = 500.0000</text>
+<text x="765.0" y="820.0" class="value" text-anchor="start">L = 0.404603</text>
+<line x1="1315.0" y1="730.0" x2="1315.0" y2="790.0" class="symbol"/>
+<line x1="1315.0" y1="708.0" x2="1315.0" y2="730.0" class="symbol"/>
+<line x1="1315.0" y1="790.0" x2="1315.0" y2="812.0" class="symbol"/>
+<line x1="1273.0" y1="730.0" x2="1273.0" y2="790.0" class="symbol"/>
+<line x1="1243.0" y1="760.0" x2="1273.0" y2="760.0" class="symbol"/>
+<line x1="1327.0" y1="760.0" x2="1375.0" y2="760.0" class="symbol"/>
+<text x="1395.0" y="750.0" class="name" text-anchor="start">XM4</text>
+<text x="1395.0" y="775.0" class="value" text-anchor="start">NFET</text>
+<text x="1395.0" y="798.0" class="value" text-anchor="start">W = 500.0000</text>
+<text x="1395.0" y="820.0" class="value" text-anchor="start">L = 0.404603</text>
+<line x1="1315.0" y1="1072.5" x2="1315.0" y2="1085.5" class="symbol"/>
+<path d="M 1315.0 1085.5 C 1343.0 1085.5, 1343.0 1106.5, 1315.0 1106.5" class="symbol"/>
+<path d="M 1315.0 1106.5 C 1343.0 1106.5, 1343.0 1127.5, 1315.0 1127.5" class="symbol"/>
+<path d="M 1315.0 1127.5 C 1343.0 1127.5, 1343.0 1148.5, 1315.0 1148.5" class="symbol"/>
+<path d="M 1315.0 1148.5 C 1343.0 1148.5, 1343.0 1169.5, 1315.0 1169.5" class="symbol"/>
+<line x1="1315.0" y1="1169.5" x2="1315.0" y2="1182.5" class="symbol"/>
+<text x="1360.0" y="1122.5" class="name" text-anchor="start">L1</text>
+<text x="1360.0" y="1147.5" class="value" text-anchor="start">1n</text>
+<line x1="685.0" y1="1072.5" x2="685.0" y2="1085.5" class="symbol"/>
+<path d="M 685.0 1085.5 C 713.0 1085.5, 713.0 1106.5, 685.0 1106.5" class="symbol"/>
+<path d="M 685.0 1106.5 C 713.0 1106.5, 713.0 1127.5, 685.0 1127.5" class="symbol"/>
+<path d="M 685.0 1127.5 C 713.0 1127.5, 713.0 1148.5, 685.0 1148.5" class="symbol"/>
+<path d="M 685.0 1148.5 C 713.0 1148.5, 713.0 1169.5, 685.0 1169.5" class="symbol"/>
+<line x1="685.0" y1="1169.5" x2="685.0" y2="1182.5" class="symbol"/>
+<text x="730.0" y="1122.5" class="name" text-anchor="start">L0</text>
+<text x="730.0" y="1147.5" class="value" text-anchor="start">1n</text>
+<line x1="1052.5" y1="610.0" x2="1052.5" y2="645.0" class="symbol"/>
+<line x1="1027.5" y1="645.0" x2="1077.5" y2="645.0" class="symbol"/>
+<line x1="1027.5" y1="665.0" x2="1077.5" y2="665.0" class="symbol"/>
+<line x1="1052.5" y1="665.0" x2="1052.5" y2="700.0" class="symbol"/>
+<text x="1094.5" y="651.0" class="name" text-anchor="start">CL</text>
+<text x="1094.5" y="677.0" class="value" text-anchor="start">1.020038e-11</text>
+<circle cx="55.0" cy="235.0" r="34" class="symbol"/>
+<text x="55.0" y="228.0" class="name" text-anchor="middle">+</text>
+<text x="55.0" y="255.0" class="name" text-anchor="middle">−</text>
+<line x1="55.0" y1="187.0" x2="55.0" y2="201.0" class="symbol"/>
+<line x1="55.0" y1="269.0" x2="55.0" y2="283.0" class="symbol"/>
+<text x="5.0" y="227.0" class="name" text-anchor="end">VDD</text>
+<text x="5.0" y="253.0" class="value" text-anchor="end">DC 1.8</text>
+<circle cx="55.0" cy="550.0" r="34" class="symbol"/>
+<text x="55.0" y="543.0" class="name" text-anchor="middle">+</text>
+<text x="55.0" y="570.0" class="name" text-anchor="middle">−</text>
+<line x1="55.0" y1="502.0" x2="55.0" y2="516.0" class="symbol"/>
+<line x1="55.0" y1="584.0" x2="55.0" y2="598.0" class="symbol"/>
+<text x="5.0" y="542.0" class="name" text-anchor="end">VSS</text>
+<text x="5.0" y="568.0" class="value" text-anchor="end">DC 0</text>
+<circle cx="55.0" cy="865.0" r="34" class="symbol"/>
+<text x="55.0" y="858.0" class="name" text-anchor="middle">+</text>
+<text x="55.0" y="885.0" class="name" text-anchor="middle">−</text>
+<line x1="55.0" y1="817.0" x2="55.0" y2="831.0" class="symbol"/>
+<line x1="55.0" y1="899.0" x2="55.0" y2="913.0" class="symbol"/>
+<text x="5.0" y="857.0" class="name" text-anchor="end">V__VCONT1</text>
+<text x="5.0" y="883.0" class="value" text-anchor="end">DC 0.900</text>
+<circle cx="55.0" cy="1180.0" r="34" class="symbol"/>
+<text x="55.0" y="1173.0" class="name" text-anchor="middle">+</text>
+<text x="55.0" y="1200.0" class="name" text-anchor="middle">−</text>
+<line x1="55.0" y1="1132.0" x2="55.0" y2="1146.0" class="symbol"/>
+<line x1="55.0" y1="1214.0" x2="55.0" y2="1228.0" class="symbol"/>
+<text x="5.0" y="1172.0" class="name" text-anchor="end">V__net1</text>
+<text x="5.0" y="1198.0" class="value" text-anchor="end">DC 0.900</text>
+<circle cx="55.0" cy="1495.0" r="34" class="symbol"/>
+<line x1="55.0" y1="1480.0" x2="55.0" y2="1510.0" class="symbol"/>
+<polyline points="48.0,1501.0 55.0,1510.0 62.0,1501.0" class="wire"/>
+<line x1="55.0" y1="1447.0" x2="55.0" y2="1461.0" class="symbol"/>
+<line x1="55.0" y1="1529.0" x2="55.0" y2="1543.0" class="symbol"/>
+<text x="5.0" y="1487.0" class="name" text-anchor="end">I__IB1</text>
+<text x="5.0" y="1513.0" class="value" text-anchor="end">DC 2.706311e-04</text>
+<line x1="55.0" y1="187.0" x2="55.0" y2="157.0" class="wire"/>
+<text x="55.0" y="149.0" class="netlabel" text-anchor="middle">VDD</text>
+<line x1="1375.0" y1="340.0" x2="1375.0" y2="310.0" class="wire"/>
+<text x="1375.0" y="302.0" class="netlabel" text-anchor="middle">VDD</text>
+<line x1="745.0" y1="340.0" x2="745.0" y2="310.0" class="wire"/>
+<text x="745.0" y="302.0" class="netlabel" text-anchor="middle">VDD</text>
+<line x1="55.0" y1="283.0" x2="55.0" y2="301.0" class="wire"/>
+<line x1="55.0" y1="301.0" x2="55.0" y2="313.0" class="wire"/>
+<line x1="37.0" y1="313.0" x2="73.0" y2="313.0" class="symbol"/>
+<line x1="43.0" y1="321.0" x2="67.0" y2="321.0" class="symbol"/>
+<line x1="49.0" y1="329.0" x2="61.0" y2="329.0" class="symbol"/>
+<text x="80.0" y="325.0" class="netlabel" text-anchor="start">0</text>
+<line x1="55.0" y1="598.0" x2="55.0" y2="616.0" class="wire"/>
+<line x1="55.0" y1="616.0" x2="55.0" y2="628.0" class="wire"/>
+<line x1="37.0" y1="628.0" x2="73.0" y2="628.0" class="symbol"/>
+<line x1="43.0" y1="636.0" x2="67.0" y2="636.0" class="symbol"/>
+<line x1="49.0" y1="644.0" x2="61.0" y2="644.0" class="symbol"/>
+<text x="80.0" y="640.0" class="netlabel" text-anchor="start">0</text>
+<line x1="55.0" y1="913.0" x2="55.0" y2="931.0" class="wire"/>
+<line x1="55.0" y1="931.0" x2="55.0" y2="943.0" class="wire"/>
+<line x1="37.0" y1="943.0" x2="73.0" y2="943.0" class="symbol"/>
+<line x1="43.0" y1="951.0" x2="67.0" y2="951.0" class="symbol"/>
+<line x1="49.0" y1="959.0" x2="61.0" y2="959.0" class="symbol"/>
+<text x="80.0" y="955.0" class="netlabel" text-anchor="start">0</text>
+<line x1="55.0" y1="1228.0" x2="55.0" y2="1246.0" class="wire"/>
+<line x1="55.0" y1="1246.0" x2="55.0" y2="1258.0" class="wire"/>
+<line x1="37.0" y1="1258.0" x2="73.0" y2="1258.0" class="symbol"/>
+<line x1="43.0" y1="1266.0" x2="67.0" y2="1266.0" class="symbol"/>
+<line x1="49.0" y1="1274.0" x2="61.0" y2="1274.0" class="symbol"/>
+<text x="80.0" y="1270.0" class="netlabel" text-anchor="start">0</text>
+<line x1="1052.5" y1="700.0" x2="1052.5" y2="718.0" class="wire"/>
+<line x1="1052.5" y1="718.0" x2="1052.5" y2="730.0" class="wire"/>
+<line x1="1034.5" y1="730.0" x2="1070.5" y2="730.0" class="symbol"/>
+<line x1="1040.5" y1="738.0" x2="1064.5" y2="738.0" class="symbol"/>
+<line x1="1046.5" y1="746.0" x2="1058.5" y2="746.0" class="symbol"/>
+<text x="1077.5" y="742.0" class="netlabel" text-anchor="start">0</text>
+<line x1="55.0" y1="502.0" x2="55.0" y2="520.0" class="wire"/>
+<line x1="55.0" y1="520.0" x2="55.0" y2="532.0" class="wire"/>
+<line x1="37.0" y1="532.0" x2="73.0" y2="532.0" class="symbol"/>
+<line x1="43.0" y1="540.0" x2="67.0" y2="540.0" class="symbol"/>
+<line x1="49.0" y1="548.0" x2="61.0" y2="548.0" class="symbol"/>
+<text x="80.0" y="544.0" class="netlabel" text-anchor="start">VSS</text>
+<line x1="55.0" y1="1543.0" x2="55.0" y2="1561.0" class="wire"/>
+<line x1="55.0" y1="1561.0" x2="55.0" y2="1573.0" class="wire"/>
+<line x1="37.0" y1="1573.0" x2="73.0" y2="1573.0" class="symbol"/>
+<line x1="43.0" y1="1581.0" x2="67.0" y2="1581.0" class="symbol"/>
+<line x1="49.0" y1="1589.0" x2="61.0" y2="1589.0" class="symbol"/>
+<text x="80.0" y="1585.0" class="netlabel" text-anchor="start">VSS</text>
+<line x1="745.0" y1="760.0" x2="745.0" y2="778.0" class="wire"/>
+<line x1="745.0" y1="778.0" x2="745.0" y2="790.0" class="wire"/>
+<line x1="727.0" y1="790.0" x2="763.0" y2="790.0" class="symbol"/>
+<line x1="733.0" y1="798.0" x2="757.0" y2="798.0" class="symbol"/>
+<line x1="739.0" y1="806.0" x2="751.0" y2="806.0" class="symbol"/>
+<text x="770.0" y="802.0" class="netlabel" text-anchor="start">VSS</text>
+<line x1="1375.0" y1="760.0" x2="1375.0" y2="778.0" class="wire"/>
+<line x1="1375.0" y1="778.0" x2="1375.0" y2="790.0" class="wire"/>
+<line x1="1357.0" y1="790.0" x2="1393.0" y2="790.0" class="symbol"/>
+<line x1="1363.0" y1="798.0" x2="1387.0" y2="798.0" class="symbol"/>
+<line x1="1369.0" y1="806.0" x2="1381.0" y2="806.0" class="symbol"/>
+<text x="1400.0" y="802.0" class="netlabel" text-anchor="start">VSS</text>
+<line x1="1315.0" y1="1182.5" x2="1315.0" y2="1200.5" class="wire"/>
+<line x1="1315.0" y1="1200.5" x2="1315.0" y2="1212.5" class="wire"/>
+<line x1="1297.0" y1="1212.5" x2="1333.0" y2="1212.5" class="symbol"/>
+<line x1="1303.0" y1="1220.5" x2="1327.0" y2="1220.5" class="symbol"/>
+<line x1="1309.0" y1="1228.5" x2="1321.0" y2="1228.5" class="symbol"/>
+<text x="1340.0" y="1224.5" class="netlabel" text-anchor="start">VSS</text>
+<line x1="685.0" y1="1182.5" x2="685.0" y2="1200.5" class="wire"/>
+<line x1="685.0" y1="1200.5" x2="685.0" y2="1212.5" class="wire"/>
+<line x1="667.0" y1="1212.5" x2="703.0" y2="1212.5" class="symbol"/>
+<line x1="673.0" y1="1220.5" x2="697.0" y2="1220.5" class="symbol"/>
+<line x1="679.0" y1="1228.5" x2="691.0" y2="1228.5" class="symbol"/>
+<text x="710.0" y="1224.5" class="netlabel" text-anchor="start">VSS</text>
+<line x1="55.0" y1="817.0" x2="27.0" y2="817.0" class="wire"/>
+<text x="22.0" y="823.0" class="netlabel" text-anchor="end">VCONT1</text>
+<line x1="685.0" y1="812.0" x2="657.0" y2="812.0" class="wire"/>
+<text x="652.0" y="818.0" class="netlabel" text-anchor="end">VCONT1</text>
+<line x1="685.0" y1="708.0" x2="657.0" y2="708.0" class="wire"/>
+<text x="652.0" y="714.0" class="netlabel" text-anchor="end">VCONT1</text>
+<line x1="1315.0" y1="812.0" x2="1287.0" y2="812.0" class="wire"/>
+<text x="1282.0" y="818.0" class="netlabel" text-anchor="end">VCONT1</text>
+<line x1="1315.0" y1="708.0" x2="1287.0" y2="708.0" class="wire"/>
+<text x="1282.0" y="714.0" class="netlabel" text-anchor="end">VCONT1</text>
+<line x1="55.0" y1="1132.0" x2="27.0" y2="1132.0" class="wire"/>
+<text x="22.0" y="1138.0" class="netlabel" text-anchor="end">net1</text>
+<line x1="613.0" y1="760.0" x2="585.0" y2="760.0" class="wire"/>
+<text x="580.0" y="766.0" class="netlabel" text-anchor="end">net1</text>
+<line x1="1243.0" y1="340.0" x2="1215.0" y2="340.0" class="wire"/>
+<text x="1210.0" y="346.0" class="netlabel" text-anchor="end">net1</text>
+<line x1="685.0" y1="392.0" x2="657.0" y2="392.0" class="wire"/>
+<text x="652.0" y="398.0" class="netlabel" text-anchor="end">net1</text>
+<line x1="685.0" y1="1072.5" x2="657.0" y2="1072.5" class="wire"/>
+<text x="652.0" y="1078.5" class="netlabel" text-anchor="end">net1</text>
+<line x1="1052.5" y1="610.0" x2="1024.5" y2="610.0" class="wire"/>
+<text x="1019.5" y="616.0" class="netlabel" text-anchor="end">net1</text>
+<line x1="55.0" y1="1447.0" x2="27.0" y2="1447.0" class="wire"/>
+<text x="22.0" y="1453.0" class="netlabel" text-anchor="end">IB1</text>
+<line x1="1315.0" y1="288.0" x2="1287.0" y2="288.0" class="wire"/>
+<text x="1282.0" y="294.0" class="netlabel" text-anchor="end">IB1</text>
+<line x1="685.0" y1="288.0" x2="657.0" y2="288.0" class="wire"/>
+<text x="652.0" y="294.0" class="netlabel" text-anchor="end">IB1</text>
+<line x1="1243.0" y1="760.0" x2="1215.0" y2="760.0" class="wire"/>
+<text x="1210.0" y="766.0" class="netlabel" text-anchor="end">net6</text>
+<line x1="1315.0" y1="392.0" x2="1287.0" y2="392.0" class="wire"/>
+<text x="1282.0" y="398.0" class="netlabel" text-anchor="end">net6</text>
+<line x1="613.0" y1="340.0" x2="585.0" y2="340.0" class="wire"/>
+<text x="580.0" y="346.0" class="netlabel" text-anchor="end">net6</text>
+<line x1="1315.0" y1="1072.5" x2="1287.0" y2="1072.5" class="wire"/>
+<text x="1282.0" y="1078.5" class="netlabel" text-anchor="end">net6</text>
+</svg>

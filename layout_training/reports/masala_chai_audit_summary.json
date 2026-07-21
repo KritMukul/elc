@@ -1,0 +1,72 @@
+{
+  "dataset_directory": "/workspace/masala-chai-dataset-new",
+  "mapping_items": 6069,
+  "valid_complete_pairs": 6036,
+  "missing_images": 32,
+  "missing_spice": 0,
+  "missing_captions": 0,
+  "corrupt_images": 0,
+  "empty_spice": 0,
+  "empty_captions": 0,
+  "component_type_totals": {
+    "DIODE": 822,
+    "CURRENT_SOURCE": 2850,
+    "VOLTAGE_SOURCE": 10795,
+    "UNKNOWN": 319,
+    "RESISTOR": 12012,
+    "VCCS": 414,
+    "CAPACITOR": 3291,
+    "BJT": 3165,
+    "MOSFET": 7381,
+    "VCVS": 187,
+    "SUBCIRCUIT": 426,
+    "CCCS": 7,
+    "CCVS": 3,
+    "INDUCTOR": 282
+  },
+  "circuit_families": {
+    "DIODE": 387,
+    "OTHER": 18,
+    "PASSIVE_OR_BASIC": 1030,
+    "BJT": 1379,
+    "MOS": 2440,
+    "MIXED_TRANSISTOR": 43,
+    "OPAMP_RELATED": 772
+  },
+  "image_formats": {
+    "JPEG": 6037
+  },
+  "image_modes": {
+    "RGB": 6037
+  },
+  "components_per_circuit": {
+    "min": 0,
+    "max": 37,
+    "mean": 6.913,
+    "median": 6
+  },
+  "nodes_per_circuit_estimate": {
+    "min": 0,
+    "max": 30,
+    "mean": 6.391,
+    "median": 6
+  },
+  "image_width": {
+    "min": 400,
+    "max": 400,
+    "mean": 400,
+    "median": 400
+  },
+  "image_height": {
+    "min": 295,
+    "max": 295,
+    "mean": 295,
+    "median": 295
+  },
+  "caption_words": {
+    "min": 7,
+    "max": 139,
+    "mean": 75.263,
+    "median": 74
+  }
+}

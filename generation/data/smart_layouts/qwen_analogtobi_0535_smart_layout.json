@@ -1,0 +1,84 @@
+{
+  "source_parsed": "/workspace/generation/data/parsed/qwen_analogtobi_0535_parsed.json",
+  "placement_method": "topology-aware analog schematic placement",
+  "cross_coupled_pairs": [
+    [
+      "XM0",
+      "XM3"
+    ]
+  ],
+  "components": {
+    "XM0": {
+      "x": -3.5,
+      "y": 2.5,
+      "orientation": "vertical",
+      "region": "core"
+    },
+    "XM3": {
+      "x": 3.5,
+      "y": 2.5,
+      "orientation": "vertical",
+      "region": "core"
+    },
+    "XM1": {
+      "x": -3.0,
+      "y": 8.0,
+      "orientation": "vertical",
+      "region": "core"
+    },
+    "XM4": {
+      "x": 3.0,
+      "y": 8.0,
+      "orientation": "vertical",
+      "region": "core"
+    },
+    "L1": {
+      "x": -3.5,
+      "y": 13.5,
+      "orientation": "vertical",
+      "region": "load"
+    },
+    "L0": {
+      "x": 3.5,
+      "y": 13.5,
+      "orientation": "vertical",
+      "region": "load"
+    },
+    "CL": {
+      "x": 8.0,
+      "y": 9.5,
+      "orientation": "vertical",
+      "region": "load"
+    },
+    "VDD": {
+      "x": -12.0,
+      "y": 1.5,
+      "orientation": "vertical",
+      "region": "bias"
+    },
+    "VSS": {
+      "x": -12.0,
+      "y": 4.5,
+      "orientation": "vertical",
+      "region": "bias"
+    },
+    "V__VCONT1": {
+      "x": -12.0,
+      "y": 7.5,
+      "orientation": "vertical",
+      "region": "bias"
+    },
+    "V__net1": {
+      "x": -12.0,
+      "y": 10.5,
+      "orientation": "vertical",
+      "region": "bias"
+    },
+    "I__IB1": {
+      "x": -12.0,
+      "y": 13.5,
+      "orientation": "vertical",
+      "region": "bias"
+    }
+  }
+}

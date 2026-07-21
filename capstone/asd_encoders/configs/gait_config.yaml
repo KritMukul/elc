@@ -1,0 +1,24 @@
+dataset_root: "/path/to/dataset/Dataset"
+cache_dir: "cache/gait"
+tasks: ["walk", "dance"]
+win_frames: 150
+overlap: 0.5
+
+model:
+  in_channels: 3
+  hidden: [64, 128, 256]
+  out_dim: 512
+  dropout: 0.3
+
+train:
+  batch_size: 16
+  epochs: 100
+  lr: 3.0e-4
+  weight_decay: 1.0e-4
+  label_smoothing: 0.1
+  early_stop_patience: 15
+  n_folds: 5
+  seed: 42
+  amp: true
+  num_workers: 8
+  checkpoint_dir: "checkpoints/gait"

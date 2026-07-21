@@ -1,0 +1,34 @@
+{
+  "input_samples": 6037,
+  "successful": 6037,
+  "failed": 0,
+  "prepared_image_directory": "/workspace/layout_training/data/layout_prepared/images",
+  "request_directory": "/workspace/layout_training/data/layout_prepared/requests",
+  "master_request_file": "/workspace/layout_training/data/layout_prepared/layout_requests.json",
+  "component_type_distribution": {
+    "DIODE": 785,
+    "CURRENT_SOURCE": 2800,
+    "VOLTAGE_SOURCE": 10615,
+    "UNKNOWN": 1622,
+    "RESISTOR": 11598,
+    "VCCS": 296,
+    "CAPACITOR": 2965,
+    "NPN": 2262,
+    "NMOS": 4451,
+    "PMOS": 2271,
+    "MOSFET": 103,
+    "BJT": 573,
+    "PNP": 197,
+    "SUBCIRCUIT": 419,
+    "VCVS": 171,
+    "CCCS": 7,
+    "CCVS": 3,
+    "INDUCTOR": 265
+  },
+  "errors": [],
+  "component_count": {
+    "min": 0,
+    "max": 36,
+    "mean": 6.858207719065761
+  }
+}

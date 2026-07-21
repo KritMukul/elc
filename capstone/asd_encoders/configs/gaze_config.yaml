@@ -1,0 +1,23 @@
+raw_root: "/path/to/raw/eye_tracking_autism"
+metadata_csv: "/path/to/raw/eye_tracking_autism/Metadata_Participants.csv"
+cache_dir: "cache/gaze"
+img_size: 224
+
+model:
+  backbone: "vit_small_patch16_224"
+  pretrained: true
+  out_dim: 512
+  dropout: 0.3
+  freeze_blocks: 6        
+train:
+  batch_size: 16
+  epochs: 80
+  lr: 1.0e-4
+  backbone_lr_mult: 0.1   
+  weight_decay: 1.0e-4
+  label_smoothing: 0.1
+  early_stop_patience: 12
+  n_folds: 5               
+  amp: true
+  num_workers: 4
+  checkpoint_dir: "checkpoints/gaze"

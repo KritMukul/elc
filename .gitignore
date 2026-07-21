@@ -1,0 +1,20 @@
+# System Trash and Snapshots
+.Trash-0/
+.snapshot/
+__MACOSX/
+
+# Jupyter and Python caches
+.ipynb_checkpoints/
+__pycache__/
+tmp/
+
+# Datasets
+masala-chai-dataset-new/
+layout_training/data/
+
+# Heavy Machine Learning Outputs & Checkpoints (Prevents GitHub 100MB limit errors)
+circuit_model_output/
+deepseek_circuit_model_output/
+netlist_to_kicad/Microsoft_Schgen/schgen-qwen-lora/
+netlist_to_kicad/Microsoft_Schgen/schgen-qwen-lora-final/
+*/checkpoint-*/

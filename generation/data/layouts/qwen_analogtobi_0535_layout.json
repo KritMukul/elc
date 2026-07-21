@@ -1,0 +1,773 @@
+{
+  "source_file": "qwen_analogtobi_0535.spice",
+  "layout_method": "algorithmic_analog_v1",
+  "coordinate_system": {
+    "type": "logical_grid",
+    "x_spacing": 4.0,
+    "y_spacing": 3.0
+  },
+  "placements": {
+    "XM3": {
+      "x": -4.0,
+      "y": 3.0,
+      "orientation": "vertical",
+      "mirror": false,
+      "region": "core"
+    },
+    "XM0": {
+      "x": 4.0,
+      "y": 3.0,
+      "orientation": "vertical",
+      "mirror": true,
+      "region": "core"
+    },
+    "XM1": {
+      "x": -4.0,
+      "y": 9.0,
+      "orientation": "vertical",
+      "mirror": false,
+      "region": "core"
+    },
+    "XM4": {
+      "x": 4.0,
+      "y": 9.0,
+      "orientation": "vertical",
+      "mirror": false,
+      "region": "core"
+    },
+    "L1": {
+      "x": 4.0,
+      "y": 15.0,
+      "orientation": "vertical",
+      "mirror": false,
+      "region": "load"
+    },
+    "L0": {
+      "x": -4.0,
+      "y": 15.0,
+      "orientation": "vertical",
+      "mirror": false,
+      "region": "load"
+    },
+    "CL": {
+      "x": -2.0,
+      "y": 12.0,
+      "orientation": "vertical",
+      "mirror": false,
+      "region": "load"
+    },
+    "VDD": {
+      "x": -12.0,
+      "y": 0.0,
+      "orientation": "vertical",
+      "mirror": false,
+      "region": "bias"
+    },
+    "I__IB1": {
+      "x": -12.0,
+      "y": 3.0,
+      "orientation": "vertical",
+      "mirror": false,
+      "region": "bias"
+    },
+    "V__VCONT1": {
+      "x": -12.0,
+      "y": 6.0,
+      "orientation": "vertical",
+      "mirror": false,
+      "region": "bias"
+    },
+    "VSS": {
+      "x": -12.0,
+      "y": 9.0,
+      "orientation": "vertical",
+      "mirror": false,
+      "region": "bias"
+    },
+    "V__net1": {
+      "x": -12.0,
+      "y": 12.0,
+      "orientation": "vertical",
+      "mirror": false,
+      "region": "bias"
+    }
+  },
+  "placement_reasons": {
+    "XM3": "left device of cross-coupled pair",
+    "XM0": "right device of cross-coupled pair",
+    "XM1": "MOS associated with branch net net1",
+    "XM4": "MOS associated with branch net net6",
+    "L1": "symmetric passive on branch net6",
+    "L0": "symmetric passive on branch net1",
+    "CL": "passive connected to branch net1",
+    "VDD": "power_source",
+    "I__IB1": "bias_source",
+    "V__VCONT1": "bias_source",
+    "VSS": "testbench_source",
+    "V__net1": "testbench_source"
+  },
+  "branch_columns": {
+    "net1": -4.0,
+    "net6": 4.0
+  },
+  "core_groups": [
+    {
+      "type": "cross_coupled",
+      "devices": [
+        "XM3",
+        "XM0"
+      ],
+      "left_branch_net": "net1",
+      "right_branch_net": "net6",
+      "center_x": 0.0
+    }
+  ],
+  "routing_hints": {
+    "VDD": {
+      "class": "power",
+      "degree": 3,
+      "strategy": "power_rail",
+      "connected_components": [
+        {
+          "component": "VDD",
+          "pin": "+",
+          "x": -12.0,
+          "y": 0.0
+        },
+        {
+          "component": "XM0",
+          "pin": "B",
+          "x": 4.0,
+          "y": 3.0
+        },
+        {
+          "component": "XM3",
+          "pin": "B",
+          "x": -4.0,
+          "y": 3.0
+        }
+      ]
+    },
+    "0": {
+      "class": "ground",
+      "degree": 5,
+      "strategy": "ground_rail",
+      "connected_components": [
+        {
+          "component": "VDD",
+          "pin": "-",
+          "x": -12.0,
+          "y": 0.0
+        },
+        {
+          "component": "VSS",
+          "pin": "-",
+          "x": -12.0,
+          "y": 9.0
+        },
+        {
+          "component": "V__VCONT1",
+          "pin": "-",
+          "x": -12.0,
+          "y": 6.0
+        },
+        {
+          "component": "V__net1",
+          "pin": "-",
+          "x": -12.0,
+          "y": 12.0
+        },
+        {
+          "component": "CL",
+          "pin": "2",
+          "x": -2.0,
+          "y": 12.0
+        }
+      ]
+    },
+    "VSS": {
+      "class": "ground",
+      "degree": 6,
+      "strategy": "ground_rail",
+      "connected_components": [
+        {
+          "component": "VSS",
+          "pin": "+",
+          "x": -12.0,
+          "y": 9.0
+        },
+        {
+          "component": "I__IB1",
+          "pin": "-",
+          "x": -12.0,
+          "y": 3.0
+        },
+        {
+          "component": "XM1",
+          "pin": "B",
+          "x": -4.0,
+          "y": 9.0
+        },
+        {
+          "component": "XM4",
+          "pin": "B",
+          "x": 4.0,
+          "y": 9.0
+        },
+        {
+          "component": "L1",
+          "pin": "2",
+          "x": 4.0,
+          "y": 15.0
+        },
+        {
+          "component": "L0",
+          "pin": "2",
+          "x": -4.0,
+          "y": 15.0
+        }
+      ]
+    },
+    "VCONT1": {
+      "class": "control",
+      "degree": 5,
+      "strategy": "named_bus",
+      "connected_components": [
+        {
+          "component": "V__VCONT1",
+          "pin": "+",
+          "x": -12.0,
+          "y": 6.0
+        },
+        {
+          "component": "XM1",
+          "pin": "D",
+          "x": -4.0,
+          "y": 9.0
+        },
+        {
+          "component": "XM1",
+          "pin": "S",
+          "x": -4.0,
+          "y": 9.0
+        },
+        {
+          "component": "XM4",
+          "pin": "D",
+          "x": 4.0,
+          "y": 9.0
+        },
+        {
+          "component": "XM4",
+          "pin": "S",
+          "x": 4.0,
+          "y": 9.0
+        }
+      ]
+    },
+    "net1": {
+      "class": "signal",
+      "degree": 6,
+      "strategy": "shared_bus",
+      "connected_components": [
+        {
+          "component": "V__net1",
+          "pin": "+",
+          "x": -12.0,
+          "y": 12.0
+        },
+        {
+          "component": "XM1",
+          "pin": "G",
+          "x": -4.0,
+          "y": 9.0
+        },
+        {
+          "component": "XM0",
+          "pin": "G",
+          "x": 4.0,
+          "y": 3.0
+        },
+        {
+          "component": "XM3",
+          "pin": "D",
+          "x": -4.0,
+          "y": 3.0
+        },
+        {
+          "component": "L0",
+          "pin": "1",
+          "x": -4.0,
+          "y": 15.0
+        },
+        {
+          "component": "CL",
+          "pin": "1",
+          "x": -2.0,
+          "y": 12.0
+        }
+      ]
+    },
+    "IB1": {
+      "class": "bias",
+      "degree": 3,
+      "strategy": "named_bus",
+      "connected_components": [
+        {
+          "component": "I__IB1",
+          "pin": "+",
+          "x": -12.0,
+          "y": 3.0
+        },
+        {
+          "component": "XM0",
+          "pin": "S",
+          "x": 4.0,
+          "y": 3.0
+        },
+        {
+          "component": "XM3",
+          "pin": "S",
+          "x": -4.0,
+          "y": 3.0
+        }
+      ]
+    },
+    "net6": {
+      "class": "signal",
+      "degree": 4,
+      "strategy": "shared_bus",
+      "connected_components": [
+        {
+          "component": "XM4",
+          "pin": "G",
+          "x": 4.0,
+          "y": 9.0
+        },
+        {
+          "component": "XM0",
+          "pin": "D",
+          "x": 4.0,
+          "y": 3.0
+        },
+        {
+          "component": "XM3",
+          "pin": "G",
+          "x": -4.0,
+          "y": 3.0
+        },
+        {
+          "component": "L1",
+          "pin": "1",
+          "x": 4.0,
+          "y": 15.0
+        }
+      ]
+    }
+  },
+  "bounds": {
+    "min_x": -12.0,
+    "max_x": 4.0,
+    "min_y": 0.0,
+    "max_y": 15.0
+  },
+  "electrical_truth": {
+    "components": [
+      {
+        "name": "VDD",
+        "type": "VOLTAGE_SOURCE",
+        "pins": {
+          "+": "VDD",
+          "-": "0"
+        },
+        "value": "DC 1.8",
+        "raw": "VDD VDD 0 DC 1.8"
+      },
+      {
+        "name": "VSS",
+        "type": "VOLTAGE_SOURCE",
+        "pins": {
+          "+": "VSS",
+          "-": "0"
+        },
+        "value": "DC 0",
+        "raw": "VSS VSS 0 DC 0"
+      },
+      {
+        "name": "V__VCONT1",
+        "type": "VOLTAGE_SOURCE",
+        "pins": {
+          "+": "VCONT1",
+          "-": "0"
+        },
+        "value": "DC 0.900",
+        "raw": "V__VCONT1 VCONT1 0 DC 0.900"
+      },
+      {
+        "name": "V__net1",
+        "type": "VOLTAGE_SOURCE",
+        "pins": {
+          "+": "net1",
+          "-": "0"
+        },
+        "value": "DC 0.900",
+        "raw": "V__net1 net1 0 DC 0.900"
+      },
+      {
+        "name": "I__IB1",
+        "type": "CURRENT_SOURCE",
+        "pins": {
+          "+": "IB1",
+          "-": "VSS"
+        },
+        "value": "DC 2.706311e-04",
+        "raw": "I__IB1 IB1 VSS DC 2.706311e-04"
+      },
+      {
+        "name": "XM1",
+        "type": "NMOS",
+        "pins": {
+          "D": "VCONT1",
+          "G": "net1",
+          "S": "VCONT1",
+          "B": "VSS"
+        },
+        "model": "sky130_fd_pr__nfet_01v8",
+        "params": {
+          "W": "500.0000",
+          "L": "0.404603"
+        },
+        "raw": "XM1 VCONT1 net1 VCONT1 VSS sky130_fd_pr__nfet_01v8 W=500.0000 L=0.404603"
+      },
+      {
+        "name": "XM4",
+        "type": "NMOS",
+        "pins": {
+          "D": "VCONT1",
+          "G": "net6",
+          "S": "VCONT1",
+          "B": "VSS"
+        },
+        "model": "sky130_fd_pr__nfet_01v8",
+        "params": {
+          "W": "500.0000",
+          "L": "0.404603"
+        },
+        "raw": "XM4 VCONT1 net6 VCONT1 VSS sky130_fd_pr__nfet_01v8 W=500.0000 L=0.404603"
+      },
+      {
+        "name": "XM0",
+        "type": "PMOS",
+        "pins": {
+          "D": "net6",
+          "G": "net1",
+          "S": "IB1",
+          "B": "VDD"
+        },
+        "model": "sky130_fd_pr__pfet_01v8",
+        "params": {
+          "W": "13.3650",
+          "L": "0.404603"
+        },
+        "raw": "XM0 net6 net1 IB1 VDD sky130_fd_pr__pfet_01v8 W=13.3650 L=0.404603"
+      },
+      {
+        "name": "XM3",
+        "type": "PMOS",
+        "pins": {
+          "D": "net1",
+          "G": "net6",
+          "S": "IB1",
+          "B": "VDD"
+        },
+        "model": "sky130_fd_pr__pfet_01v8",
+        "params": {
+          "W": "13.3650",
+          "L": "0.404603"
+        },
+        "raw": "XM3 net1 net6 IB1 VDD sky130_fd_pr__pfet_01v8 W=13.3650 L=0.404603"
+      },
+      {
+        "name": "L1",
+        "type": "INDUCTOR",
+        "pins": {
+          "1": "net6",
+          "2": "VSS"
+        },
+        "value": "1n",
+        "raw": "L1 net6 VSS 1n"
+      },
+      {
+        "name": "L0",
+        "type": "INDUCTOR",
+        "pins": {
+          "1": "net1",
+          "2": "VSS"
+        },
+        "value": "1n",
+        "raw": "L0 net1 VSS 1n"
+      },
+      {
+        "name": "CL",
+        "type": "CAPACITOR",
+        "pins": {
+          "1": "net1",
+          "2": "0"
+        },
+        "value": "1.020038e-11",
+        "raw": "CL net1 0 1.020038e-11"
+      }
+    ],
+    "nets": {
+      "VDD": {
+        "name": "VDD",
+        "connections": [
+          {
+            "component": "VDD",
+            "component_type": "VOLTAGE_SOURCE",
+            "pin": "+"
+          },
+          {
+            "component": "XM0",
+            "component_type": "PMOS",
+            "pin": "B"
+          },
+          {
+            "component": "XM3",
+            "component_type": "PMOS",
+            "pin": "B"
+          }
+        ],
+        "degree": 3
+      },
+      "0": {
+        "name": "0",
+        "connections": [
+          {
+            "component": "VDD",
+            "component_type": "VOLTAGE_SOURCE",
+            "pin": "-"
+          },
+          {
+            "component": "VSS",
+            "component_type": "VOLTAGE_SOURCE",
+            "pin": "-"
+          },
+          {
+            "component": "V__VCONT1",
+            "component_type": "VOLTAGE_SOURCE",
+            "pin": "-"
+          },
+          {
+            "component": "V__net1",
+            "component_type": "VOLTAGE_SOURCE",
+            "pin": "-"
+          },
+          {
+            "component": "CL",
+            "component_type": "CAPACITOR",
+            "pin": "2"
+          }
+        ],
+        "degree": 5
+      },
+      "VSS": {
+        "name": "VSS",
+        "connections": [
+          {
+            "component": "VSS",
+            "component_type": "VOLTAGE_SOURCE",
+            "pin": "+"
+          },
+          {
+            "component": "I__IB1",
+            "component_type": "CURRENT_SOURCE",
+            "pin": "-"
+          },
+          {
+            "component": "XM1",
+            "component_type": "NMOS",
+            "pin": "B"
+          },
+          {
+            "component": "XM4",
+            "component_type": "NMOS",
+            "pin": "B"
+          },
+          {
+            "component": "L1",
+            "component_type": "INDUCTOR",
+            "pin": "2"
+          },
+          {
+            "component": "L0",
+            "component_type": "INDUCTOR",
+            "pin": "2"
+          }
+        ],
+        "degree": 6
+      },
+      "VCONT1": {
+        "name": "VCONT1",
+        "connections": [
+          {
+            "component": "V__VCONT1",
+            "component_type": "VOLTAGE_SOURCE",
+            "pin": "+"
+          },
+          {
+            "component": "XM1",
+            "component_type": "NMOS",
+            "pin": "D"
+          },
+          {
+            "component": "XM1",
+            "component_type": "NMOS",
+            "pin": "S"
+          },
+          {
+            "component": "XM4",
+            "component_type": "NMOS",
+            "pin": "D"
+          },
+          {
+            "component": "XM4",
+            "component_type": "NMOS",
+            "pin": "S"
+          }
+        ],
+        "degree": 5
+      },
+      "net1": {
+        "name": "net1",
+        "connections": [
+          {
+            "component": "V__net1",
+            "component_type": "VOLTAGE_SOURCE",
+            "pin": "+"
+          },
+          {
+            "component": "XM1",
+            "component_type": "NMOS",
+            "pin": "G"
+          },
+          {
+            "component": "XM0",
+            "component_type": "PMOS",
+            "pin": "G"
+          },
+          {
+            "component": "XM3",
+            "component_type": "PMOS",
+            "pin": "D"
+          },
+          {
+            "component": "L0",
+            "component_type": "INDUCTOR",
+            "pin": "1"
+          },
+          {
+            "component": "CL",
+            "component_type": "CAPACITOR",
+            "pin": "1"
+          }
+        ],
+        "degree": 6
+      },
+      "IB1": {
+        "name": "IB1",
+        "connections": [
+          {
+            "component": "I__IB1",
+            "component_type": "CURRENT_SOURCE",
+            "pin": "+"
+          },
+          {
+            "component": "XM0",
+            "component_type": "PMOS",
+            "pin": "S"
+          },
+          {
+            "component": "XM3",
+            "component_type": "PMOS",
+            "pin": "S"
+          }
+        ],
+        "degree": 3
+      },
+      "net6": {
+        "name": "net6",
+        "connections": [
+          {
+            "component": "XM4",
+            "component_type": "NMOS",
+            "pin": "G"
+          },
+          {
+            "component": "XM0",
+            "component_type": "PMOS",
+            "pin": "D"
+          },
+          {
+            "component": "XM3",
+            "component_type": "PMOS",
+            "pin": "G"
+          },
+          {
+            "component": "L1",
+            "component_type": "INDUCTOR",
+            "pin": "1"
+          }
+        ],
+        "degree": 4
+      }
+    }
+  },
+  "motifs": {
+    "cross_coupled_pairs": [
+      {
+        "devices": [
+          "XM0",
+          "XM3"
+        ],
+        "device_type": "PMOS",
+        "branch_nets": [
+          "net6",
+          "net1"
+        ]
+      }
+    ],
+    "shared_source_groups": [
+      {
+        "devices": [
+          "XM1",
+          "XM4"
+        ],
+        "device_type": "NMOS",
+        "source_net": "VCONT1"
+      },
+      {
+        "devices": [
+          "XM0",
+          "XM3"
+        ],
+        "device_type": "PMOS",
+        "source_net": "IB1"
+      }
+    ],
+    "shared_gate_groups": [],
+    "passive_symmetry": [
+      {
+        "devices": [
+          "L1",
+          "L0"
+        ],
+        "device_type": "INDUCTOR",
+        "common_nets": [
+          "VSS"
+        ]
+      }
+    ]
+  },
+  "validation_errors": []
+}

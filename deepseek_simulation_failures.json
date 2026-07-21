@@ -1,0 +1,122 @@
+[
+  {
+    "idx": 0,
+    "predicted": "*Testbenchforanalogtobi_2139(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(ACforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Referencevoltage---V__VREF1VREF10DC1.2*---Erroramplifierinput---V__VIN1VIN10DC1.2*---Bias(BFS+Vth/Vov)---I__MB1VB1VSSDC1.000610e-05I__MB2VB2VSSDC1.000610e-05I__MB3VB3VSSDC1.000610e-05I__MB4VB4VSSDC1.000610e-05I__MB5VB5VSSDC1.000610e-05*---DUT:analogtobi_2139---XMM8net9net9VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XMM7net8net9VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XMM3net20net38net",
+    "ground_truth": "* Testbench for analogtobi_2520 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Reference voltage ---\nV__VREF1 VREF1 0 DC 1.2\n\n* --- Error amplifier input ---\nV__VIN1 VIN1 0 DC 1.2\n\n* --- Bias (BFS + Vth/Vov) ---\nI__MB1 VB1 VSS DC 1.860902e-05\nI__MB2 VB2 VSS DC 1.860902e-05\nX__MB3 VB3 VB3 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679\nI__MB3 VDD VB3 DC 1.860902e-05\nX__MB4 VB4 VB4 VDD VDD sky130_fd_pr__pfet_01v8 W=3.0761 L",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 1,
+    "predicted": "*Testbenchforanalogtobi_1541(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply---VDDVDD0DC1.8VSSVSS0DC0*---Bias(BFS+Vth/Vov)---X__MB1VB1VB1VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB1VB1VSSDC0.000032X__MB2VB2VB2VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB2VB2VSSDC0.000032X__MB3VB3VB3VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB3VB3VSSDC0.000032*---DUT:analogtobi_1541---XQ1net9net9VSS0sky130_fd_pr__npn_05v5_W1p00L1p00XQ0net8net8VSS0sky130_fd_pr__npn_05v5_W1p00L1p00XMM14net025net012VDDVDDsky130_fd",
+    "ground_truth": "* Testbench for analogtobi_1475 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply ---\nVDD VDD 0 DC 1.8\nVSS VSS 0 DC 0\n\n* --- Bias (BFS + Vth/Vov) ---\nX__MB1 VB1 VB1 VDD VDD sky130_fd_pr__pfet_01v8 W=7.6318 L=0.511000\nI__MB1 VB1 VSS DC 3.375519e-05\nX__MB2 VB2 VB2 VDD VDD sky130_fd_pr__pfet_01v8 W=7.6318 L=0.511000\nI__MB2 VB2 VSS DC 3.375519e-05\nI__MB3 VDD VB3 DC 3.375519e-05\n* --- DUT: analogtobi_1475 ---\nXQ1 net9 net9 VSS 0 sky130_fd_pr__npn_05v5_W1p00L1p00\nXQ0 net8 net8 VSS 0 sky130_fd_pr",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 2,
+    "predicted": "*Testbenchforocb_sky130_301_44111(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Input---VSIGVIN10DC0.9AC1*---DUT:ocb_sky130_301_44111---XM_CS0n1VIN1tail_s0VSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XM_LD0n1vb_s0VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I_TAIL0tail_s0VSSDC5.250000e-04XM_MB0vb_s0vb_s0VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I_MB0vb_s0VSSDC5.250000e-04R0VIN1n2_mid10kC1n2_midVOUT11pXM_CS1n3n1tail_s1VSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XM_LD1n3v",
+    "ground_truth": "* Testbench for ocb_sky130_301_44276 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Input ---\nVSIG VIN1 0 DC 0.9 AC 1\n\n* --- DUT: ocb_sky130_301_44276 ---\nXM_CS0 n1 VIN1 tail_s0 VSS sky130_fd_pr__nfet_01v8 W=10.0 L=0.5\nXM_LD0 n1 vb_s0 VDD VDD sky130_fd_pr__pfet_01v8 W=10.0 L=0.5\nI_TAIL0 tail_s0 VSS DC 5.250000e-04\nXM_MB0 vb_s0 vb_s0 VDD VDD sky130_fd_pr__pfet_01v8 W=10.0 L=0.5\nI_MB0 vb_s0 VSS DC 5.250000e-04\nR0 VIN1 n2",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 3,
+    "predicted": "*Testbenchforanalogtobi_2219(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Bias(BFS+Vth/Vov)---X__MB1VB1VB1VIN1VIN1sky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB1VDDVB1DC0.000032X__MB2VB2VB2VIN1VIN1sky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB2VDDVB2DC0.000032X__MB3VB3VB3VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5I__MB3VB3VDDDC0.000032X__MB4VB4VB4VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5I__MB4VDDVB4DC0.000032X__MB5VB5VB5VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5I__MB",
+    "ground_truth": "* Testbench for analogtobi_2488 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Reference voltage ---\nV__VREF1 VREF1 0 DC 1.2\n\n* --- Error amplifier input ---\nV__VIN1 VIN1 0 DC 1.2\n\n* --- Bias (BFS + Vth/Vov) ---\nX__MB1 VB1 VB1 VDD VDD sky130_fd_pr__pfet_01v8 W=49.0217 L=0.673612\nI__MB1 VB1 VSS DC 5.956940e-05\nX__MB2 VB2 VB2 VDD VDD sky130_fd_pr__pfet_01v8 W=49.0217 L=0.673612\nI__MB2 VB2 VSS DC 5.956940e-05\nV__VB3 VB3 0 DC 0.9",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 4,
+    "predicted": "*Testbenchforanalogtobi_1024(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Input---*WARNING:Noinputportfound*---DUT:analogtobi_1024---XM5VOUT1net15VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5XM4net15net15VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5XM3net12net15VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5XM2VOUT2net8VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5XM1net21net8VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5XM0net8net8VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5XM6n",
+    "ground_truth": "* Testbench for analogtobi_1024 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Input ---\n* WARNING: No input port found\n\n* --- DUT: analogtobi_1024 ---\nXM5 VOUT1 net15 VDD VDD sky130_fd_pr__pfet_01v8 W=8.5415 L=0.688117\nXM4 net15 net15 VDD VDD sky130_fd_pr__pfet_01v8 W=8.5415 L=0.688117\nXM3 net12 net15 VDD VDD sky130_fd_pr__pfet_01v8 W=8.5415 L=0.688117\nXM2 VOUT2 net8 VDD VDD sky130_fd_pr__pfet_01v8 W=8.5415 L=0.688117",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 5,
+    "predicted": "*Testbenchforanalogtobi_1790(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Bias(BFS+Vth/Vov)---X__MB1VB1VB1VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB1VB1VSSDC0.000032X__MB2VB2VB2VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5I__MB2VDDVB2DC0.000032X__MB3VB3VB3VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB3VB3VSSDC0.000032*---Input---VSIGVIN10DC0.9AC1VREF_INVIN20DC0.9*---DUT:analogtobi_1790---XMM10net27net12VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XMM9net2",
+    "ground_truth": "* Testbench for analogtobi_1791 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Bias (BFS + Vth/Vov) ---\nX__MB1 VB1 VB1 VDD VDD sky130_fd_pr__pfet_01v8 W=8.9542 L=0.362570\nI__MB1 VB1 VSS DC 9.466514e-05\nX__MB2 VB2 VB2 VSS VSS sky130_fd_pr__nfet_01v8 W=8.9542 L=0.362570\nI__MB2 VDD VB2 DC 9.466514e-05\nX__MB3 VB3 VB3 VDD VDD sky130_fd_pr__pfet_01v8 W=8.9542 L=0.362570\nI__MB3 VB3 VSS DC 9.466514e-05\n* --- Input ---\nVSIG VIN",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 6,
+    "predicted": "*Testbenchforocb_sky130_301_40128(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Input---VSIGVIN10DC0.9AC1*---DUT:ocb_sky130_301_40128---XM_CS0n1VIN1tail_s0VSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XM_LD0n1vb_s0VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I_TAIL0tail_s0VSSDC5.625000e-04XM_MB0vb_s0vb_s0VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I_MB0vb_s0VSSDC5.625000e-04C0VIN1n11pXM_CS1n2n1tail_s1VSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XM_LD1n2vb_s1VDDVDDsky130_fd_",
+    "ground_truth": "* Testbench for ocb_sky130_301_16338 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Input ---\nVSIG VIN1 0 DC 0.9 AC 1\n\n* --- DUT: ocb_sky130_301_16338 ---\nXM_CS0 n1 VIN1 tail_s0 VSS sky130_fd_pr__nfet_01v8 W=10.0 L=0.5\nXM_LD0 n1 vb_s0 VDD VDD sky130_fd_pr__pfet_01v8 W=10.0 L=0.5\nI_TAIL0 tail_s0 VSS DC 5.625000e-04\nXM_MB0 vb_s0 vb_s0 VDD VDD sky130_fd_pr__pfet_01v8 W=10.0 L=0.5\nI_MB0 vb_s0 VSS DC 5.625000e-04\nC0 VIN1 n1",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 7,
+    "predicted": "*Testbenchforanalogtobi_1114(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply---VDDVDD0DC1.8VSSVSS0DC0*---Bias(BFS+Vth/Vov)---V__VB1VB10DC0.900X__MB1VB2VB2VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB1VB2VSSDC0.000032V__VCONT1VCONT10DC0.900V__VREF1VREF10DC0.900V__VREF2VREF20DC0.900V__net14net140DC0.900*---Input(VCO:controlvoltageornone)---*---DUT:analogtobi_1114---XQ6VDDnet20net120sky130_fd_pr__npn_05v5_W1p00L1p00XQ5net23net12net240sky130_fd_pr__npn_05v5_W1p00L1p00XQ4net17net12net250sky130_fd_pr__",
+    "ground_truth": "* Testbench for analogtobi_1114 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply ---\nVDD VDD 0 DC 1.8\nVSS VSS 0 DC 0\n\n* --- Bias (BFS + Vth/Vov) ---\nV__VB1 VB1 0 DC 0.900\nX__MB1 VB2 VB2 VDD VDD sky130_fd_pr__pfet_01v8 W=10.0 L=0.5\nI__MB1 VB2 VSS DC 0.000032\nV__VCONT1 VCONT1 0 DC 0.900\nV__VREF1 VREF1 0 DC 0.900\nV__VREF2 VREF2 0 DC 0.900\nV__net14 net14 0 DC 0.900\n\n* --- Input (VCO: control voltage or none) ---\n\n* --- DUT: analogtobi_1114 ---\nXQ6 VDD net20 net12 0 sky130_fd_pr__npn_05v5_W1p0",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 8,
+    "predicted": "*Testbenchforanalogtobi_0662(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Input---VSIGVINP0DC0.9AC1VREF_INVINN0DC0.9*---DUT:analogtobi_0662---XM12VOUTNET050VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5XM7NET049NET1VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5XM11NET043NET050VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5XM10NET2NET050VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5XM6NET050VOUTNVDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5XM5VOUTNVOUTNVDDVDDsky130_fd_pr__pfet_",
+    "ground_truth": "* Testbench for analoggym_amp_leung_dfcfc2_pin_3 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Input ---\nVSIG VINN 0 DC 0.9 AC 1\nVREF_IN VINP 0 DC 0.9\n\n* --- DUT: analoggym_amp_leung_dfcfc2_pin_3 ---\nXM12 VOUT NET050 VDD VDD sky130_fd_pr__pfet_01v8 W=29.2258 L=0.563216\nXM7 NET049 NET1 VDD VDD sky130_fd_pr__pfet_01v8 W=29.2258 L=0.563216\nXM11 NET043 NET050 VDD VDD sky130_fd_pr__pfet_01v8 W=29.2258 L=0.563216\nXM10 NET2 ",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 9,
+    "predicted": "*Testbenchforanalogtobi_2208(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Bias(BFS+Vth/Vov)---X__MB1VB1VB1VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB1VB1VSSDC0.000080X__MB2VB2VB2VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB2VB2VSSDC0.000080V__VB3VB30DC0.900V__VB4VB40DC0.900*---Biascurrents(fromMOSFETwidths)---I__IB1IB1VSSDC0.000160*---Input---VSIGVIN10DC0.9AC1*---DUT:analogtobi_2208---XMM10net27net12VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XMM9ne",
+    "ground_truth": "* Testbench for analogtobi_2293 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Reference voltage ---\nV__VREF1 VREF1 0 DC 1.2\n\n* --- Error amplifier input ---\nV__VIN1 VIN1 0 DC 1.2\n\n* --- Bias (BFS + Vth/Vov) ---\nX__MB1 VB1 VB1 VDD VDD sky130_fd_pr__pfet_01v8 W=16.5892 L=0.676121\nI__MB1 VB1 VSS DC 7.351622e-05\nX__MB2 VB2 VB2 VDD VDD sky130_fd_pr__pfet_01v8 W=16.5892 L=0.676121\nI__MB2 VB2 VSS DC 7.351622e-05\nV__VB3 VB3 0 DC 0.9",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 10,
+    "predicted": "*Testbenchforanalogtobi_2596(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(ACforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Referencevoltage---V__VREF1VREF10DC1.2*---Bias(BFS+Vth/Vov)---I__MB1VB1VSSDC1.000662e-05I__MB2VB2VSSDC1.000662e-05I__MB3VB3VSSDC1.000662e-05I__MB4VB4VSSDC1.000662e-05I__MB5VB5VSSDC1.000662e-05*---DUT:analogtobi_2596---XMM8net9net9VSSVSSsky130_fd_pr__nfet_01v8W=10.0550L=0.407732XMM7net8net9VSSVSSsky130_fd_pr__nfet_01v8W=10.0550L=0.407732XMM3net20VREF1net16VSSsky130_fd_pr__nfet_01v",
+    "ground_truth": "* Testbench for analogtobi_2612 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Reference voltage ---\nV__VREF1 VREF1 0 DC 1.2\n\n* --- Bias (BFS + Vth/Vov) ---\nI__MB1 VB1 VSS DC 2.070183e-05\nI__MB2 VB2 VSS DC 2.070183e-05\nX__MB3 VB3 VB3 VSS VSS sky130_fd_pr__nfet_01v8 W=19.8194 L=0.398636\nI__MB3 VDD VB3 DC 2.070183e-05\nX__MB4 VB4 VB4 VDD VDD sky130_fd_pr__pfet_01v8 W=19.8194 L=0.398636\nI__MB4 VB4 VSS DC 2.070183e-05\nX__MB5 VB5 V",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 11,
+    "predicted": "*Testbenchforanalogtobi_0703(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Bias(BFS+Vth/Vov)---I__MB1VDDVB1DC1.000322e-05I__MB2VB2VSSDC1.000322e-05*---Clocks---V__VCLK1VCLK10PULSE(01.801n1n500n1000n)V__VCLK2VCLK20PULSE(01.801n1n500n1000n)V__VCLK3VCLK30PULSE(01.801n1n500n1000n)*---Input---*ACinjectedviabiasportVB1*---DUT:analogtobi_0703---XMM3net75net17VDDVDDsky130_fd_pr__pfet_01v8W=10.0501L=0.409732XMM2net17net17VDDVDDsky130_fd_pr__pfet_01v8W=10.05",
+    "ground_truth": "* Testbench for analogtobi_3497 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Bias (BFS + Vth/Vov) ---\nI__MB1 VDD VB1 DC 7.001362e-05\nI__MB2 VDD VB2 DC 7.001362e-05\n* --- Clocks ---\nV__VCLK1 VCLK1 0 PULSE(0 1.8 0 1n 1n 500n 1000n)\nV__VCLK2 VCLK2 0 PULSE(0 1.8 0 1n 1n 500n 1000n)\nV__VCLK3 VCLK3 0 PULSE(0 1.8 0 1n 1n 500n 1000n)\n\n* --- Input ---\n* AC injected via bias port VB1\n\n* --- DUT: analogtobi_3497 ---\nXMM3 net75 ",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 12,
+    "predicted": "*Testbenchforocb_sky130_301_02011(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Input---VSIGVIN10DC0.9AC1*---DUT:ocb_sky130_301_02011---XM_CS0n1VIN1tail_s0VSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XM_LD0n1vb_s0VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I_TAIL0tail_s0VSSDC1.500000e-05XM_MB0vb_s0vb_s0VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I_MB0vb_s0VSSDC1.500000e-05XM_CS1VOUT1VIN1tail_s1VSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XM_LD1VOUT1vb_s1VDDVDDsky130_fd_pr",
+    "ground_truth": "* Testbench for ocb_sky130_301_27044 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Input ---\nVSIG VIN1 0 DC 0.9 AC 1\n\n* --- DUT: ocb_sky130_301_27044 ---\nXM_CS0 n1 VIN1 tail_s0 VSS sky130_fd_pr__nfet_01v8 W=10.0 L=0.5\nXM_LD0 n1 vb_s0 VDD VDD sky130_fd_pr__pfet_01v8 W=10.0 L=0.5\nI_TAIL0 tail_s0 VSS DC 1.500000e-05\nXM_MB0 vb_s0 vb_s0 VDD VDD sky130_fd_pr__pfet_01v8 W=10.0 L=0.5\nI_MB0 vb_s0 VSS DC 1.500000e-05\nXM_CS1 VOU",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 13,
+    "predicted": "*Testbenchforanalogtobi_1170(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Bias(BFS+Vth/Vov)---X__MB1VB1VB1VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB1VB1VSSDC0.000032X__MB2VB2VB2VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5I__MB2VDDVB2DC0.000032X__MB3VB3VB3VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB3VB3VSSDC0.000032X__MB4VB4VB4VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5I__MB4VDDVB4DC0.000032*---Input---VSIGVIN10DC0.9AC1*---DUT:analogtobi_1170---XMM4ne",
+    "ground_truth": "* Testbench for analogtobi_1405 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Bias (BFS + Vth/Vov) ---\nX__MB1 VB1 VB1 VDD VDD sky130_fd_pr__pfet_01v8 W=12.9274 L=0.601306\nI__MB1 VB1 VSS DC 7.739146e-05\nX__MB2 VB2 VB2 VSS VSS sky130_fd_pr__nfet_01v8 W=12.9274 L=0.601306\nI__MB2 VDD VB2 DC 7.739146e-05\nX__MB3 VB3 VB3 VDD VDD sky130_fd_pr__pfet_01v8 W=12.9274 L=0.601306\nI__MB3 VB3 VSS DC 7.739146e-05\nI__MB4 VDD VB4 DC 7.7",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 14,
+    "predicted": "*Testbenchforanalogtobi_3068(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Bias(BFS+Vth/Vov)---I__MB1VDDVB1DC1.005611e-05V__VB2VB20DC0.900*---Clocks---V__VCLK1VCLK10PULSE(01.801n1n500n1000n)V__VCLK2VCLK20PULSE(01.801n1n500n1000n)*---Input---VSIGVIN10DC0.9AC1*---DUT:analogtobi_3068---XMM9VOUT1net12VSSVSSsky130_fd_pr__nfet_01v8W=10.0550L=0.411742XMM8net12net12VSSVSSsky130_fd_pr__nfet_01v8W=10.0550L=0.411742XMM7VOUT1net12net10net14sky130_fd_pr__pfet_0",
+    "ground_truth": "* Testbench for analogtobi_3069 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Bias (BFS + Vth/Vov) ---\nI__MB1 VDD VB1 DC 1.089212e-05\nV__VB2 VB2 0 DC 0.900\n\n* --- Clocks ---\nV__VCLK1 VCLK1 0 PULSE(0 1.8 0 1n 1n 500n 1000n)\nV__VCLK2 VCLK2 0 PULSE(0 1.8 0 1n 1n 500n 1000n)\n\n* --- Input ---\nVSIG VIN1 0 DC 0.9 AC 1\n\n* --- DUT: analogtobi_3069 ---\nXMM9 VOUT1 net12 VSS VSS sky130_fd_pr__nfet_01v8 W=18.8393 L=0.432207\nXMM8 n",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 15,
+    "predicted": "*Testbenchforanalogtobi_3426(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Bias(BFS+Vth/Vov)---I__MB1VDDVB1DC1.000560e-05I__MB2VB2VSSDC1.000560e-05*---Clocks---V__VCLK1VCLK10PULSE(01.801n1n500n1000n)V__VCLK2VCLK20PULSE(01.801n1n500n1000n)*---Input---VSIGVIN10DC0.9AC1*---DUT:analogtobi_3426---XMM7VOUT1net23net11net18sky130_fd_pr__pfet_01v8W=10.0550L=0.411732XMM6net13VSSnet11net18sky130_fd_pr__pfet_01v8W=10.0550L=0.411732XMM5net11net1004VDDVDDsky130_",
+    "ground_truth": "* Testbench for analogtobi_3424 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Bias (BFS + Vth/Vov) ---\nI__MB1 VDD VB1 DC 5.380868e-05\nI__MB2 VB2 VSS DC 5.380868e-05\n* --- Clocks ---\nV__VCLK1 VCLK1 0 PULSE(0 1.8 0 1n 1n 500n 1000n)\nV__VCLK2 VCLK2 0 PULSE(0 1.8 0 1n 1n 500n 1000n)\n\n* --- Input ---\nVSIG VIN1 0 DC 0.9 AC 1\n\n* --- DUT: analogtobi_3424 ---\nXMM7 VOUT1 net23 net11 net18 sky130_fd_pr__pfet_01v8 W=5.7471 L=0.42",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 16,
+    "predicted": "*Testbenchforanalogtobi_2620(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(ACforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Referencevoltage---V__VREF1VREF10DC1.2*---Bias(BFS+Vth/Vov)---X__MB1VB1VB1VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB1VB1VSSDC0.000032X__MB2VB2VB2VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB2VB2VSSDC0.000032X__MB3VB3VB3VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5I__MB3VDDVB3DC0.000032X__MB4VB4VB4VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I__MB4VB4VSSDC0.000032X__MB5VB5VB5VSSVSSsky130",
+    "ground_truth": "* Testbench for analogtobi_2559 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Reference voltage ---\nV__VREF1 VREF1 0 DC 1.2\n\n* --- Bias (BFS + Vth/Vov) ---\nX__MB1 VB1 VB1 VDD VDD sky130_fd_pr__pfet_01v8 W=8.1701 L=0.362873\nI__MB1 VB1 VSS DC 2.001664e-05\nX__MB2 VB2 VB2 VDD VDD sky130_fd_pr__pfet_01v8 W=8.1701 L=0.362873\nI__MB2 VB2 VSS DC 2.001664e-05\nI__MB3 VDD VB3 DC 2.001664e-05\nX__MB4 VB4 VB4 VDD VDD sky130_fd_pr__pfet_01v",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 17,
+    "predicted": "*Testbenchforocb_sky130_301_02328(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Input---VSIGVIN10DC0.9AC1*---DUT:ocb_sky130_301_02328---XM_CS0n1VIN1tail_s0VSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XM_LD0n1vb_s0VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I_TAIL0tail_s0VSSDC1.275000e-04XM_MB0vb_s0vb_s0VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I_MB0vb_s0VSSDC1.275000e-04XM_CS1n2n1tail_s1VSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XM_LD1n2vb_s1VDDVDDsky130_fd_pr__pfet_0",
+    "ground_truth": "* Testbench for ocb_sky130_301_33485 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Input ---\nVSIG VIN1 0 DC 0.9 AC 1\n\n* --- DUT: ocb_sky130_301_33485 ---\nXM_CS0 n1 VIN1 tail_s0 VSS sky130_fd_pr__nfet_01v8 W=10.0 L=0.5\nXM_LD0 n1 vb_s0 VDD VDD sky130_fd_pr__pfet_01v8 W=10.0 L=0.5\nI_TAIL0 tail_s0 VSS DC 1.275000e-04\nXM_MB0 vb_s0 vb_s0 VDD VDD sky130_fd_pr__pfet_01v8 W=10.0 L=0.5\nI_MB0 vb_s0 VSS DC 1.275000e-04\nXM_CS1 n2 ",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 18,
+    "predicted": "*Testbenchforanalogtobi_0017(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Input---VSIGVIN10DC0.9AC1*---DUT:analogtobi_0017---R1VOUT1VSS10kR0VDDnet210kXM1net2VIN1VSSVSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XM0VDDnet2VOUT1VSSsky130_fd_pr__nfet_01v8W=10.0L=0.5CLVOUT10100p.control*---DCoperatingpoint---opprintv(VOUT1)print@VDD[i]*---AC:gain,UGF,PM,PSRR---acdec100110G*Differentialgain(inputAC=1drivesthesignal)measacdc_gain_dBmaxvdb(VOUT1)measacugf_Hzwhenvd",
+    "ground_truth": "* Testbench for analogtobi_0017 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Input ---\nVSIG VIN1 0 DC 0.9 AC 1\n\n* --- DUT: analogtobi_0017 ---\nR1 VOUT1 VSS 10k\nR0 VDD net2 10k\nXM1 net2 VIN1 VSS VSS sky130_fd_pr__nfet_01v8 W=11.8392 L=0.725144\nXM0 VDD net2 VOUT1 VSS sky130_fd_pr__nfet_01v8 W=11.8392 L=0.725144\n\nCL VOUT1 0 3.855038e-14\n.control\n\n* --- DC operating point ---\nop\nprint v(VOUT1)\nprint @VDD[i]\n\n* --- AC: ga",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  },
+  {
+    "idx": 19,
+    "predicted": "*Testbenchforocb_sky130_301_01811(sky130typical).lib\"{{SKY130_LIB}}\"tt*---Supply(AConVDDforPSRR)---VDDVDD0DC1.8AC1VSSVSS0DC0*---Input---VSIGVIN10DC0.9AC1*---DUT:ocb_sky130_301_01811---XM_CS0n1VIN1tail_s0VSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XM_LD0n1vb_s0VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I_TAIL0tail_s0VSSDC2.550000e-04XM_MB0vb_s0vb_s0VDDVDDsky130_fd_pr__pfet_01v8W=10.0L=0.5I_MB0vb_s0VSSDC2.550000e-04C0VIN1n11pXM_CS1n2n1tail_s1VSSsky130_fd_pr__nfet_01v8W=10.0L=0.5XM_LD1n2vb_s1VDDVDDsky130_fd_",
+    "ground_truth": "* Testbench for ocb_sky130_301_32885 (sky130 typical)\n.lib \"{{SKY130_LIB}}\" tt\n\n* --- Supply (AC on VDD for PSRR) ---\nVDD VDD 0 DC 1.8 AC 1\nVSS VSS 0 DC 0\n\n* --- Input ---\nVSIG VIN1 0 DC 0.9 AC 1\n\n* --- DUT: ocb_sky130_301_32885 ---\nXM_CS0 n1 VIN1 tail_s0 VSS sky130_fd_pr__nfet_01v8 W=10.0 L=0.5\nXM_LD0 n1 vb_s0 VDD VDD sky130_fd_pr__pfet_01v8 W=10.0 L=0.5\nI_TAIL0 tail_s0 VSS DC 2.550000e-04\nXM_MB0 vb_s0 vb_s0 VDD VDD sky130_fd_pr__pfet_01v8 W=10.0 L=0.5\nI_MB0 vb_s0 VSS DC 2.550000e-04\nC0 VIN1 n1",
+    "stderr": "Note: No \".plot\", \".print\", or \".fourier\" lines; no simulations run\n"
+  }
+]

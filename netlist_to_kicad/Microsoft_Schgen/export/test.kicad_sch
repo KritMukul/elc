@@ -1,0 +1,2217 @@
+(kicad_sch (version 20260306) (generator "eeschema") (generator_version "10.0") (uuid 748e538f-73a8-45c8-8c10-199653322132) (paper "A4") (lib_symbols 
+
+(symbol "Device:Q_NMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_NMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "N-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_NMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 0.762 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 1.016 0) 
+
+(xy 2.032 0.381) 
+
+(xy 2.032 -0.381) 
+
+(xy 1.016 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 0.508) 
+
+(xy 2.921 0.381) 
+
+(xy 3.683 0.381) 
+
+(xy 3.81 0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 0.381) 
+
+(xy 2.921 -0.254) 
+
+(xy 3.683 -0.254) 
+
+(xy 3.302 0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_NMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "power:+BATT" (power) (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "#PWR" (at 0 -3.81 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Value" "+BATT" (at 0 3.556 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"+BATT\"" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "global power battery" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "+BATT_0_1" 
+
+(polyline (pts 
+
+(xy -0.762 1.27) 
+
+(xy 0 2.54)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0 0) 
+
+(xy 0 2.54)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0 2.54) 
+
+(xy 0.762 1.27)) (stroke (width 0) (type default)) (fill (type none)))) 
+
+(symbol "+BATT_1_1" (pin power_in line (at 0 0 90) (length 0) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:Q_PMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_PMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor PMOS P-MOS P-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_PMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 0.762 -1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.286 0) 
+
+(xy 1.27 0.381) 
+
+(xy 1.27 -0.381) 
+
+(xy 2.286 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 -0.508) 
+
+(xy 2.921 -0.381) 
+
+(xy 3.683 -0.381) 
+
+(xy 3.81 -0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 -0.381) 
+
+(xy 2.921 0.254) 
+
+(xy 3.683 0.254) 
+
+(xy 3.302 -0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_PMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:Q_PMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_PMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor PMOS P-MOS P-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_PMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 0.762 -1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.286 0) 
+
+(xy 1.27 0.381) 
+
+(xy 1.27 -0.381) 
+
+(xy 2.286 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 -0.508) 
+
+(xy 2.921 -0.381) 
+
+(xy 3.683 -0.381) 
+
+(xy 3.81 -0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 -0.381) 
+
+(xy 2.921 0.254) 
+
+(xy 3.683 0.254) 
+
+(xy 3.302 -0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_PMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:Q_PMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_PMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor PMOS P-MOS P-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_PMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 0.762 -1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.286 0) 
+
+(xy 1.27 0.381) 
+
+(xy 1.27 -0.381) 
+
+(xy 2.286 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 -0.508) 
+
+(xy 2.921 -0.381) 
+
+(xy 3.683 -0.381) 
+
+(xy 3.81 -0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 -0.381) 
+
+(xy 2.921 0.254) 
+
+(xy 3.683 0.254) 
+
+(xy 3.302 -0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_PMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:C" (pin_numbers hide) (pin_names (offset 0.254)) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "C" (at 0.635 2.54 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "C" (at 0.635 -2.54 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 0.9652 -3.81 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Unpolarized capacitor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "cap capacitor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_fp_filters" "C_*" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "C_0_1" 
+
+(polyline (pts 
+
+(xy -2.032 -0.762) 
+
+(xy 2.032 -0.762)) (stroke (width 0.508) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy -2.032 0.762) 
+
+(xy 2.032 0.762)) (stroke (width 0.508) (type default)) (fill (type none)))) 
+
+(symbol "C_1_1" (pin passive line (at 0 3.81 270) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin passive line (at 0 -3.81 90) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "power:GND" (power) (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "#PWR" (at 0 -6.35 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Value" "GND" (at 0 -3.81 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"GND\" , ground" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "global power" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "GND_0_1" 
+
+(polyline (pts 
+
+(xy 0 0) 
+
+(xy 0 -1.27) 
+
+(xy 1.27 -1.27) 
+
+(xy 0 -2.54) 
+
+(xy -1.27 -1.27) 
+
+(xy 0 -1.27)) (stroke (width 0) (type default)) (fill (type none)))) 
+
+(symbol "GND_1_1" (pin power_in line (at 0 0 270) (length 0) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:Q_NMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_NMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "N-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_NMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 0.762 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 1.016 0) 
+
+(xy 2.032 0.381) 
+
+(xy 2.032 -0.381) 
+
+(xy 1.016 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 0.508) 
+
+(xy 2.921 0.381) 
+
+(xy 3.683 0.381) 
+
+(xy 3.81 0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 0.381) 
+
+(xy 2.921 -0.254) 
+
+(xy 3.683 -0.254) 
+
+(xy 3.302 0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_NMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "power:+BATT" (power) (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "#PWR" (at 0 -3.81 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Value" "+BATT" (at 0 3.556 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"+BATT\"" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "global power battery" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "+BATT_0_1" 
+
+(polyline (pts 
+
+(xy -0.762 1.27) 
+
+(xy 0 2.54)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0 0) 
+
+(xy 0 2.54)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0 2.54) 
+
+(xy 0.762 1.27)) (stroke (width 0) (type default)) (fill (type none)))) 
+
+(symbol "+BATT_1_1" (pin power_in line (at 0 0 90) (length 0) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:Q_PMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_PMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor PMOS P-MOS P-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_PMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 0.762 -1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.286 0) 
+
+(xy 1.27 0.381) 
+
+(xy 1.27 -0.381) 
+
+(xy 2.286 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 -0.508) 
+
+(xy 2.921 -0.381) 
+
+(xy 3.683 -0.381) 
+
+(xy 3.81 -0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 -0.381) 
+
+(xy 2.921 0.254) 
+
+(xy 3.683 0.254) 
+
+(xy 3.302 -0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_PMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:Q_PMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_PMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor PMOS P-MOS P-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_PMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 0.762 -1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.286 0) 
+
+(xy 1.27 0.381) 
+
+(xy 1.27 -0.381) 
+
+(xy 2.286 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 -0.508) 
+
+(xy 2.921 -0.381) 
+
+(xy 3.683 -0.381) 
+
+(xy 3.81 -0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 -0.381) 
+
+(xy 2.921 0.254) 
+
+(xy 3.683 0.254) 
+
+(xy 3.302 -0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_PMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:Q_PMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_PMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor PMOS P-MOS P-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_PMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 0.762 -1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.286 0) 
+
+(xy 1.27 0.381) 
+
+(xy 1.27 -0.381) 
+
+(xy 2.286 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 -0.508) 
+
+(xy 2.921 -0.381) 
+
+(xy 3.683 -0.381) 
+
+(xy 3.81 -0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 -0.381) 
+
+(xy 2.921 0.254) 
+
+(xy 3.683 0.254) 
+
+(xy 3.302 -0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_PMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:C" (pin_numbers hide) (pin_names (offset 0.254)) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "C" (at 0.635 2.54 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "C" (at 0.635 -2.54 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 0.9652 -3.81 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Unpolarized capacitor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "cap capacitor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_fp_filters" "C_*" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "C_0_1" 
+
+(polyline (pts 
+
+(xy -2.032 -0.762) 
+
+(xy 2.032 -0.762)) (stroke (width 0.508) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy -2.032 0.762) 
+
+(xy 2.032 0.762)) (stroke (width 0.508) (type default)) (fill (type none)))) 
+
+(symbol "C_1_1" (pin passive line (at 0 3.81 270) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin passive line (at 0 -3.81 90) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "power:GND" (power) (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "#PWR" (at 0 -6.35 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Value" "GND" (at 0 -3.81 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"GND\" , ground" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "global power" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "GND_0_1" 
+
+(polyline (pts 
+
+(xy 0 0) 
+
+(xy 0 -1.27) 
+
+(xy 1.27 -1.27) 
+
+(xy 0 -2.54) 
+
+(xy -1.27 -1.27) 
+
+(xy 0 -1.27)) (stroke (width 0) (type default)) (fill (type none)))) 
+
+(symbol "GND_1_1" (pin power_in line (at 0 0 270) (length 0) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:Q_NMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_NMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "N-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor NMOS N-MOS N-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_NMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 0.762 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 1.016 0) 
+
+(xy 2.032 0.381) 
+
+(xy 2.032 -0.381) 
+
+(xy 1.016 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 0.508) 
+
+(xy 2.921 0.381) 
+
+(xy 3.683 0.381) 
+
+(xy 3.81 0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 0.381) 
+
+(xy 2.921 -0.254) 
+
+(xy 3.683 -0.254) 
+
+(xy 3.302 0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_NMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "power:+BATT" (power) (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "#PWR" (at 0 -3.81 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Value" "+BATT" (at 0 3.556 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"+BATT\"" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "global power battery" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "+BATT_0_1" 
+
+(polyline (pts 
+
+(xy -0.762 1.27) 
+
+(xy 0 2.54)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0 0) 
+
+(xy 0 2.54)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0 2.54) 
+
+(xy 0.762 1.27)) (stroke (width 0) (type default)) (fill (type none)))) 
+
+(symbol "+BATT_1_1" (pin power_in line (at 0 0 90) (length 0) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:Q_PMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_PMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor PMOS P-MOS P-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_PMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 0.762 -1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.286 0) 
+
+(xy 1.27 0.381) 
+
+(xy 1.27 -0.381) 
+
+(xy 2.286 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 -0.508) 
+
+(xy 2.921 -0.381) 
+
+(xy 3.683 -0.381) 
+
+(xy 3.81 -0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 -0.381) 
+
+(xy 2.921 0.254) 
+
+(xy 3.683 0.254) 
+
+(xy 3.302 -0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_PMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:Q_PMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_PMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor PMOS P-MOS P-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_PMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 0.762 -1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.286 0) 
+
+(xy 1.27 0.381) 
+
+(xy 1.27 -0.381) 
+
+(xy 2.286 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 -0.508) 
+
+(xy 2.921 -0.381) 
+
+(xy 3.683 -0.381) 
+
+(xy 3.81 -0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 -0.381) 
+
+(xy 2.921 0.254) 
+
+(xy 3.683 0.254) 
+
+(xy 3.302 -0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_PMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:Q_PMOS_DGS" (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "Q" (at 5.08 1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "Q_PMOS_DGS" (at 5.08 -1.27 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "transistor PMOS P-MOS P-MOSFET" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "Q_PMOS_DGS_0_1" 
+
+(polyline (pts 
+
+(xy 0.254 0) 
+
+(xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.254 1.905) 
+
+(xy 0.254 -1.905)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 -1.27) 
+
+(xy 0.762 -2.286)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 0.508) 
+
+(xy 0.762 -0.508)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 2.286) 
+
+(xy 0.762 1.27)) (stroke (width 0.254) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 2.54) 
+
+(xy 2.54 1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.54 -2.54) 
+
+(xy 2.54 0) 
+
+(xy 0.762 0)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 0.762 1.778) 
+
+(xy 3.302 1.778) 
+
+(xy 3.302 -1.778) 
+
+(xy 0.762 -1.778)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 2.286 0) 
+
+(xy 1.27 0.381) 
+
+(xy 1.27 -0.381) 
+
+(xy 2.286 0)) (stroke (width 0) (type default)) (fill (type outline))) 
+
+(polyline (pts 
+
+(xy 2.794 -0.508) 
+
+(xy 2.921 -0.381) 
+
+(xy 3.683 -0.381) 
+
+(xy 3.81 -0.254)) (stroke (width 0) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy 3.302 -0.381) 
+
+(xy 2.921 0.254) 
+
+(xy 3.683 0.254) 
+
+(xy 3.302 -0.381)) (stroke (width 0) (type default)) (fill (type none))) (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none))) (circle (center 2.54 -1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline))) (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))) 
+
+(symbol "Q_PMOS_DGS_1_1" (pin passive line (at 2.54 5.08 270) (length 2.54) (name "D" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin input line (at -5.08 0 0) (length 2.54) (name "G" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))) (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "S" (effects (font (size 1.27 1.27)))) (number "3" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:R" (pin_numbers hide) (pin_names (offset 0)) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "R" (at 2.032 0 90) (effects (font (size 1.27 1.27)))) 
+
+(property "Value" "R" (at 0 0 90) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at -1.778 0 90) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "R res resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_fp_filters" "R_*" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "R_0_1" 
+
+(rectangle (start -1.016 -2.54) (end 1.016 2.54) (stroke (width 0.254) (type default)) (fill (type none)))) 
+
+(symbol "R_1_1" (pin passive line (at 0 3.81 270) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin passive line (at 0 -3.81 90) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:R" (pin_numbers hide) (pin_names (offset 0)) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "R" (at 2.032 0 90) (effects (font (size 1.27 1.27)))) 
+
+(property "Value" "R" (at 0 0 90) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at -1.778 0 90) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "R res resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_fp_filters" "R_*" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "R_0_1" 
+
+(rectangle (start -1.016 -2.54) (end 1.016 2.54) (stroke (width 0.254) (type default)) (fill (type none)))) 
+
+(symbol "R_1_1" (pin passive line (at 0 3.81 270) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin passive line (at 0 -3.81 90) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:R" (pin_numbers hide) (pin_names (offset 0)) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "R" (at 2.032 0 90) (effects (font (size 1.27 1.27)))) 
+
+(property "Value" "R" (at 0 0 90) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at -1.778 0 90) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "R res resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_fp_filters" "R_*" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "R_0_1" 
+
+(rectangle (start -1.016 -2.54) (end 1.016 2.54) (stroke (width 0.254) (type default)) (fill (type none)))) 
+
+(symbol "R_1_1" (pin passive line (at 0 3.81 270) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin passive line (at 0 -3.81 90) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:R" (pin_numbers hide) (pin_names (offset 0)) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "R" (at 2.032 0 90) (effects (font (size 1.27 1.27)))) 
+
+(property "Value" "R" (at 0 0 90) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at -1.778 0 90) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "R res resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_fp_filters" "R_*" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "R_0_1" 
+
+(rectangle (start -1.016 -2.54) (end 1.016 2.54) (stroke (width 0.254) (type default)) (fill (type none)))) 
+
+(symbol "R_1_1" (pin passive line (at 0 3.81 270) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin passive line (at 0 -3.81 90) (length 1.27) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "Device:C" (pin_numbers hide) (pin_names (offset 0.254)) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "C" (at 0.635 2.54 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Value" "C" (at 0.635 -2.54 0) (effects (font (size 1.27 1.27)) (justify left))) 
+
+(property "Footprint" "" (at 0.9652 -3.81 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Unpolarized capacitor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "cap capacitor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_fp_filters" "C_*" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "C_0_1" 
+
+(polyline (pts 
+
+(xy -2.032 -0.762) 
+
+(xy 2.032 -0.762)) (stroke (width 0.508) (type default)) (fill (type none))) 
+
+(polyline (pts 
+
+(xy -2.032 0.762) 
+
+(xy 2.032 0.762)) (stroke (width 0.508) (type default)) (fill (type none)))) 
+
+(symbol "C_1_1" (pin passive line (at 0 3.81 270) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27))))) (pin passive line (at 0 -3.81 90) (length 2.794) (name "~" (effects (font (size 1.27 1.27)))) (number "2" (effects (font (size 1.27 1.27))))))) 
+
+(symbol "power:GND" (power) (pin_names (offset 0) hide) (exclude_from_sim no) (in_bom yes) (on_board yes) 
+
+(property "Reference" "#PWR" (at 0 -6.35 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Value" "GND" (at 0 -3.81 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"GND\" , ground" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "ki_keywords" "global power" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(symbol "GND_0_1" 
+
+(polyline (pts 
+
+(xy 0 0) 
+
+(xy 0 -1.27) 
+
+(xy 1.27 -1.27) 
+
+(xy 0 -2.54) 
+
+(xy -1.27 -1.27) 
+
+(xy 0 -1.27)) (stroke (width 0) (type default)) (fill (type none)))) 
+
+(symbol "GND_1_1" (pin power_in line (at 0 0 270) (length 0) (name "~" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))))) 
+
+(symbol (lib_id "Device:Q_NMOS_DGS") (at 149.86 100.33 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 31dbc506-2151-4982-acaf-052a327028f5) 
+
+(property "Reference" "XM1" (at 154.94 101.6 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_NMOS_DGS" (at 154.94 99.06 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "N-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 807fb8c2-7ab6-44db-97e2-9b7970988e2d)) (pin "2" (uuid a9a73255-a076-4b5b-a539-18117c155d16)) (pin "3" (uuid 02922a4e-2fea-4352-96d4-13b149c100b2)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM1") (unit 1))))) 
+
+(symbol (lib_id "power:+BATT") (at 143.51 90.17 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 62c68584-6135-41d7-a038-c2c3353c5d1d) 
+
+(property "Reference" "#PWR1" (at 143.51 86.36 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "+BATT" (at 143.51 93.73 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"+BATT\"" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 582fbf3c-9dfc-4ae1-9980-2a084a16e51c)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "#PWR1") (unit 1))))) 
+
+(symbol (lib_id "Device:Q_PMOS_DGS") (at 149.86 90.17 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid b2f89263-07df-4a29-91b3-dc56e86e5600) 
+
+(property "Reference" "XM2" (at 154.94 91.44 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_PMOS_DGS" (at 154.94 88.9 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid a43d5495-3e59-43d8-93a1-4bba209e9d1d)) (pin "2" (uuid 6ab17cdf-b1b3-4268-a1d4-a8584fa829b2)) (pin "3" (uuid fe7be56a-f5ce-4d14-9ff1-360ed7d43ec4)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM2") (unit 1))))) 
+
+(symbol (lib_id "Device:Q_PMOS_DGS") (at 149.86 110.49 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 89e6de5b-1888-40ef-ae03-866baede623e) 
+
+(property "Reference" "XM3" (at 154.94 111.76 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_PMOS_DGS" (at 154.94 109.22 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid e6abc739-4dd5-4d71-b004-c5473c389a56)) (pin "2" (uuid 72fec6ba-2b7e-48c9-a732-9da6e66c58ae)) (pin "3" (uuid 87b32c77-9d24-4536-be9a-53737f1730b3)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM3") (unit 1))))) 
+
+(symbol (lib_id "Device:Q_PMOS_DGS") (at 149.86 119.38 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 4020f7ca-9dd9-4bea-b16e-46f8dc6efdb2) 
+
+(property "Reference" "XM4" (at 154.94 120.65 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_PMOS_DGS" (at 154.94 118.11 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 7f9de7bd-54a8-455e-bf13-5ee886c2b80d)) (pin "2" (uuid b140ad8d-10b2-4ec7-8b2a-a979c55de449)) (pin "3" (uuid 9aeb4cf9-6a76-47b6-a6a6-04bd58655e80)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM4") (unit 1))))) 
+
+(symbol (lib_id "Device:C") (at 160.02 119.38 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid e2cd99e3-2458-4b3b-8bb1-fc9f081cb99a) 
+
+(property "Reference" "CL1" (at 160.66 121.92 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "1uF" (at 160.66 116.84 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0.9652 -3.81 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Unpolarized capacitor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 47ebaef9-1f9f-4d70-ae6f-904d96a1decd)) (pin "2" (uuid 0cce8c7e-d5fa-414f-9375-40213001ea38)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "CL1") (unit 1))))) 
+
+(symbol (lib_id "power:GND") (at 160.02 129.54 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 5cba73c2-0313-4af5-84a4-dcd9d9dd0ae9) 
+
+(property "Reference" "#PWR2" (at 160.02 123.19 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "GND" (at 160.02 125.73 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"GND\" , ground" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 4004a338-5625-4b1a-af1f-5c149fd00538)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "#PWR2") (unit 1))))) 
+
+(symbol (lib_id "Device:Q_NMOS_DGS") (at 149.86 100.33 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 6ab8c0ee-6111-48db-9012-03cb8eab2d1c) 
+
+(property "Reference" "XM1" (at 154.94 101.6 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_NMOS_DGS" (at 154.94 99.06 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "N-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid c912577e-68bc-4a85-a40b-740a5a64e965)) (pin "2" (uuid 028b07e6-7cad-41bd-a5f8-e85a1222fa9d)) (pin "3" (uuid 43aa0ac2-a730-414f-97c6-f334a2df3965)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM1") (unit 1))))) 
+
+(symbol (lib_id "power:+BATT") (at 143.51 90.17 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 951b6638-e921-47f2-a8b2-003a4bff1b46) 
+
+(property "Reference" "#PWR1" (at 143.51 86.36 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "+BATT" (at 143.51 93.73 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"+BATT\"" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 2c7d80b6-be51-4f64-937f-b6ada87936ca)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "#PWR1") (unit 1))))) 
+
+(symbol (lib_id "Device:Q_PMOS_DGS") (at 149.86 90.17 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid dc250bb8-e252-478e-86ff-eb7cba00189c) 
+
+(property "Reference" "XM2" (at 154.94 91.44 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_PMOS_DGS" (at 154.94 88.9 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid dda33318-c6ac-429b-853e-a3faa6886041)) (pin "2" (uuid 19e7909e-860c-4cb5-97b0-581196604ff3)) (pin "3" (uuid ca051314-b8f5-497c-9759-2f31ce028376)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM2") (unit 1))))) 
+
+(symbol (lib_id "Device:Q_PMOS_DGS") (at 149.86 110.49 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid f0c0c9d7-0a19-461e-a8d9-e2d3dc419156) 
+
+(property "Reference" "XM3" (at 154.94 111.76 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_PMOS_DGS" (at 154.94 109.22 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid c8f1dd5b-d09d-45fc-9c79-b5564d131770)) (pin "2" (uuid fd5e5daf-ebee-4585-ac60-737bf5f1a5d7)) (pin "3" (uuid a6ab3f33-13d9-49d6-8926-0051cfb42c2f)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM3") (unit 1))))) 
+
+(symbol (lib_id "Device:Q_PMOS_DGS") (at 149.86 119.38 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid c22992e7-2e92-4a97-8f4d-106eea822638) 
+
+(property "Reference" "XM4" (at 154.94 120.65 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_PMOS_DGS" (at 154.94 118.11 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 6e062647-7339-4d52-aa53-8994a91e9802)) (pin "2" (uuid 5ac89239-bc73-491f-90fe-e4beae44b18d)) (pin "3" (uuid c91d0b96-4709-45d3-a7c1-796c29c765af)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM4") (unit 1))))) 
+
+(symbol (lib_id "Device:C") (at 160.02 119.38 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 3ab6ee89-757f-47bf-9eb9-ec649f5334cc) 
+
+(property "Reference" "CL1" (at 160.66 121.92 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "1uF" (at 160.66 116.84 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0.9652 -3.81 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Unpolarized capacitor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 3624202b-2249-4043-92b6-d8e38effd828)) (pin "2" (uuid 7235f535-2f6a-47ab-a269-90eb823e0cc2)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "CL1") (unit 1))))) 
+
+(symbol (lib_id "power:GND") (at 160.02 129.54 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 21eae35a-10be-48b1-a80c-ab5eea495420) 
+
+(property "Reference" "#PWR2" (at 160.02 123.19 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "GND" (at 160.02 125.73 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"GND\" , ground" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 9dfd0be5-1330-4cc7-99fe-7fedd08f031a)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "#PWR2") (unit 1))))) 
+
+(symbol (lib_id "Device:Q_NMOS_DGS") (at 149.86 100.33 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid d165a5a5-529a-4446-9a7f-11df14458f47) 
+
+(property "Reference" "XM1" (at 154.94 101.6 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_NMOS_DGS" (at 154.94 99.06 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "N-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid ed47ab78-f6cd-4a28-9715-11b8585bfd53)) (pin "2" (uuid d51f60d1-6495-4a6a-9a27-1cbac681a099)) (pin "3" (uuid b342e4d4-eae7-4463-8ec2-56960a6fad92)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM1") (unit 1))))) 
+
+(symbol (lib_id "power:+BATT") (at 129.54 90.17 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 330e3a98-148e-49a1-9c3c-955686ef1ae9) 
+
+(property "Reference" "#PWR1" (at 129.54 86.36 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "+BATT" (at 129.54 93.73 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"+BATT\"" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 72db8c11-635f-4d6a-b984-8af1b01c05f3)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "#PWR1") (unit 1))))) 
+
+(symbol (lib_id "Device:Q_PMOS_DGS") (at 149.86 90.17 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 68ce7185-cb9c-4053-b472-0c25fac50243) 
+
+(property "Reference" "XM2" (at 154.94 91.44 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_PMOS_DGS" (at 154.94 88.9 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid ebc3002f-8e9c-446a-815d-1469a9cd61e4)) (pin "2" (uuid 808d802f-d5f8-42e6-886e-7f7a5b40f14e)) (pin "3" (uuid 2e423caf-22de-4f03-85b8-de83ab1ee315)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM2") (unit 1))))) 
+
+(symbol (lib_id "Device:Q_PMOS_DGS") (at 149.86 110.49 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid f95aefd7-d332-4627-ae6a-beaffabf22e7) 
+
+(property "Reference" "XM3" (at 154.94 111.76 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_PMOS_DGS" (at 154.94 109.22 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid fbad2d00-1c35-42ec-a3fd-654d100e9e17)) (pin "2" (uuid 9b93cb04-f845-45a8-811d-19348f4c9515)) (pin "3" (uuid 26edf96a-2474-4622-9341-6e9158db6b60)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM3") (unit 1))))) 
+
+(symbol (lib_id "Device:Q_PMOS_DGS") (at 149.86 119.38 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid a8572552-685b-4766-b66b-dc6413eb5a2c) 
+
+(property "Reference" "XM4" (at 154.94 120.65 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "Q_PMOS_DGS" (at 154.94 118.11 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 5.08 2.54 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "P-MOSFET transistor, drain/gate/source" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 1a2811b4-9cab-4861-86ac-a9d2988e96ce)) (pin "2" (uuid 9f835a7f-3d3e-4483-b63b-0a205125839e)) (pin "3" (uuid 54c522b4-6def-49dc-aff6-9ad2e78e27a3)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "XM4") (unit 1))))) 
+
+(symbol (lib_id "Device:R") (at 165.1 100.33 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid a244e108-02b4-4040-9560-ee781e7d2d70) 
+
+(property "Reference" "R1" (at 167.13 100.33 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "10k" (at 165.1 100.33 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at -1.778 0 90) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 5ec8e5a6-5982-4872-bb02-b20222273aec)) (pin "2" (uuid 06a65ece-8645-4d6a-9d36-e7ba93bb966a)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "R1") (unit 1))))) 
+
+(symbol (lib_id "Device:R") (at 165.1 110.49 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid d654361f-10cf-48c7-9364-b2adc41fc213) 
+
+(property "Reference" "R2" (at 167.13 110.49 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "10k" (at 165.1 110.49 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at -1.778 0 90) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 0b6e8a78-72e8-4cf3-878f-72fa46357348)) (pin "2" (uuid 99296c1e-eb01-409c-a607-3fd6ab5c48b2)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "R2") (unit 1))))) 
+
+(symbol (lib_id "Device:R") (at 165.1 119.38 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 010b15aa-c0e7-4d42-a722-eced614965b5) 
+
+(property "Reference" "R3" (at 167.13 119.38 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "10k" (at 165.1 119.38 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at -1.778 0 90) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid 3086585f-b115-4996-8fd5-df5d68c58c5c)) (pin "2" (uuid 5906cae0-8196-49e0-8257-29695a75bd62)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "R3") (unit 1))))) 
+
+(symbol (lib_id "Device:R") (at 165.1 129.54 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid c85490b0-7651-445b-a891-75abe3e7765a) 
+
+(property "Reference" "R4" (at 167.13 129.54 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "10k" (at 165.1 129.54 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at -1.778 0 90) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Resistor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid b086945b-b97a-4371-b6a9-99fb525fee89)) (pin "2" (uuid 0a23b675-ff1b-4e82-97cb-b7162eddf08d)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "R4") (unit 1))))) 
+
+(symbol (lib_id "Device:C") (at 175.26 129.54 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 72f058be-9b9b-49e0-b0e7-380b95cc2928) 
+
+(property "Reference" "CL" (at 175.89 132.08 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "1uF" (at 175.89 127.0 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0.9652 -3.81 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "~" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Unpolarized capacitor" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid a977724f-8e6a-4c1e-949c-269f7e9d37d3)) (pin "2" (uuid 1198cae2-0878-41e3-ad78-843e9febf4b6)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "CL") (unit 1))))) 
+
+(symbol (lib_id "power:GND") (at 175.26 139.7 0) (unit 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced yes) (uuid 158d5df6-bb1c-4568-8c52-fb5f80b74afa) 
+
+(property "Reference" "#PWR2" (at 175.26 133.35 0) (effects (font (size 1.27 1.27)))) 
+
+(property Value "GND" (at 175.26 135.89 0) (effects (font (size 1.27 1.27)))) 
+
+(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) 
+
+(property "Description" "Power symbol creates a global label with name \"GND\" , ground" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes))) (pin "1" (uuid b3b45f95-06c4-48c0-b5af-7bf55bcef918)) (instances (project "test" (path "/748e538f-73a8-45c8-8c10-199653322132" (reference "#PWR2") (unit 1))))) 
+
+(wire (pts 
+
+(xy 142.24 95.25) 
+
+(xy 152.4 95.25)) (stroke (width 0.25) (type default)) (uuid 33fb8a74-dcc8-4452-ad2b-a6777bebbb3a)) 
+
+(wire (pts 
+
+(xy 152.4 105.41) 
+
+(xy 153.67000000000002 105.41)) (stroke (width 0.25) (type default)) (uuid 76342bcb-0700-4938-9d16-4e2b291a7543)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 105.41) 
+
+(xy 153.67000000000002 95.25)) (stroke (width 0.25) (type default)) (uuid 734093b8-09d4-4c37-8459-c73b2eea717b)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 95.25) 
+
+(xy 152.4 95.25)) (stroke (width 0.25) (type default)) (uuid e51af0b6-0adb-434c-9c5e-fe9169aa1e95)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 105.41) 
+
+(xy 153.67000000000002 115.57000000000001)) (stroke (width 0.25) (type default)) (uuid ff0389ff-fc0a-4d42-aa28-91e835a3b2d8)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 115.57000000000001) 
+
+(xy 152.4 115.57000000000001)) (stroke (width 0.25) (type default)) (uuid e817f3c1-9e8f-4862-8b36-6ea06a6e7171)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 105.41) 
+
+(xy 153.67000000000002 124.46000000000001)) (stroke (width 0.25) (type default)) (uuid 23d6f45c-088f-4544-8029-e3fe55a7f63f)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 124.46000000000001) 
+
+(xy 152.4 124.46000000000001)) (stroke (width 0.25) (type default)) (uuid 822a808b-45cd-4c39-8d72-d325fce00417)) 
+
+(wire (pts 
+
+(xy 152.4 115.57000000000001) 
+
+(xy 152.4 114.3)) (stroke (width 0.25) (type default)) (uuid 712e187e-7539-4b21-ac0d-eab6a95a37bd)) 
+
+(wire (pts 
+
+(xy 152.4 114.3) 
+
+(xy 160.02 114.3)) (stroke (width 0.25) (type default)) (uuid c5c7e432-1ef9-42da-a3bf-b19dc060b8c1)) 
+
+(wire (pts 
+
+(xy 160.02 114.3) 
+
+(xy 160.02 115.57000000000001)) (stroke (width 0.25) (type default)) (uuid 80028b0e-d93e-42c6-822c-335e1980d1b0)) 
+
+(wire (pts 
+
+(xy 144.78 100.33) 
+
+(xy 152.4 100.33)) (stroke (width 0.25) (type default)) (uuid a2fffb3e-786d-41a5-a00d-a2d28b11c5ea)) 
+
+(wire (pts 
+
+(xy 152.4 95.25) 
+
+(xy 153.67000000000002 95.25)) (stroke (width 0.25) (type default)) (uuid 0f3b8ba6-90ea-45ef-b57d-7339e767785b)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 95.25) 
+
+(xy 153.67000000000002 100.33)) (stroke (width 0.25) (type default)) (uuid ad7382c1-e43a-4662-b931-36063898dc92)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 100.33) 
+
+(xy 152.4 100.33)) (stroke (width 0.25) (type default)) (uuid 32a054a2-9b5a-424f-9c6d-48eeda9e4e16)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 95.25) 
+
+(xy 153.67000000000002 90.17)) (stroke (width 0.25) (type default)) (uuid 3eafbbc7-e0c8-4acc-bcf3-044581141e78)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 90.17) 
+
+(xy 152.4 90.17)) (stroke (width 0.25) (type default)) (uuid 5cf78cc0-0ee9-435b-8e52-9cf4556de76f)) 
+
+(wire (pts 
+
+(xy 143.51 90.17) 
+
+(xy 152.4 90.17)) (stroke (width 0.25) (type default)) (uuid 162288f1-8df9-46bf-a6cd-63841b399909)) 
+
+(wire (pts 
+
+(xy 152.4 95.25) 
+
+(xy 160.02 95.25)) (stroke (width 0.25) (type default)) (uuid 2bdc1907-ad43-41e3-94a0-5b0e5d88704b)) 
+
+(wire (pts 
+
+(xy 160.02 115.57000000000001) 
+
+(xy 160.02 95.25)) (stroke (width 0.25) (type default)) (uuid 65521db2-f217-4f6d-b592-af33edac408d)) 
+
+(wire (pts 
+
+(xy 160.02 115.57000000000001) 
+
+(xy 160.02 124.46000000000001)) (stroke (width 0.25) (type default)) (uuid 6b184710-57df-470f-962d-68f379938229)) 
+
+(wire (pts 
+
+(xy 152.4 124.46000000000001) 
+
+(xy 160.02 124.46000000000001)) (stroke (width 0.25) (type default)) (uuid 2647d321-33b0-4b54-a682-a4f2a272f7fe)) 
+
+(wire (pts 
+
+(xy 152.4 105.41) 
+
+(xy 160.02 105.41)) (stroke (width 0.25) (type default)) (uuid 014b443b-78a3-4689-ab14-c9c4eee1202f)) 
+
+(wire (pts 
+
+(xy 160.02 129.54) 
+
+(xy 162.56 129.54)) (stroke (width 0.25) (type default)) (uuid 98d58ea1-2d6d-42cf-b506-dc8504ae9605)) 
+
+(wire (pts 
+
+(xy 162.56 129.54) 
+
+(xy 162.56 105.41)) (stroke (width 0.25) (type default)) (uuid 3fe8516f-8a16-407c-bfc2-0c75b18bf8e8)) 
+
+(wire (pts 
+
+(xy 162.56 105.41) 
+
+(xy 160.02 105.41)) (stroke (width 0.25) (type default)) (uuid c891dcde-b7ab-4d78-895f-9a9e00ec879d)) 
+
+(wire (pts 
+
+(xy 134.62 90.17) 
+
+(xy 144.78 90.17)) (stroke (width 0.25) (type default)) (uuid fe71ae8c-bc82-471a-a6f5-e12b016e3936)) 
+
+(wire (pts 
+
+(xy 165.1 125.73) 
+
+(xy 165.1 124.46000000000001)) (stroke (width 0.25) (type default)) (uuid 91e16d6a-4ce0-4459-baa4-2a3a5e67046e)) 
+
+(wire (pts 
+
+(xy 165.1 124.46000000000001) 
+
+(xy 175.26 124.46000000000001)) (stroke (width 0.25) (type default)) (uuid d5c8a3b5-6d93-42d7-9b57-90e619e561b6)) 
+
+(wire (pts 
+
+(xy 175.26 124.46000000000001) 
+
+(xy 175.26 125.73)) (stroke (width 0.25) (type default)) (uuid ddb0d512-9b26-4b48-9119-0cd9737a6976)) 
+
+(wire (pts 
+
+(xy 152.4 115.57000000000001) 
+
+(xy 165.1 115.57000000000001)) (stroke (width 0.25) (type default)) (uuid ae66c4df-6aa1-4226-924f-cdba1a07b01d)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 95.25) 
+
+(xy 153.67000000000002 85.09)) (stroke (width 0.25) (type default)) (uuid f708c716-be0f-4c2b-910a-2c4ecc0382bb)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 85.09) 
+
+(xy 152.4 85.09)) (stroke (width 0.25) (type default)) (uuid 34e2a806-d9a7-43b4-a812-f406ca0bc817)) 
+
+(wire (pts 
+
+(xy 152.4 85.09) 
+
+(xy 153.67000000000002 85.09)) (stroke (width 0.25) (type default)) (uuid beed3214-50c8-4f35-b4c6-34c04f10e1eb)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 85.09) 
+
+(xy 153.67000000000002 105.41)) (stroke (width 0.25) (type default)) (uuid 2dc3952e-e198-46cc-aec7-94e04334ebed)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 105.41) 
+
+(xy 152.4 105.41)) (stroke (width 0.25) (type default)) (uuid b6ac0826-eda4-47d6-aad7-95b4744c009b)) 
+
+(wire (pts 
+
+(xy 153.67000000000002 105.41) 
+
+(xy 153.67000000000002 114.3)) (stroke (width 0.25) (type default)) (uuid 160b2e71-c8f2-4b14-aa6e-56c38892a150))
+
+    (wire
+        (pts
+            (xy 153.67000000000002 114.3)
+            (xy 152.4 114.3)
+        )
+        (stroke
+            (width 0.25)
+            (type default)
+        )
+        (uuid ef8bc4ff-4542-49c1-9072-fcbb68be7332)
+    )
+
+ (sheet_instances (path "/" (page "1"))) (embedded_fonts no) 
+
+(global_label "VCONT1" (shape input) (at 142.24 95.25 180) (fields_autoplaced) (effects (font (size 1.27 1.27)) (justify right)) (uuid 871b9a3c-4ae7-4d5b-9761-03b9cee35365) 
+
+(property "Intersheetrefs" "${INTERSHEET_REFS}" (at 135.9891 95.25 0) (effects (font (size 1.27 1.27)) (justify right) hide))) 
+
+(junction (at 153.67 115.57) (diameter 0) (color 0 0 0 0) (uuid 3c9dd926-6451-4338-b2fe-25a4f8bca6e4)) 
+
+(junction (at 153.67 95.25) (diameter 0) (color 0 0 0 0) (uuid 5476bd0a-bd87-4ecc-a962-ac64269df49c)) 
+
+(junction (at 153.67 100.33) (diameter 0) (color 0 0 0 0) (uuid 333e4ad2-ecc3-4d8b-9169-8980cd93df45)) 
+
+(junction (at 152.4 100.33) (diameter 0) (color 0 0 0 0) (uuid e5821140-684f-4cf0-9f4e-17eb34ca9d6c)) 
+
+(junction (at 152.4 90.17) (diameter 0) (color 0 0 0 0) (uuid 78867f19-7ecf-424c-976e-5bfe0efd6f4e)) 
+
+(junction (at 153.67 95.25) (diameter 0) (color 0 0 0 0) (uuid b13f8570-dc43-4bd2-bc52-d1fbce7fd0c1)) 
+
+(junction (at 153.67 95.25) (diameter 0) (color 0 0 0 0) (uuid 3cc06dc7-feb3-4f70-8f5f-6e69acbd3194)) 
+
+(junction (at 160.02 114.3) (diameter 0) (color 0 0 0 0) (uuid e5484273-5b7c-4c8a-aefa-e5352986f65f)) 
+
+(junction (at 160.02 95.25) (diameter 0) (color 0 0 0 0) (uuid 0b57f9e6-ba39-45b0-aeb6-7fa893937eb8)) 
+
+(junction (at 153.67 124.46) (diameter 0) (color 0 0 0 0) (uuid bf751cd0-abdc-4f9d-827e-5953c8b40cab)) 
+
+(junction (at 160.02 124.46) (diameter 0) (color 0 0 0 0) (uuid f1e2e5f2-8dc5-4c53-afb2-fb722309cb8e)) 
+
+(junction (at 153.67 105.41) (diameter 0) (color 0 0 0 0) (uuid ecb490d8-4cba-43fc-8493-102b7921fc4e)) 
+
+(junction (at 160.02 105.41) (diameter 0) (color 0 0 0 0) (uuid 02d9923a-ea90-4aa5-b4ab-5d047c6787e3)) 
+
+(global_label "VCONT1" (shape input) (at 142.24 95.25 180) (fields_autoplaced) (effects (font (size 1.27 1.27)) (justify right)) (uuid bcd195b9-d600-421f-8d97-909d82d20b6f) 
+
+(property "Intersheetrefs" "${INTERSHEET_REFS}" (at 135.9891 95.25 0) (effects (font (size 1.27 1.27)) (justify right) hide))) 
+
+(junction (at 152.4 100.33) (diameter 0) (color 0 0 0 0) (uuid 33262532-2ebc-4c3c-8a69-a91599e6e308)) 
+
+(junction (at 152.4 90.17) (diameter 0) (color 0 0 0 0) (uuid 75e1c196-7f10-4b08-9913-3a7da8338c56)) 
+
+(junction (at 160.02 95.25) (diameter 0) (color 0 0 0 0) (uuid f170c710-7cbd-4f8e-9fec-c8050ab27193)) 
+
+(junction (at 160.02 124.46) (diameter 0) (color 0 0 0 0) (uuid a75657b1-8ff0-484f-96ab-1a107c23420d)) 
+
+(junction (at 160.02 105.41) (diameter 0) (color 0 0 0 0) (uuid 4a287496-22e3-43c5-8a16-5066153773a4)) 
+
+(global_label "VCONT1" (shape input) (at 134.62 90.17 180) (fields_autoplaced) (effects (font (size 1.27 1.27)) (justify right)) (uuid 689edd46-ad8c-4d99-9658-76c59c0ed0f4) 
+
+(property "Intersheetrefs" "${INTERSHEET_REFS}" (at 128.3691 90.17 0) (effects (font (size 1.27 1.27)) (justify right) hide))) 
+
+(junction (at 153.67 115.57) (diameter 0) (color 0 0 0 0) (uuid fd0a1d34-56d0-44a6-b551-bfa9ec54bcfd)) 
+
+(junction (at 153.67 90.17) (diameter 0) (color 0 0 0 0) (uuid 42050dbc-03a3-4d9a-8f23-2a27fc9c9744)) 
+
+(junction (at 153.67 85.09) (diameter 0) (color 0 0 0 0) (uuid 86ad4d13-6e36-4040-b429-5892469988c1)) 
+
+(junction (at 153.67 95.25) (diameter 0) (color 0 0 0 0) (uuid 03be5747-4361-4e12-aff7-b2a86416e32d)) 
+
+(junction (at 153.67 95.25) (diameter 0) (color 0 0 0 0) (uuid 13f5dee4-c09b-4e8e-9ca6-56525faa7184)) 
+
+(junction (at 152.4 105.41) (diameter 0) (color 0 0 0 0) (uuid ffe6bf86-39c3-4fd3-a96b-98c4f0552e2e)) 
+
+(junction (at 153.67 105.41) (diameter 0) (color 0 0 0 0) (uuid 76f79a1e-9af6-4d74-95d5-95ed9889a99c)) 
+
+(junction (at 153.67 114.3) (diameter 0) (color 0 0 0 0) (uuid 666b0767-f99c-4319-914e-cbbab78b5ffe)) 
+
+(junction (at 153.67 114.3) (diameter 0) (color 0 0 0 0) (uuid 6ae1515a-8430-44bc-bb9c-0b885d2bcd64)) 
+
+(junction (at 153.67 114.3) (diameter 0) (color 0 0 0 0) (uuid 7c94a98c-c4f5-40cd-9c13-52099d477e7b)))

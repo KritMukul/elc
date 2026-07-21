@@ -1,0 +1,523 @@
+{
+  "source": "qwen_analogtobi_0535.spice",
+  "components": [
+    {
+      "name": "VDD",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "VDD",
+        "-": "0"
+      },
+      "value": "DC 1.8",
+      "raw": "VDD VDD 0 DC 1.8"
+    },
+    {
+      "name": "VSS",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "VSS",
+        "-": "0"
+      },
+      "value": "DC 0",
+      "raw": "VSS VSS 0 DC 0"
+    },
+    {
+      "name": "V__VCONT1",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "VCONT1",
+        "-": "0"
+      },
+      "value": "DC 0.900",
+      "raw": "V__VCONT1 VCONT1 0 DC 0.900"
+    },
+    {
+      "name": "V__net1",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "net1",
+        "-": "0"
+      },
+      "value": "DC 0.900",
+      "raw": "V__net1 net1 0 DC 0.900"
+    },
+    {
+      "name": "I__IB1",
+      "type": "CURRENT_SOURCE",
+      "pins": {
+        "+": "IB1",
+        "-": "VSS"
+      },
+      "value": "DC 2.706311e-04",
+      "raw": "I__IB1 IB1 VSS DC 2.706311e-04"
+    },
+    {
+      "name": "XM1",
+      "type": "NMOS",
+      "pins": {
+        "D": "VCONT1",
+        "G": "net1",
+        "S": "VCONT1",
+        "B": "VSS"
+      },
+      "model": "sky130_fd_pr__nfet_01v8",
+      "params": {
+        "W": "500.0000",
+        "L": "0.404603"
+      },
+      "raw": "XM1 VCONT1 net1 VCONT1 VSS sky130_fd_pr__nfet_01v8 W=500.0000 L=0.404603"
+    },
+    {
+      "name": "XM4",
+      "type": "NMOS",
+      "pins": {
+        "D": "VCONT1",
+        "G": "net6",
+        "S": "VCONT1",
+        "B": "VSS"
+      },
+      "model": "sky130_fd_pr__nfet_01v8",
+      "params": {
+        "W": "500.0000",
+        "L": "0.404603"
+      },
+      "raw": "XM4 VCONT1 net6 VCONT1 VSS sky130_fd_pr__nfet_01v8 W=500.0000 L=0.404603"
+    },
+    {
+      "name": "XM0",
+      "type": "PMOS",
+      "pins": {
+        "D": "net6",
+        "G": "net1",
+        "S": "IB1",
+        "B": "VDD"
+      },
+      "model": "sky130_fd_pr__pfet_01v8",
+      "params": {
+        "W": "13.3650",
+        "L": "0.404603"
+      },
+      "raw": "XM0 net6 net1 IB1 VDD sky130_fd_pr__pfet_01v8 W=13.3650 L=0.404603"
+    },
+    {
+      "name": "XM3",
+      "type": "PMOS",
+      "pins": {
+        "D": "net1",
+        "G": "net6",
+        "S": "IB1",
+        "B": "VDD"
+      },
+      "model": "sky130_fd_pr__pfet_01v8",
+      "params": {
+        "W": "13.3650",
+        "L": "0.404603"
+      },
+      "raw": "XM3 net1 net6 IB1 VDD sky130_fd_pr__pfet_01v8 W=13.3650 L=0.404603"
+    },
+    {
+      "name": "L1",
+      "type": "INDUCTOR",
+      "pins": {
+        "1": "net6",
+        "2": "VSS"
+      },
+      "value": "1n",
+      "raw": "L1 net6 VSS 1n"
+    },
+    {
+      "name": "L0",
+      "type": "INDUCTOR",
+      "pins": {
+        "1": "net1",
+        "2": "VSS"
+      },
+      "value": "1n",
+      "raw": "L0 net1 VSS 1n"
+    },
+    {
+      "name": "CL",
+      "type": "CAPACITOR",
+      "pins": {
+        "1": "net1",
+        "2": "0"
+      },
+      "value": "1.020038e-11",
+      "raw": "CL net1 0 1.020038e-11"
+    }
+  ],
+  "core_components": [
+    {
+      "name": "XM1",
+      "type": "NMOS",
+      "pins": {
+        "D": "VCONT1",
+        "G": "net1",
+        "S": "VCONT1",
+        "B": "VSS"
+      },
+      "model": "sky130_fd_pr__nfet_01v8",
+      "params": {
+        "W": "500.0000",
+        "L": "0.404603"
+      },
+      "raw": "XM1 VCONT1 net1 VCONT1 VSS sky130_fd_pr__nfet_01v8 W=500.0000 L=0.404603"
+    },
+    {
+      "name": "XM4",
+      "type": "NMOS",
+      "pins": {
+        "D": "VCONT1",
+        "G": "net6",
+        "S": "VCONT1",
+        "B": "VSS"
+      },
+      "model": "sky130_fd_pr__nfet_01v8",
+      "params": {
+        "W": "500.0000",
+        "L": "0.404603"
+      },
+      "raw": "XM4 VCONT1 net6 VCONT1 VSS sky130_fd_pr__nfet_01v8 W=500.0000 L=0.404603"
+    },
+    {
+      "name": "XM0",
+      "type": "PMOS",
+      "pins": {
+        "D": "net6",
+        "G": "net1",
+        "S": "IB1",
+        "B": "VDD"
+      },
+      "model": "sky130_fd_pr__pfet_01v8",
+      "params": {
+        "W": "13.3650",
+        "L": "0.404603"
+      },
+      "raw": "XM0 net6 net1 IB1 VDD sky130_fd_pr__pfet_01v8 W=13.3650 L=0.404603"
+    },
+    {
+      "name": "XM3",
+      "type": "PMOS",
+      "pins": {
+        "D": "net1",
+        "G": "net6",
+        "S": "IB1",
+        "B": "VDD"
+      },
+      "model": "sky130_fd_pr__pfet_01v8",
+      "params": {
+        "W": "13.3650",
+        "L": "0.404603"
+      },
+      "raw": "XM3 net1 net6 IB1 VDD sky130_fd_pr__pfet_01v8 W=13.3650 L=0.404603"
+    },
+    {
+      "name": "L1",
+      "type": "INDUCTOR",
+      "pins": {
+        "1": "net6",
+        "2": "VSS"
+      },
+      "value": "1n",
+      "raw": "L1 net6 VSS 1n"
+    },
+    {
+      "name": "L0",
+      "type": "INDUCTOR",
+      "pins": {
+        "1": "net1",
+        "2": "VSS"
+      },
+      "value": "1n",
+      "raw": "L0 net1 VSS 1n"
+    },
+    {
+      "name": "CL",
+      "type": "CAPACITOR",
+      "pins": {
+        "1": "net1",
+        "2": "0"
+      },
+      "value": "1.020038e-11",
+      "raw": "CL net1 0 1.020038e-11"
+    }
+  ],
+  "sources": [
+    {
+      "name": "VDD",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "VDD",
+        "-": "0"
+      },
+      "value": "DC 1.8",
+      "raw": "VDD VDD 0 DC 1.8"
+    },
+    {
+      "name": "VSS",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "VSS",
+        "-": "0"
+      },
+      "value": "DC 0",
+      "raw": "VSS VSS 0 DC 0"
+    },
+    {
+      "name": "V__VCONT1",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "VCONT1",
+        "-": "0"
+      },
+      "value": "DC 0.900",
+      "raw": "V__VCONT1 VCONT1 0 DC 0.900"
+    },
+    {
+      "name": "V__net1",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "net1",
+        "-": "0"
+      },
+      "value": "DC 0.900",
+      "raw": "V__net1 net1 0 DC 0.900"
+    },
+    {
+      "name": "I__IB1",
+      "type": "CURRENT_SOURCE",
+      "pins": {
+        "+": "IB1",
+        "-": "VSS"
+      },
+      "value": "DC 2.706311e-04",
+      "raw": "I__IB1 IB1 VSS DC 2.706311e-04"
+    }
+  ],
+  "nets": {
+    "VDD": {
+      "class": "power",
+      "degree": 3,
+      "connections": [
+        {
+          "component": "VDD",
+          "pin": "+"
+        },
+        {
+          "component": "XM0",
+          "pin": "B"
+        },
+        {
+          "component": "XM3",
+          "pin": "B"
+        }
+      ]
+    },
+    "0": {
+      "class": "ground",
+      "degree": 5,
+      "connections": [
+        {
+          "component": "VDD",
+          "pin": "-"
+        },
+        {
+          "component": "VSS",
+          "pin": "-"
+        },
+        {
+          "component": "V__VCONT1",
+          "pin": "-"
+        },
+        {
+          "component": "V__net1",
+          "pin": "-"
+        },
+        {
+          "component": "CL",
+          "pin": "2"
+        }
+      ]
+    },
+    "VSS": {
+      "class": "ground",
+      "degree": 6,
+      "connections": [
+        {
+          "component": "VSS",
+          "pin": "+"
+        },
+        {
+          "component": "I__IB1",
+          "pin": "-"
+        },
+        {
+          "component": "XM1",
+          "pin": "B"
+        },
+        {
+          "component": "XM4",
+          "pin": "B"
+        },
+        {
+          "component": "L1",
+          "pin": "2"
+        },
+        {
+          "component": "L0",
+          "pin": "2"
+        }
+      ]
+    },
+    "VCONT1": {
+      "class": "bias",
+      "degree": 5,
+      "connections": [
+        {
+          "component": "V__VCONT1",
+          "pin": "+"
+        },
+        {
+          "component": "XM1",
+          "pin": "D"
+        },
+        {
+          "component": "XM1",
+          "pin": "S"
+        },
+        {
+          "component": "XM4",
+          "pin": "D"
+        },
+        {
+          "component": "XM4",
+          "pin": "S"
+        }
+      ]
+    },
+    "net1": {
+      "class": "signal",
+      "degree": 6,
+      "connections": [
+        {
+          "component": "V__net1",
+          "pin": "+"
+        },
+        {
+          "component": "XM1",
+          "pin": "G"
+        },
+        {
+          "component": "XM0",
+          "pin": "G"
+        },
+        {
+          "component": "XM3",
+          "pin": "D"
+        },
+        {
+          "component": "L0",
+          "pin": "1"
+        },
+        {
+          "component": "CL",
+          "pin": "1"
+        }
+      ]
+    },
+    "IB1": {
+      "class": "bias",
+      "degree": 3,
+      "connections": [
+        {
+          "component": "I__IB1",
+          "pin": "+"
+        },
+        {
+          "component": "XM0",
+          "pin": "S"
+        },
+        {
+          "component": "XM3",
+          "pin": "S"
+        }
+      ]
+    },
+    "net6": {
+      "class": "signal",
+      "degree": 4,
+      "connections": [
+        {
+          "component": "XM4",
+          "pin": "G"
+        },
+        {
+          "component": "XM0",
+          "pin": "D"
+        },
+        {
+          "component": "XM3",
+          "pin": "G"
+        },
+        {
+          "component": "L1",
+          "pin": "1"
+        }
+      ]
+    }
+  },
+  "structures": {
+    "cross_coupled_pairs": [
+      {
+        "devices": [
+          "XM0",
+          "XM3"
+        ],
+        "device_type": "PMOS",
+        "left_right_nodes": [
+          "net6",
+          "net1"
+        ]
+      }
+    ],
+    "shared_source_pairs": [
+      {
+        "devices": [
+          "XM1",
+          "XM4"
+        ],
+        "device_type": "NMOS",
+        "source_net": "VCONT1"
+      },
+      {
+        "devices": [
+          "XM0",
+          "XM3"
+        ],
+        "device_type": "PMOS",
+        "source_net": "IB1"
+      }
+    ],
+    "shared_gate_pairs": [],
+    "current_mirrors": [],
+    "passive_pairs": [
+      {
+        "devices": [
+          "L1",
+          "L0"
+        ],
+        "device_type": "INDUCTOR",
+        "common_nets": [
+          "VSS"
+        ]
+      }
+    ]
+  },
+  "source_roles": {
+    "VDD": "power_supply",
+    "VSS": "testbench",
+    "V__VCONT1": "bias_source",
+    "V__net1": "testbench",
+    "I__IB1": "bias_current"
+  }
+}

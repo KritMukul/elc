@@ -1,0 +1,78 @@
+* Testbench for analogtobi_2520 (sky130 typical)
+.lib "{{SKY130_LIB}}" tt
+
+* --- Supply (AC for PSRR) ---
+VDD VDD 0 DC 1.8 AC 1
+VSS VSS 0 DC 0
+
+* --- Reference voltage ---
+V__VREF1 VREF1 0 DC 1.2
+
+* --- Error amplifier input ---
+V__VIN1 VIN1 0 DC 1.2
+
+* --- Bias (BFS + Vth/Vov) ---
+I__MB1 VB1 VSS DC 1.860902e-05
+I__MB2 VB2 VSS DC 1.860902e-05
+X__MB3 VB3 VB3 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+I__MB3 VDD VB3 DC 1.860902e-05
+X__MB4 VB4 VB4 VDD VDD sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+I__MB4 VB4 VSS DC 1.860902e-05
+X__MB5 VB5 VB5 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+I__MB5 VDD VB5 DC 1.860902e-05
+* --- DUT: analogtobi_2520 ---
+XMM8 net9 net9 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XMM7 net8 net9 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XMM3 net20 net38 net16 VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XMM0 net11 VREF1 net16 VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XMM4 net16 net1005 VSS VSS sky130_fd_pr__nfet_01v8 W=6.1523 L=0.603679
+XMM6 net9 net11 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XMM5 net8 net20 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XMM1 net20 net20 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XMM2 net11 net11 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XMM2_1 net1005 net1005 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XMM10 VB1 net1007 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XMM1_1 net1005 VB1 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XMM0_1 VB1 VB1 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XMM3_1 VB2 VB2 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XMM1_2 net1007 VB2 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+RR0 net15 VSS 10k
+XMM0_2 net1007 net1007 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XMM2_2 VB2 net1007 net15 VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XM14 VOUT1 net36 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XM11 net36 net34 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XM10 net34 net34 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XM6 net26 net26 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XM5 net20 net20 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XM3 net17 net20 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XM0 net11 VB4 VIN1 VIN1 sky130_fd_pr__pfet_01v8 W=3.0761 L=0.603679
+XM13 net36 net11 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XM12 net34 net8 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XM9 net25 VB5 VSS VSS sky130_fd_pr__nfet_01v8 W=6.1523 L=0.603679
+XM8 net20 VB3 net25 VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XM7 net26 net17 net25 VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XM4 net17 net8 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XM2 net11 net11 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+XM1 net11 net8 VSS VSS sky130_fd_pr__nfet_01v8 W=3.0761 L=0.603679
+C2 VOUT1 net38 1p
+C1 VOUT1 net8 1p
+C0 net8 net17 1p
+R1 net38 VSS 10k
+R0 VOUT1 net38 10k
+
+* --- Load (1 mA nominal) ---
+RL VOUT1 0 1200
+
+CL VOUT1 0 7.842821e-12
+.control
+op
+print v(VOUT1)
+print @VDD[i]
+
+ac dec 100 1 10G
+meas ac dc_gain_dB find vdb(VOUT1) at=1
+meas ac ugf_Hz when vdb(VOUT1)=0
+quit
+.endc
+
+.end

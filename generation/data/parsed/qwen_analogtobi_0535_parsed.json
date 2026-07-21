@@ -1,0 +1,387 @@
+{
+  "source_file": "qwen_analogtobi_0535.spice",
+  "components": [
+    {
+      "name": "VDD",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "VDD",
+        "-": "0"
+      },
+      "value": "DC 1.8",
+      "raw": "VDD VDD 0 DC 1.8"
+    },
+    {
+      "name": "VSS",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "VSS",
+        "-": "0"
+      },
+      "value": "DC 0",
+      "raw": "VSS VSS 0 DC 0"
+    },
+    {
+      "name": "V__VCONT1",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "VCONT1",
+        "-": "0"
+      },
+      "value": "DC 0.900",
+      "raw": "V__VCONT1 VCONT1 0 DC 0.900"
+    },
+    {
+      "name": "V__net1",
+      "type": "VOLTAGE_SOURCE",
+      "pins": {
+        "+": "net1",
+        "-": "0"
+      },
+      "value": "DC 0.900",
+      "raw": "V__net1 net1 0 DC 0.900"
+    },
+    {
+      "name": "I__IB1",
+      "type": "CURRENT_SOURCE",
+      "pins": {
+        "+": "IB1",
+        "-": "VSS"
+      },
+      "value": "DC 2.706311e-04",
+      "raw": "I__IB1 IB1 VSS DC 2.706311e-04"
+    },
+    {
+      "name": "XM1",
+      "type": "NMOS",
+      "pins": {
+        "D": "VCONT1",
+        "G": "net1",
+        "S": "VCONT1",
+        "B": "VSS"
+      },
+      "model": "sky130_fd_pr__nfet_01v8",
+      "params": {
+        "W": "500.0000",
+        "L": "0.404603"
+      },
+      "raw": "XM1 VCONT1 net1 VCONT1 VSS sky130_fd_pr__nfet_01v8 W=500.0000 L=0.404603"
+    },
+    {
+      "name": "XM4",
+      "type": "NMOS",
+      "pins": {
+        "D": "VCONT1",
+        "G": "net6",
+        "S": "VCONT1",
+        "B": "VSS"
+      },
+      "model": "sky130_fd_pr__nfet_01v8",
+      "params": {
+        "W": "500.0000",
+        "L": "0.404603"
+      },
+      "raw": "XM4 VCONT1 net6 VCONT1 VSS sky130_fd_pr__nfet_01v8 W=500.0000 L=0.404603"
+    },
+    {
+      "name": "XM0",
+      "type": "PMOS",
+      "pins": {
+        "D": "net6",
+        "G": "net1",
+        "S": "IB1",
+        "B": "VDD"
+      },
+      "model": "sky130_fd_pr__pfet_01v8",
+      "params": {
+        "W": "13.3650",
+        "L": "0.404603"
+      },
+      "raw": "XM0 net6 net1 IB1 VDD sky130_fd_pr__pfet_01v8 W=13.3650 L=0.404603"
+    },
+    {
+      "name": "XM3",
+      "type": "PMOS",
+      "pins": {
+        "D": "net1",
+        "G": "net6",
+        "S": "IB1",
+        "B": "VDD"
+      },
+      "model": "sky130_fd_pr__pfet_01v8",
+      "params": {
+        "W": "13.3650",
+        "L": "0.404603"
+      },
+      "raw": "XM3 net1 net6 IB1 VDD sky130_fd_pr__pfet_01v8 W=13.3650 L=0.404603"
+    },
+    {
+      "name": "L1",
+      "type": "INDUCTOR",
+      "pins": {
+        "1": "net6",
+        "2": "VSS"
+      },
+      "value": "1n",
+      "raw": "L1 net6 VSS 1n"
+    },
+    {
+      "name": "L0",
+      "type": "INDUCTOR",
+      "pins": {
+        "1": "net1",
+        "2": "VSS"
+      },
+      "value": "1n",
+      "raw": "L0 net1 VSS 1n"
+    },
+    {
+      "name": "CL",
+      "type": "CAPACITOR",
+      "pins": {
+        "1": "net1",
+        "2": "0"
+      },
+      "value": "1.020038e-11",
+      "raw": "CL net1 0 1.020038e-11"
+    }
+  ],
+  "directives": [
+    ".lib \"{{SKY130_LIB}}\" tt",
+    ".control",
+    "op",
+    "print v(net1)",
+    "print @VDD[i]",
+    "tran 0.01n 500n",
+    "meas tran t_rise1 when v(net1)=0.9 rise=3",
+    "meas tran t_rise2 when v(net1)=0.9 rise=4",
+    "meas tran vout_min min v(net1) from=100n",
+    "meas tran vout_max max v(net1) from=100n",
+    "quit",
+    ".endc",
+    ".end"
+  ],
+  "comments": [
+    "* Testbench for analogtobi_0535 (sky130 typical)",
+    "* --- Supply ---",
+    "* --- Bias (BFS + Vth/Vov) ---",
+    "* --- Bias currents (from MOSFET widths) ---",
+    "* --- Input (VCO: control voltage or none) ---",
+    "* --- DUT: analogtobi_0535 ---",
+    "* --- Transient: let oscillator settle then measure ---",
+    "* Oscillation frequency from zero-crossings in steady state",
+    "* Output swing"
+  ],
+  "ignored_lines": [],
+  "nets": {
+    "VDD": {
+      "name": "VDD",
+      "connections": [
+        {
+          "component": "VDD",
+          "component_type": "VOLTAGE_SOURCE",
+          "pin": "+"
+        },
+        {
+          "component": "XM0",
+          "component_type": "PMOS",
+          "pin": "B"
+        },
+        {
+          "component": "XM3",
+          "component_type": "PMOS",
+          "pin": "B"
+        }
+      ],
+      "degree": 3
+    },
+    "0": {
+      "name": "0",
+      "connections": [
+        {
+          "component": "VDD",
+          "component_type": "VOLTAGE_SOURCE",
+          "pin": "-"
+        },
+        {
+          "component": "VSS",
+          "component_type": "VOLTAGE_SOURCE",
+          "pin": "-"
+        },
+        {
+          "component": "V__VCONT1",
+          "component_type": "VOLTAGE_SOURCE",
+          "pin": "-"
+        },
+        {
+          "component": "V__net1",
+          "component_type": "VOLTAGE_SOURCE",
+          "pin": "-"
+        },
+        {
+          "component": "CL",
+          "component_type": "CAPACITOR",
+          "pin": "2"
+        }
+      ],
+      "degree": 5
+    },
+    "VSS": {
+      "name": "VSS",
+      "connections": [
+        {
+          "component": "VSS",
+          "component_type": "VOLTAGE_SOURCE",
+          "pin": "+"
+        },
+        {
+          "component": "I__IB1",
+          "component_type": "CURRENT_SOURCE",
+          "pin": "-"
+        },
+        {
+          "component": "XM1",
+          "component_type": "NMOS",
+          "pin": "B"
+        },
+        {
+          "component": "XM4",
+          "component_type": "NMOS",
+          "pin": "B"
+        },
+        {
+          "component": "L1",
+          "component_type": "INDUCTOR",
+          "pin": "2"
+        },
+        {
+          "component": "L0",
+          "component_type": "INDUCTOR",
+          "pin": "2"
+        }
+      ],
+      "degree": 6
+    },
+    "VCONT1": {
+      "name": "VCONT1",
+      "connections": [
+        {
+          "component": "V__VCONT1",
+          "component_type": "VOLTAGE_SOURCE",
+          "pin": "+"
+        },
+        {
+          "component": "XM1",
+          "component_type": "NMOS",
+          "pin": "D"
+        },
+        {
+          "component": "XM1",
+          "component_type": "NMOS",
+          "pin": "S"
+        },
+        {
+          "component": "XM4",
+          "component_type": "NMOS",
+          "pin": "D"
+        },
+        {
+          "component": "XM4",
+          "component_type": "NMOS",
+          "pin": "S"
+        }
+      ],
+      "degree": 5
+    },
+    "net1": {
+      "name": "net1",
+      "connections": [
+        {
+          "component": "V__net1",
+          "component_type": "VOLTAGE_SOURCE",
+          "pin": "+"
+        },
+        {
+          "component": "XM1",
+          "component_type": "NMOS",
+          "pin": "G"
+        },
+        {
+          "component": "XM0",
+          "component_type": "PMOS",
+          "pin": "G"
+        },
+        {
+          "component": "XM3",
+          "component_type": "PMOS",
+          "pin": "D"
+        },
+        {
+          "component": "L0",
+          "component_type": "INDUCTOR",
+          "pin": "1"
+        },
+        {
+          "component": "CL",
+          "component_type": "CAPACITOR",
+          "pin": "1"
+        }
+      ],
+      "degree": 6
+    },
+    "IB1": {
+      "name": "IB1",
+      "connections": [
+        {
+          "component": "I__IB1",
+          "component_type": "CURRENT_SOURCE",
+          "pin": "+"
+        },
+        {
+          "component": "XM0",
+          "component_type": "PMOS",
+          "pin": "S"
+        },
+        {
+          "component": "XM3",
+          "component_type": "PMOS",
+          "pin": "S"
+        }
+      ],
+      "degree": 3
+    },
+    "net6": {
+      "name": "net6",
+      "connections": [
+        {
+          "component": "XM4",
+          "component_type": "NMOS",
+          "pin": "G"
+        },
+        {
+          "component": "XM0",
+          "component_type": "PMOS",
+          "pin": "D"
+        },
+        {
+          "component": "XM3",
+          "component_type": "PMOS",
+          "pin": "G"
+        },
+        {
+          "component": "L1",
+          "component_type": "INDUCTOR",
+          "pin": "1"
+        }
+      ],
+      "degree": 4
+    }
+  },
+  "statistics": {
+    "component_count": 12,
+    "net_count": 7,
+    "directive_count": 13,
+    "ignored_line_count": 0
+  },
+  "validation_warnings": []
+}

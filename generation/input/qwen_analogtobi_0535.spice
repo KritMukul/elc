@@ -1,0 +1,43 @@
+* Testbench for analogtobi_0535 (sky130 typical)
+.lib "{{SKY130_LIB}}" tt
+
+* --- Supply ---
+VDD VDD 0 DC 1.8
+VSS VSS 0 DC 0
+
+* --- Bias (BFS + Vth/Vov) ---
+V__VCONT1 VCONT1 0 DC 0.900
+V__net1 net1 0 DC 0.900
+
+* --- Bias currents (from MOSFET widths) ---
+I__IB1 IB1 VSS DC 2.706311e-04
+* --- Input (VCO: control voltage or none) ---
+
+* --- DUT: analogtobi_0535 ---
+XM1 VCONT1 net1 VCONT1 VSS sky130_fd_pr__nfet_01v8 W=500.0000 L=0.404603
+XM4 VCONT1 net6 VCONT1 VSS sky130_fd_pr__nfet_01v8 W=500.0000 L=0.404603
+XM0 net6 net1 IB1 VDD sky130_fd_pr__pfet_01v8 W=13.3650 L=0.404603
+XM3 net1 net6 IB1 VDD sky130_fd_pr__pfet_01v8 W=13.3650 L=0.404603
+L1 net6 VSS 1n
+L0 net1 VSS 1n
+
+CL net1 0 1.020038e-11
+.control
+op
+print v(net1)
+print @VDD[i]
+
+* --- Transient: let oscillator settle then measure ---
+tran 0.01n 500n
+
+* Oscillation frequency from zero-crossings in steady state
+meas tran t_rise1 when v(net1)=0.9 rise=3
+meas tran t_rise2 when v(net1)=0.9 rise=4
+
+* Output swing
+meas tran vout_min min v(net1) from=100n
+meas tran vout_max max v(net1) from=100n
+quit
+.endc
+
+.end

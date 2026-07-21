@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1476" height="1707" viewBox="0 0 1476 1707">
+<rect x="0" y="0" width="1476" height="1707" fill="#ffffff"/>
+<text x="100.00" y="42.00" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="bold" text-anchor="start" fill="#111111">Generated schematic — qwen_analogtobi_0535.spice</text>
+<g id="wires">
+<g id="net-VDD">
+<line x1="210.00" y1="210.00" x2="1134.00" y2="210.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="265.00" y1="375.00" x2="265.00" y2="210.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="1079.00" y1="606.00" x2="1079.00" y2="210.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="771.00" y1="606.00" x2="771.00" y2="210.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+</g>
+<g id="net-net1">
+<line x1="265.00" y1="952.50" x2="1211.00" y2="952.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="265.00" y1="1035.00" x2="265.00" y2="952.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="639.00" y1="936.00" x2="639.00" y2="952.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="1211.00" y1="606.00" x2="1211.00" y2="952.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="705.00" y1="540.00" x2="705.00" y2="952.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="705.00" y1="1200.00" x2="705.00" y2="952.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="815.00" y1="1035.00" x2="815.00" y2="952.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+</g>
+<g id="net-net6">
+<line x1="639.00" y1="1018.50" x2="1145.00" y2="1018.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="1079.00" y1="936.00" x2="1079.00" y2="1018.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="1145.00" y1="540.00" x2="1145.00" y2="1018.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="639.00" y1="606.00" x2="639.00" y2="1018.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="1145.00" y1="1200.00" x2="1145.00" y2="1018.50" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+</g>
+<g id="net-IB1">
+<line x1="622.50" y1="540.00" x2="622.50" y2="672.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="265.00" y1="540.00" x2="622.50" y2="540.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="1145.00" y1="672.00" x2="622.50" y2="672.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="705.00" y1="672.00" x2="622.50" y2="672.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+</g>
+<g id="net-VCONT1">
+<line x1="581.25" y1="705.00" x2="581.25" y2="1002.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="265.00" y1="705.00" x2="581.25" y2="705.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="705.00" y1="870.00" x2="581.25" y2="870.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="705.00" y1="1002.00" x2="581.25" y2="1002.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="1145.00" y1="870.00" x2="581.25" y2="870.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="1145.00" y1="1002.00" x2="581.25" y2="1002.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+</g>
+<g id="net-0">
+<line x1="210.00" y1="1497.00" x2="870.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="265.00" y1="507.00" x2="265.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="265.00" y1="1002.00" x2="265.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="265.00" y1="837.00" x2="265.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="265.00" y1="1167.00" x2="265.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="815.00" y1="1167.00" x2="815.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+</g>
+<g id="net-VSS">
+<line x1="210.00" y1="1497.00" x2="1266.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="265.00" y1="870.00" x2="265.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="265.00" y1="672.00" x2="265.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="771.00" y1="936.00" x2="771.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="1211.00" y1="936.00" x2="1211.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="1145.00" y1="1332.00" x2="1145.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+<line x1="705.00" y1="1332.00" x2="705.00" y2="1497.00" stroke="#111111" stroke-width="2.2" stroke-linecap="square"/>
+</g>
+</g>
+<g id="components">
+<line x1="265.00" y1="375.00" x2="265.00" y2="417.90" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="265.00" cy="441.00" r="23.10" fill="#ffffff" stroke="#111111" stroke-width="2.2"/>
+<line x1="265.00" y1="464.10" x2="265.00" y2="507.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<text x="265.00" y="435.50" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#111111">+</text>
+<text x="265.00" y="452.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#111111">−</text>
+<text x="298.00" y="445.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="start" fill="#111111">VDD</text>
+<line x1="265.00" y1="540.00" x2="265.00" y2="582.90" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="265.00" cy="606.00" r="23.10" fill="#ffffff" stroke="#111111" stroke-width="2.2"/>
+<line x1="265.00" y1="629.10" x2="265.00" y2="672.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="265.00" y1="617.00" x2="265.00" y2="595.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<polygon points="265.00,592.25 259.50,601.60 270.50,601.60" fill="#111111"/>
+<text x="298.00" y="610.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="start" fill="#111111">I__IB1</text>
+<line x1="265.00" y1="705.00" x2="265.00" y2="747.90" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="265.00" cy="771.00" r="23.10" fill="#ffffff" stroke="#111111" stroke-width="2.2"/>
+<line x1="265.00" y1="794.10" x2="265.00" y2="837.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<text x="265.00" y="765.50" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#111111">+</text>
+<text x="265.00" y="782.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#111111">−</text>
+<text x="298.00" y="775.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="start" fill="#111111">V__VCONT1</text>
+<line x1="265.00" y1="870.00" x2="265.00" y2="912.90" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="265.00" cy="936.00" r="23.10" fill="#ffffff" stroke="#111111" stroke-width="2.2"/>
+<line x1="265.00" y1="959.10" x2="265.00" y2="1002.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<text x="265.00" y="930.50" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#111111">+</text>
+<text x="265.00" y="947.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#111111">−</text>
+<text x="298.00" y="940.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="start" fill="#111111">VSS</text>
+<line x1="265.00" y1="1035.00" x2="265.00" y2="1077.90" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="265.00" cy="1101.00" r="23.10" fill="#ffffff" stroke="#111111" stroke-width="2.2"/>
+<line x1="265.00" y1="1124.10" x2="265.00" y2="1167.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<text x="265.00" y="1095.50" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#111111">+</text>
+<text x="265.00" y="1112.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#111111">−</text>
+<text x="298.00" y="1105.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="start" fill="#111111">V__net1</text>
+<line x1="815.00" y1="1035.00" x2="815.00" y2="1094.40" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="794.10" y1="1094.40" x2="835.90" y2="1094.40" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="794.10" y1="1107.60" x2="835.90" y2="1107.60" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="815.00" y1="1107.60" x2="815.00" y2="1167.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<text x="845.25" y="1105.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="start" fill="#111111">CL</text>
+<line x1="705.00" y1="1200.00" x2="705.00" y2="1238.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M 705.00 1238.50 C 722.60 1240.15, 722.60 1250.60, 705.00 1252.25 C 722.60 1253.90, 722.60 1264.35, 705.00 1266.00 C 722.60 1267.65, 722.60 1278.10, 705.00 1279.75 C 722.60 1281.40, 722.60 1291.85, 705.00 1293.50" fill="none" stroke="#111111" stroke-width="2.2"/>
+<line x1="705.00" y1="1293.50" x2="705.00" y2="1332.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<text x="732.50" y="1270.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="start" fill="#111111">L0</text>
+<line x1="1145.00" y1="1200.00" x2="1145.00" y2="1238.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M 1145.00 1238.50 C 1162.60 1240.15, 1162.60 1250.60, 1145.00 1252.25 C 1162.60 1253.90, 1162.60 1264.35, 1145.00 1266.00 C 1162.60 1267.65, 1162.60 1278.10, 1145.00 1279.75 C 1162.60 1281.40, 1162.60 1291.85, 1145.00 1293.50" fill="none" stroke="#111111" stroke-width="2.2"/>
+<line x1="1145.00" y1="1293.50" x2="1145.00" y2="1332.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<text x="1172.50" y="1270.00" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="start" fill="#111111">L1</text>
+<line x1="705.00" y1="578.50" x2="705.00" y2="633.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="705.00" y1="540.00" x2="705.00" y2="578.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="705.00" y1="672.00" x2="705.00" y2="633.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="689.60" y1="582.90" x2="689.60" y2="629.10" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="639.00" y1="606.00" x2="689.60" y2="606.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="771.00" y1="606.00" x2="705.00" y2="606.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="695.10" cy="606.00" r="4.95" fill="#ffffff" stroke="#111111" stroke-width="2.2"/>
+<text x="740.75" y="596.10" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="start" fill="#111111">XM3</text>
+<text x="740.75" y="611.50" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" text-anchor="start" fill="#111111">P</text>
+<line x1="1145.00" y1="578.50" x2="1145.00" y2="633.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="1145.00" y1="540.00" x2="1145.00" y2="578.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="1145.00" y1="672.00" x2="1145.00" y2="633.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="1160.40" y1="582.90" x2="1160.40" y2="629.10" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="1211.00" y1="606.00" x2="1160.40" y2="606.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="1079.00" y1="606.00" x2="1145.00" y2="606.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="1154.90" cy="606.00" r="4.95" fill="#ffffff" stroke="#111111" stroke-width="2.2"/>
+<text x="1109.25" y="596.10" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="end" fill="#111111">XM0</text>
+<text x="1109.25" y="611.50" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" text-anchor="end" fill="#111111">P</text>
+<line x1="705.00" y1="908.50" x2="705.00" y2="963.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="705.00" y1="870.00" x2="705.00" y2="908.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="705.00" y1="1002.00" x2="705.00" y2="963.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="689.60" y1="912.90" x2="689.60" y2="959.10" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="639.00" y1="936.00" x2="689.60" y2="936.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="771.00" y1="936.00" x2="705.00" y2="936.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<text x="740.75" y="926.10" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="start" fill="#111111">XM1</text>
+<text x="740.75" y="941.50" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" text-anchor="start" fill="#111111">N</text>
+<line x1="1145.00" y1="908.50" x2="1145.00" y2="963.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="1145.00" y1="870.00" x2="1145.00" y2="908.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="1145.00" y1="1002.00" x2="1145.00" y2="963.50" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="1129.60" y1="912.90" x2="1129.60" y2="959.10" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="1079.00" y1="936.00" x2="1129.60" y2="936.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="1211.00" y1="936.00" x2="1145.00" y2="936.00" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+<text x="1180.75" y="926.10" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" text-anchor="start" fill="#111111">XM4</text>
+<text x="1180.75" y="941.50" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" text-anchor="start" fill="#111111">N</text>
+</g>
+<g id="junctions">
+<circle cx="265.00" cy="210.00" r="4.12" fill="#111111"/>
+<circle cx="1079.00" cy="210.00" r="4.12" fill="#111111"/>
+<circle cx="771.00" cy="210.00" r="4.12" fill="#111111"/>
+<circle cx="265.00" cy="952.50" r="4.12" fill="#111111"/>
+<circle cx="639.00" cy="952.50" r="4.12" fill="#111111"/>
+<circle cx="1211.00" cy="952.50" r="4.12" fill="#111111"/>
+<circle cx="705.00" cy="952.50" r="4.12" fill="#111111"/>
+<circle cx="815.00" cy="952.50" r="4.12" fill="#111111"/>
+<circle cx="1079.00" cy="1018.50" r="4.12" fill="#111111"/>
+<circle cx="1145.00" cy="1018.50" r="4.12" fill="#111111"/>
+<circle cx="639.00" cy="1018.50" r="4.12" fill="#111111"/>
+<circle cx="622.50" cy="540.00" r="4.12" fill="#111111"/>
+<circle cx="622.50" cy="672.00" r="4.12" fill="#111111"/>
+<circle cx="581.25" cy="705.00" r="4.12" fill="#111111"/>
+<circle cx="581.25" cy="870.00" r="4.12" fill="#111111"/>
+<circle cx="581.25" cy="1002.00" r="4.12" fill="#111111"/>
+<circle cx="265.00" cy="1497.00" r="4.12" fill="#111111"/>
+<circle cx="815.00" cy="1497.00" r="4.12" fill="#111111"/>
+<circle cx="771.00" cy="1497.00" r="4.12" fill="#111111"/>
+<circle cx="1211.00" cy="1497.00" r="4.12" fill="#111111"/>
+<circle cx="1145.00" cy="1497.00" r="4.12" fill="#111111"/>
+<circle cx="705.00" cy="1497.00" r="4.12" fill="#111111"/>
+</g>
+<g id="labels">
+<text x="215.00" y="203.00" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" text-anchor="start" fill="#111111">VDD</text>
+<text x="270.00" y="945.50" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" text-anchor="start" fill="#111111">net1</text>
+<text x="644.00" y="1011.50" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" text-anchor="start" fill="#111111">net6</text>
+<text x="270.00" y="533.00" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" text-anchor="start" fill="#111111">IB1</text>
+<text x="270.00" y="698.00" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" text-anchor="start" fill="#111111">VCONT1</text>
+<text x="215.00" y="1490.00" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" text-anchor="start" fill="#111111">0</text>
+<text x="215.00" y="1490.00" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" text-anchor="start" fill="#111111">VSS</text>
+</g>
+</svg>

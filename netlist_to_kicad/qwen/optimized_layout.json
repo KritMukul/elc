@@ -1,0 +1,311 @@
+{
+  "device": "cuda",
+  "positions": {
+    "XM1": {
+      "x": 2.0,
+      "y": 0.0
+    },
+    "XM4": {
+      "x": -2.0,
+      "y": 0.0
+    },
+    "XM0": {
+      "x": -1.5,
+      "y": 2.0
+    },
+    "XM3": {
+      "x": 1.5,
+      "y": 2.0
+    },
+    "L1": {
+      "x": -2.0,
+      "y": -2.5
+    },
+    "L0": {
+      "x": 2.0,
+      "y": -2.5
+    },
+    "CL": {
+      "x": 4.0,
+      "y": -1.0
+    }
+  },
+  "structures": {
+    "cross_coupled_pairs": [
+      {
+        "devices": [
+          "XM0",
+          "XM3"
+        ],
+        "type": "PMOS",
+        "nodes": [
+          "net6",
+          "net1"
+        ]
+      }
+    ],
+    "common_source_pairs": [
+      {
+        "devices": [
+          "XM1",
+          "XM4"
+        ],
+        "type": "NMOS",
+        "common_source": "VCONT1"
+      },
+      {
+        "devices": [
+          "XM0",
+          "XM3"
+        ],
+        "type": "PMOS",
+        "common_source": "IB1"
+      }
+    ],
+    "passive_pairs": [
+      {
+        "devices": [
+          "L1",
+          "L0"
+        ],
+        "type": "INDUCTOR",
+        "common_nodes": [
+          "VSS"
+        ]
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "XM1",
+      "type": "NMOS",
+      "pins": {
+        "D": "VCONT1",
+        "G": "net1",
+        "S": "VCONT1",
+        "B": "VSS"
+      },
+      "model": "sky130_fd_pr__nfet_01v8",
+      "params": {
+        "W": "500.0000",
+        "L": "0.404603"
+      }
+    },
+    {
+      "name": "XM4",
+      "type": "NMOS",
+      "pins": {
+        "D": "VCONT1",
+        "G": "net6",
+        "S": "VCONT1",
+        "B": "VSS"
+      },
+      "model": "sky130_fd_pr__nfet_01v8",
+      "params": {
+        "W": "500.0000",
+        "L": "0.404603"
+      }
+    },
+    {
+      "name": "XM0",
+      "type": "PMOS",
+      "pins": {
+        "D": "net6",
+        "G": "net1",
+        "S": "IB1",
+        "B": "VDD"
+      },
+      "model": "sky130_fd_pr__pfet_01v8",
+      "params": {
+        "W": "13.3650",
+        "L": "0.404603"
+      }
+    },
+    {
+      "name": "XM3",
+      "type": "PMOS",
+      "pins": {
+        "D": "net1",
+        "G": "net6",
+        "S": "IB1",
+        "B": "VDD"
+      },
+      "model": "sky130_fd_pr__pfet_01v8",
+      "params": {
+        "W": "13.3650",
+        "L": "0.404603"
+      }
+    },
+    {
+      "name": "L1",
+      "type": "INDUCTOR",
+      "pins": {
+        "1": "net6",
+        "2": "VSS"
+      },
+      "value": "1n"
+    },
+    {
+      "name": "L0",
+      "type": "INDUCTOR",
+      "pins": {
+        "1": "net1",
+        "2": "VSS"
+      },
+      "value": "1n"
+    },
+    {
+      "name": "CL",
+      "type": "CAPACITOR",
+      "pins": {
+        "1": "net1",
+        "2": "0"
+      },
+      "value": "1.020038e-11"
+    }
+  ],
+  "nets": {
+    "VDD": [
+      {
+        "component": "VDD",
+        "pin": "+"
+      },
+      {
+        "component": "XM0",
+        "pin": "B"
+      },
+      {
+        "component": "XM3",
+        "pin": "B"
+      }
+    ],
+    "0": [
+      {
+        "component": "VDD",
+        "pin": "-"
+      },
+      {
+        "component": "VSS",
+        "pin": "-"
+      },
+      {
+        "component": "V__VCONT1",
+        "pin": "-"
+      },
+      {
+        "component": "V__net1",
+        "pin": "-"
+      },
+      {
+        "component": "CL",
+        "pin": "2"
+      }
+    ],
+    "VSS": [
+      {
+        "component": "VSS",
+        "pin": "+"
+      },
+      {
+        "component": "I__IB1",
+        "pin": "-"
+      },
+      {
+        "component": "XM1",
+        "pin": "B"
+      },
+      {
+        "component": "XM4",
+        "pin": "B"
+      },
+      {
+        "component": "L1",
+        "pin": "2"
+      },
+      {
+        "component": "L0",
+        "pin": "2"
+      }
+    ],
+    "VCONT1": [
+      {
+        "component": "V__VCONT1",
+        "pin": "+"
+      },
+      {
+        "component": "XM1",
+        "pin": "D"
+      },
+      {
+        "component": "XM1",
+        "pin": "S"
+      },
+      {
+        "component": "XM4",
+        "pin": "D"
+      },
+      {
+        "component": "XM4",
+        "pin": "S"
+      }
+    ],
+    "net1": [
+      {
+        "component": "V__net1",
+        "pin": "+"
+      },
+      {
+        "component": "XM1",
+        "pin": "G"
+      },
+      {
+        "component": "XM0",
+        "pin": "G"
+      },
+      {
+        "component": "XM3",
+        "pin": "D"
+      },
+      {
+        "component": "L0",
+        "pin": "1"
+      },
+      {
+        "component": "CL",
+        "pin": "1"
+      }
+    ],
+    "IB1": [
+      {
+        "component": "I__IB1",
+        "pin": "+"
+      },
+      {
+        "component": "XM0",
+        "pin": "S"
+      },
+      {
+        "component": "XM3",
+        "pin": "S"
+      }
+    ],
+    "net6": [
+      {
+        "component": "XM4",
+        "pin": "G"
+      },
+      {
+        "component": "XM0",
+        "pin": "D"
+      },
+      {
+        "component": "XM3",
+        "pin": "G"
+      },
+      {
+        "component": "L1",
+        "pin": "1"
+      }
+    ]
+  }
+}

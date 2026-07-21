@@ -1,0 +1,5 @@
+{
+  "meta": { "version": 1 },
+  "netlist": { "format": "kicad", "nets": [] },
+  "schematic": { "page_layout_descr_file": "" }
+}

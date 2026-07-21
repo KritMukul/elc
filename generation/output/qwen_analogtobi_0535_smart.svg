@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000">
+<rect width="100%" height="100%" fill="white"/>
+<text x="750.0" y="35" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle">Schematic reconstructed from generated SPICE</text>
+<line x1="100.0" y1="137.5" x2="100.0" y2="157.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="182.5" r="25" fill="white" stroke="black" stroke-width="2"/>
+<text x="100.0" y="177.5" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle">+</text>
+<text x="100.0" y="197.5" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle">−</text>
+<line x1="100.0" y1="207.5" x2="100.0" y2="227.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<text x="135.0" y="187.5" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="start">VDD</text>
+<line x1="100.0" y1="302.5" x2="100.0" y2="322.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="347.5" r="25" fill="white" stroke="black" stroke-width="2"/>
+<text x="100.0" y="342.5" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle">+</text>
+<text x="100.0" y="362.5" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle">−</text>
+<line x1="100.0" y1="372.5" x2="100.0" y2="392.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<text x="135.0" y="352.5" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="start">VSS</text>
+<line x1="100.0" y1="467.5" x2="100.0" y2="487.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="512.5" r="25" fill="white" stroke="black" stroke-width="2"/>
+<text x="100.0" y="507.5" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle">+</text>
+<text x="100.0" y="527.5" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle">−</text>
+<line x1="100.0" y1="537.5" x2="100.0" y2="557.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<text x="135.0" y="517.5" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="start">V__VCONT1</text>
+<line x1="100.0" y1="632.5" x2="100.0" y2="652.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="677.5" r="25" fill="white" stroke="black" stroke-width="2"/>
+<text x="100.0" y="672.5" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle">+</text>
+<text x="100.0" y="692.5" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle">−</text>
+<line x1="100.0" y1="702.5" x2="100.0" y2="722.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<text x="135.0" y="682.5" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="start">V__net1</text>
+<line x1="100.0" y1="797.5" x2="100.0" y2="817.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="842.5" r="25" fill="white" stroke="black" stroke-width="2"/>
+<line x1="100.0" y1="830.5" x2="100.0" y2="854.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<polygon points="94.0,847.5 106.0,847.5 100.0,857.5" fill="black"/>
+<line x1="100.0" y1="867.5" x2="100.0" y2="887.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<text x="135.0" y="847.5" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="start">I__IB1</text>
+<line x1="595.0" y1="512.0" x2="595.0" y2="568.0" stroke="black" stroke-width="3" stroke-linecap="round"/>
+<line x1="570.0" y1="518.0" x2="570.0" y2="562.0" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="550.0" y1="540.0" x2="570.0" y2="540.0" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="595.0" y1="512.0" x2="595.0" y2="492.0" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="595.0" y1="568.0" x2="595.0" y2="588.0" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="609.0" y1="528.0" x2="609.0" y2="552.0" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<text x="623.0" y="535.0" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start">XM1</text>
+<text x="623.0" y="554.0" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">NMOS</text>
+<line x1="925.0" y1="512.0" x2="925.0" y2="568.0" stroke="black" stroke-width="3" stroke-linecap="round"/>
+<line x1="900.0" y1="518.0" x2="900.0" y2="562.0" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="880.0" y1="540.0" x2="900.0" y2="540.0" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="925.0" y1="512.0" x2="925.0" y2="492.0" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="925.0" y1="568.0" x2="925.0" y2="588.0" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="939.0" y1="528.0" x2="939.0" y2="552.0" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<text x="953.0" y="535.0" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start">XM4</text>
+<text x="953.0" y="554.0" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">NMOS</text>
+<line x1="567.5" y1="209.5" x2="567.5" y2="265.5" stroke="black" stroke-width="3" stroke-linecap="round"/>
+<line x1="542.5" y1="215.5" x2="542.5" y2="259.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="522.5" y1="237.5" x2="542.5" y2="237.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="567.5" y1="209.5" x2="567.5" y2="189.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="567.5" y1="265.5" x2="567.5" y2="285.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="581.5" y1="225.5" x2="581.5" y2="249.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="549.5" cy="237.5" r="5" fill="white" stroke="black" stroke-width="2"/>
+<text x="595.5" y="232.5" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start">XM0</text>
+<text x="595.5" y="251.5" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">PMOS</text>
+<line x1="952.5" y1="209.5" x2="952.5" y2="265.5" stroke="black" stroke-width="3" stroke-linecap="round"/>
+<line x1="927.5" y1="215.5" x2="927.5" y2="259.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="907.5" y1="237.5" x2="927.5" y2="237.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="952.5" y1="209.5" x2="952.5" y2="189.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="952.5" y1="265.5" x2="952.5" y2="285.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="966.5" y1="225.5" x2="966.5" y2="249.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="934.5" cy="237.5" r="5" fill="white" stroke="black" stroke-width="2"/>
+<text x="980.5" y="232.5" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start">XM3</text>
+<text x="980.5" y="251.5" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">PMOS</text>
+<line x1="567.5" y1="797.5" x2="567.5" y2="812.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<path d="M 567.5 812.5 C 585.5 815.5, 585.5 824.5, 567.5 827.5" fill="none" stroke="black" stroke-width="2"/>
+<path d="M 567.5 827.5 C 585.5 830.5, 585.5 839.5, 567.5 842.5" fill="none" stroke="black" stroke-width="2"/>
+<path d="M 567.5 842.5 C 585.5 845.5, 585.5 854.5, 567.5 857.5" fill="none" stroke="black" stroke-width="2"/>
+<path d="M 567.5 857.5 C 585.5 860.5, 585.5 869.5, 567.5 872.5" fill="none" stroke="black" stroke-width="2"/>
+<line x1="567.5" y1="872.5" x2="567.5" y2="887.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<text x="592.5" y="842.5" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start">L1</text>
+<line x1="952.5" y1="797.5" x2="952.5" y2="812.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<path d="M 952.5 812.5 C 970.5 815.5, 970.5 824.5, 952.5 827.5" fill="none" stroke="black" stroke-width="2"/>
+<path d="M 952.5 827.5 C 970.5 830.5, 970.5 839.5, 952.5 842.5" fill="none" stroke="black" stroke-width="2"/>
+<path d="M 952.5 842.5 C 970.5 845.5, 970.5 854.5, 952.5 857.5" fill="none" stroke="black" stroke-width="2"/>
+<path d="M 952.5 857.5 C 970.5 860.5, 970.5 869.5, 952.5 872.5" fill="none" stroke="black" stroke-width="2"/>
+<line x1="952.5" y1="872.5" x2="952.5" y2="887.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<text x="977.5" y="842.5" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start">L0</text>
+<line x1="1200.0" y1="577.5" x2="1200.0" y2="612.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="1182.0" y1="612.5" x2="1218.0" y2="612.5" stroke="black" stroke-width="3" stroke-linecap="round"/>
+<line x1="1182.0" y1="632.5" x2="1218.0" y2="632.5" stroke="black" stroke-width="3" stroke-linecap="round"/>
+<line x1="1200.0" y1="632.5" x2="1200.0" y2="667.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<text x="1228.0" y="627.5" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start">CL</text>
+<line x1="100.0" y1="114.16666666666666" x2="966.5" y2="114.16666666666666" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="100.0" y1="137.5" x2="100.0" y2="114.16666666666666" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="114.16666666666666" r="3" fill="black"/>
+<line x1="581.5" y1="237.5" x2="581.5" y2="114.16666666666666" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="581.5" cy="114.16666666666666" r="3" fill="black"/>
+<line x1="966.5" y1="237.5" x2="966.5" y2="114.16666666666666" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="966.5" cy="114.16666666666666" r="3" fill="black"/>
+<text x="105.0" y="108.16666666666666" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="start">VDD</text>
+<line x1="100.0" y1="613.5" x2="1200.0" y2="613.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="100.0" y1="227.5" x2="100.0" y2="613.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="613.5" r="3" fill="black"/>
+<line x1="100.0" y1="392.5" x2="100.0" y2="613.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="613.5" r="3" fill="black"/>
+<line x1="100.0" y1="557.5" x2="100.0" y2="613.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="613.5" r="3" fill="black"/>
+<line x1="100.0" y1="722.5" x2="100.0" y2="613.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="613.5" r="3" fill="black"/>
+<line x1="1200.0" y1="667.5" x2="1200.0" y2="613.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="1200.0" cy="613.5" r="3" fill="black"/>
+<line x1="100.0" y1="774.1666666666666" x2="952.5" y2="774.1666666666666" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="100.0" y1="302.5" x2="100.0" y2="774.1666666666666" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="774.1666666666666" r="3" fill="black"/>
+<line x1="100.0" y1="887.5" x2="100.0" y2="774.1666666666666" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="774.1666666666666" r="3" fill="black"/>
+<line x1="609.0" y1="540.0" x2="609.0" y2="774.1666666666666" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="609.0" cy="774.1666666666666" r="3" fill="black"/>
+<line x1="939.0" y1="540.0" x2="939.0" y2="774.1666666666666" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="939.0" cy="774.1666666666666" r="3" fill="black"/>
+<line x1="567.5" y1="887.5" x2="567.5" y2="774.1666666666666" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="567.5" cy="774.1666666666666" r="3" fill="black"/>
+<line x1="952.5" y1="887.5" x2="952.5" y2="774.1666666666666" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="952.5" cy="774.1666666666666" r="3" fill="black"/>
+<line x1="100.0" y1="480.5" x2="925.0" y2="480.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="100.0" y1="467.5" x2="100.0" y2="480.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="480.5" r="3" fill="black"/>
+<line x1="595.0" y1="492.0" x2="595.0" y2="480.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="595.0" cy="480.5" r="3" fill="black"/>
+<line x1="595.0" y1="588.0" x2="595.0" y2="480.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="595.0" cy="480.5" r="3" fill="black"/>
+<line x1="925.0" y1="492.0" x2="925.0" y2="480.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="925.0" cy="480.5" r="3" fill="black"/>
+<line x1="925.0" y1="588.0" x2="925.0" y2="480.5" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="925.0" cy="480.5" r="3" fill="black"/>
+<text x="105.0" y="474.5" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="start">VCONT1</text>
+<line x1="100.0" y1="474.75" x2="1200.0" y2="474.75" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="100.0" y1="632.5" x2="100.0" y2="474.75" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="474.75" r="3" fill="black"/>
+<line x1="550.0" y1="540.0" x2="550.0" y2="474.75" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="550.0" cy="474.75" r="3" fill="black"/>
+<line x1="522.5" y1="237.5" x2="522.5" y2="474.75" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="522.5" cy="474.75" r="3" fill="black"/>
+<line x1="952.5" y1="189.5" x2="952.5" y2="474.75" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="952.5" cy="474.75" r="3" fill="black"/>
+<line x1="952.5" y1="797.5" x2="952.5" y2="474.75" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="952.5" cy="474.75" r="3" fill="black"/>
+<line x1="1200.0" y1="577.5" x2="1200.0" y2="474.75" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="1200.0" cy="474.75" r="3" fill="black"/>
+<text x="105.0" y="468.75" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="start">net1</text>
+<line x1="100.0" y1="459.1666666666667" x2="952.5" y2="459.1666666666667" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="100.0" y1="797.5" x2="100.0" y2="459.1666666666667" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="100.0" cy="459.1666666666667" r="3" fill="black"/>
+<line x1="567.5" y1="285.5" x2="567.5" y2="459.1666666666667" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="567.5" cy="459.1666666666667" r="3" fill="black"/>
+<line x1="952.5" y1="285.5" x2="952.5" y2="459.1666666666667" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="952.5" cy="459.1666666666667" r="3" fill="black"/>
+<text x="105.0" y="453.1666666666667" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="start">IB1</text>
+<line x1="567.5" y1="468.125" x2="907.5" y2="468.125" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<line x1="880.0" y1="540.0" x2="880.0" y2="468.125" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="880.0" cy="468.125" r="3" fill="black"/>
+<line x1="567.5" y1="189.5" x2="567.5" y2="468.125" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="567.5" cy="468.125" r="3" fill="black"/>
+<line x1="907.5" y1="237.5" x2="907.5" y2="468.125" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="907.5" cy="468.125" r="3" fill="black"/>
+<line x1="567.5" y1="797.5" x2="567.5" y2="468.125" stroke="black" stroke-width="2" stroke-linecap="round"/>
+<circle cx="567.5" cy="468.125" r="3" fill="black"/>
+<text x="572.5" y="462.125" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="start">net6</text>
+<text x="30" y="975" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="start">Generated from qwen_analogtobi_0535.spice</text>
+</svg>

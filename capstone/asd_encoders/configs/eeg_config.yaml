@@ -1,0 +1,28 @@
+dataset_root: "/path/to/dataset/Dataset"
+cache_dir: "cache/eeg"
+tasks: ["walk", "dance"]
+sfreq: 250
+win_sec: 4.0
+overlap: 0.5
+
+model:
+  n_channels: 16        
+  conv_emb_dim: 40
+  n_layers: 4
+  n_heads: 8
+  out_dim: 512
+  dropout: 0.3
+
+train:
+  batch_size: 32
+  epochs: 100
+  lr: 3.0e-4
+  weight_decay: 1.0e-4
+  warmup_epochs: 5
+  label_smoothing: 0.1
+  early_stop_patience: 15
+  n_folds: 5             
+  seed: 42
+  amp: true               
+  num_workers: 8
+  checkpoint_dir: "checkpoints/eeg"
