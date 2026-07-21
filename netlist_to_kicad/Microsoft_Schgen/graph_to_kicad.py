@@ -389,54 +389,56 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
             )
 
     # ── Power Symbols ──
-    lines += [
-        "",
-        "# ══════════════════════════════════════",
-        "#  Power Symbols",
-        "# ══════════════════════════════════════",
-    ]
     pwr_n = 1
     vdd_pwr, gnd_pwr = {}, {}
 
-    for net in sorted(vdd_nets):
-        pwr_ref = f"#PWR{pwr_n:02d}"
-        vdd_pwr[net] = pwr_ref
+    # Skip power symbols entirely in manual mode to maintain a clean closed loop like the hand drawing
+    if not (args and args.manual):
+        lines += [
+            "",
+            "# ══════════════════════════════════════",
+            "#  Power Symbols",
+            "# ══════════════════════════════════════",
+        ]
+        for net in sorted(vdd_nets):
+            pwr_ref = f"#PWR{pwr_n:02d}"
+            vdd_pwr[net] = pwr_ref
 
-        if use_gvae and power_positions and net in power_positions:
-            kx, ky = power_positions[net]
-            sx, sy = kx, A4_HEIGHT - ky
-            lines.append(
-                f'add_schematic_symbol(symbol_lib="power", symbol_name="VDD", '
-                f'pos_x={sx:.2f}, pos_y={sy:.2f}, '
-                f'reference="{pwr_ref}", value="VDD", rotation=0)'
-            )
-        else:
-            lines.append(
-                f'add_schematic_symbol(symbol_lib="power", symbol_name="VDD", '
-                f'pos_x={base_x - 20}, pos_y={base_y - 30}, '
-                f'reference="{pwr_ref}", value="VDD", rotation=0)'
-            )
-        pwr_n += 1
+            if use_gvae and power_positions and net in power_positions:
+                kx, ky = power_positions[net]
+                sx, sy = kx, A4_HEIGHT - ky
+                lines.append(
+                    f'add_schematic_symbol(symbol_lib="power", symbol_name="VDD", '
+                    f'pos_x={sx:.2f}, pos_y={sy:.2f}, '
+                    f'reference="{pwr_ref}", value="VDD", rotation=0)'
+                )
+            else:
+                lines.append(
+                    f'add_schematic_symbol(symbol_lib="power", symbol_name="VDD", '
+                    f'pos_x={base_x - 20}, pos_y={base_y - 30}, '
+                    f'reference="{pwr_ref}", value="VDD", rotation=0)'
+                )
+            pwr_n += 1
 
-    for net in sorted(gnd_nets):
-        pwr_ref = f"#PWR{pwr_n:02d}"
-        gnd_pwr[net] = pwr_ref
+        for net in sorted(gnd_nets):
+            pwr_ref = f"#PWR{pwr_n:02d}"
+            gnd_pwr[net] = pwr_ref
 
-        if use_gvae and power_positions and net in power_positions:
-            kx, ky = power_positions[net]
-            sx, sy = kx, A4_HEIGHT - ky
-            lines.append(
-                f'add_schematic_symbol(symbol_lib="power", symbol_name="GND", '
-                f'pos_x={sx:.2f}, pos_y={sy:.2f}, '
-                f'reference="{pwr_ref}", value="GND", rotation=0)'
-            )
-        else:
-            lines.append(
-                f'add_schematic_symbol(symbol_lib="power", symbol_name="GND", '
-                f'pos_x={base_x - 20}, pos_y={base_y + 30}, '
-                f'reference="{pwr_ref}", value="GND", rotation=0)'
-            )
-        pwr_n += 1
+            if use_gvae and power_positions and net in power_positions:
+                kx, ky = power_positions[net]
+                sx, sy = kx, A4_HEIGHT - ky
+                lines.append(
+                    f'add_schematic_symbol(symbol_lib="power", symbol_name="GND", '
+                    f'pos_x={sx:.2f}, pos_y={sy:.2f}, '
+                    f'reference="{pwr_ref}", value="GND", rotation=0)'
+                )
+            else:
+                lines.append(
+                    f'add_schematic_symbol(symbol_lib="power", symbol_name="GND", '
+                    f'pos_x={base_x - 20}, pos_y={base_y + 30}, '
+                    f'reference="{pwr_ref}", value="GND", rotation=0)'
+                )
+            pwr_n += 1
 
     # ── Net Connections ──
     lines += [
