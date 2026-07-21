@@ -346,7 +346,7 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
         "R0": {"x": 115, "y": 120, "rot": 90},     # Resistor on the top (horizontal, at y=120)
         "C0": {"x": 150, "y": 84, "rot": 0},       # Capacitor in the middle (vertical, bottom pin at ~80)
         "R1": {"x": 185, "y": 110, "rot": 180},    # Resistor on the right branch (vertical, top pin at ~115)
-        "D0": {"x": 185, "y": 85, "rot": 270},     # LED on the right branch (vertical, bottom pin at ~80)
+        "D0": {"x": 185, "y": 85, "rot": 90},      # LED on the right branch (vertical, pointing down, rot=90)
     }
 
     # Grid layout defaults
