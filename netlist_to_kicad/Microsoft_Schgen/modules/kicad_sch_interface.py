@@ -1079,8 +1079,12 @@ def connect_pins(sym_a: str, pin_a: str, sym_b: str, pin_b: str):
 
 def connect_two_points(start_pos: list, end_pos: list):
     """
-    Connect two points on the schematic. Will do some form of auto routing if the two points are not directly connected.
+    Connect two points on the schematic. Directly draws a Manhattan wire if not straight.
     """
+    if start_pos[0] != end_pos[0] and start_pos[1] != end_pos[1]:
+        # Directly draw a manhattan wire using the unflipped coordinates
+        draw_manhattan_wire(start_pos, end_pos, bent_down=True)
+        return
 
     if REVERSE_Y_FLAG:
         start_pos = start_pos.copy()  # Create a copy to avoid modifying the original list
@@ -1088,15 +1092,8 @@ def connect_two_points(start_pos: list, end_pos: list):
         start_pos[1] = reY(start_pos[1])
         end_pos[1] = reY(end_pos[1])
 
-    if start_pos[0] != end_pos[0] and start_pos[1] != end_pos[1]:
-        ## If not a straight wire, add the points to the junction connections for later processing.
-        # -- Eventually, calls draw_manhattan_wire(), which still calls add_new_wire() to write out the wires.
-        add_point_connection(start_pos, end_pos, junction_connections)
-        # print(f"Added non-direct connection for later write-out. {start_pos} -- {end_pos}")
-        return
-    else:
-        # add_new_wire() now only handles direct wires.
-        add_auto_wire(start_pos, end_pos, reY_off=True)  # reY_off=True to avoid reversing the Y coordinate again, since we already did it here.
+    # add_new_wire() now only handles direct wires.
+    add_auto_wire(start_pos, end_pos, reY_off=True)
 
 
 connected_pins = set()
