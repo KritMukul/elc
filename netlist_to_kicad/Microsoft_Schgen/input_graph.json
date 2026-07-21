@@ -1,0 +1,114 @@
+{
+  "nets": [
+    {
+      "name": "N1",
+      "role": "internal",
+      "external": false
+    },
+    {
+      "name": "N2",
+      "role": "internal",
+      "external": false
+    },
+    {
+      "name": "N3",
+      "role": "internal",
+      "external": false
+    },
+    {
+      "name": "N4",
+      "role": "internal",
+      "external": false
+    }
+  ],
+  "devices": [
+    {
+      "name": "C0",
+      "type": "cap",
+      "model": "",
+      "pins": [
+        {
+          "role": "P",
+          "net": "N1"
+        },
+        {
+          "role": "N",
+          "net": "N4"
+        }
+      ],
+      "params": {
+        "value": "22u"
+      }
+    },
+    {
+      "name": "D0",
+      "type": "diode",
+      "model": "LED",
+      "pins": [
+        {
+          "role": "A",
+          "net": "N3"
+        },
+        {
+          "role": "K",
+          "net": "N4"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "name": "V0",
+      "type": "vsource",
+      "model": "dc",
+      "pins": [
+        {
+          "role": "P",
+          "net": "N2"
+        },
+        {
+          "role": "N",
+          "net": "N4"
+        }
+      ],
+      "params": {
+        "value": "9"
+      }
+    },
+    {
+      "name": "R0",
+      "type": "res",
+      "model": "",
+      "pins": [
+        {
+          "role": "P",
+          "net": "N2"
+        },
+        {
+          "role": "N",
+          "net": "N1"
+        }
+      ],
+      "params": {
+        "value": "1k"
+      }
+    },
+    {
+      "name": "R1",
+      "type": "res",
+      "model": "",
+      "pins": [
+        {
+          "role": "P",
+          "net": "N1"
+        },
+        {
+          "role": "N",
+          "net": "N3"
+        }
+      ],
+      "params": {
+        "value": "2.2k"
+      }
+    }
+  ]
+}

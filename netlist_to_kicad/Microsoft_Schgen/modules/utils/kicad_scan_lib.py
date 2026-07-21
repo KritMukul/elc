@@ -13,7 +13,7 @@ if __name__ == "__main__":
     #     project_path = lines[0].strip()
     #     sys.path.append(project_path)
     project_path = os.environ["PROJECT_PATH"]
-    sys.path.append(project_path)
+    sys.path.insert(0, project_path)
 
 
 

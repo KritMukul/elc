@@ -3,8 +3,16 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
 import os
 import subprocess
+import argparse
+import sys
+
 
 def main():
+    parser = argparse.ArgumentParser(description="Generate KiCad Schematic via LLM")
+    parser.add_argument("--prompt", type=str, required=True, help="Description or SPICE netlist for the circuit")
+    parser.add_argument("--project_name", type=str, default="generated_project", help="Name of the KiCad project")
+    args = parser.parse_args()
+
     base_model_id = "Qwen/Qwen2.5-Coder-1.5B-Instruct"
     adapter_dir = "./schgen-qwen-lora-final"
     
@@ -21,9 +29,7 @@ def main():
     model = PeftModel.from_pretrained(base_model, adapter_dir).to(device)
     model.eval()
 
-    # Define your circuit prompt
-    user_prompt = """I want a schematic for a Voltage Controlled Oscillator (VCO).
-It must include 4 active transistors (XM1, XM2 as nfets; XM3, XM4 as pfets), a control voltage input net 'VCONT1', an output node 'net1', and a load capacitor 'CL' connected to ground."""
+    user_prompt = args.prompt
 
     # Construct the exact same message structure used during training
     # Construct the exact same message structure used during training
@@ -48,9 +54,11 @@ NOTE:
 2. The size of the schematic is 210 by 297 mm, size of a A4 paper. It uses a X-Y axes based coordinate system. The origin is [0,0] at bottom left corner of the sheet. X axis is horizontal, and Y axis is vertical. To keep the circuit in the center region.
 3. You should check the symbol context to see the spatial information, including the size, orientation, pin locations. The center of the symbol is at (0, 0) and the pin locations are relative to the center of the symbol. X axis is horizontal, and Y axis is vertical. For symbol definition, the Y axis points upward, that means higher Y position means higher position, same direction as the schematic coordinate system.
 4. The code should be valid Python code with correct indentation and syntax. For example, comment should start with #.
-5. Explicit Spacing: "Ensure all transistors and components are spaced at least 30 units apart on both the X and Y axes."
-6. Bounding Box Warning: "When generating the placement coordinates, leave a minimum distance of 25mm between component centers to prevent KiCad bounding box overlaps."
-7. Grid Layout Instruction: "Do not stack components tightly. Use a wide grid spacing multiplier for all pos_x and pos_y variables."
+5. You MUST include `from modules.kicad_sch_interface import *` at the very beginning of the script.
+6. Explicit Spacing: "Ensure all components are spaced at least 50 units (mm) apart on both the X and Y axes. DO NOT place any two components at the same X or Y coordinate unless they are separated by at least 50 units."
+7. Label Placement: "DO NOT place labels (like VDD, GND, +BATT) at the exact same coordinate as a component's center. Labels must be offset by at least 15 units from any component."
+8. Power Rails: "You MUST use standard power net names like 'VDD', 'VCC', or 'GND' instead of generic names like '#PWR1' or '#PWR2'."
+9. Grid Layout Instruction: "Do not stack components tightly. Calculate positions using a strict grid, e.g., pos_x = 50 * i + 100, pos_y = 50 * j + 100."
 """
 
     messages = [
@@ -75,6 +83,17 @@ NOTE:
     generated_ids = [output_ids[len(input_ids):] for input_ids, output_ids in zip(inputs.input_ids, generated_ids)]
     response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
     
+    # Extract only the python block if the model outputs markdown
+    if "```python" in response:
+        response = response.split("```python")[1].split("```")[0].strip()
+    elif "```" in response:
+        response = response.split("```")[1].strip()
+
+    # Ensure the required import is present for init_project.py
+    required_import = "from modules.kicad_sch_interface import *"
+    if required_import not in response:
+        response = f"{required_import}\n\n" + response
+
     print("\n--- Generated Python Code Output ---")
     print(response)
     print("------------------------------------\n")
@@ -85,11 +104,9 @@ NOTE:
         f.write(response)
     print(f"Saved generated script to {output_script}")
     
-    # Execute the generated schematic script if the environment variables are set
-    # Note: Ensure you have your dummy or actual environment variable set:
-    # os.environ["PROJECT_PATH"] = "/workspace/path_to_kicad_modules"
-    # print("Executing script to compile the schematic...")
-    # subprocess.run(["python", output_script])
+    # Automatically run init_project.py to compile the schematic
+    print(f"\nInitializing KiCad project '{args.project_name}'...")
+    subprocess.run([sys.executable, "init_project.py", args.project_name, output_script, "--overwrite"])
 
 if __name__ == "__main__":
     main()
