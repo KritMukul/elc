@@ -305,7 +305,7 @@ def predict_positions_gvae(graph: dict, weights_path: str):
 #  Layout Code Generation
 # ═══════════════════════════════════════════════════════════════════
 
-def generate_layout_code(graph: dict, device_positions=None, power_positions=None) -> str:
+def generate_layout_code(graph: dict, device_positions=None, power_positions=None, args=None) -> str:
     """
     Generate a Python script using the SchGen API.
 
@@ -314,6 +314,7 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
         device_positions: if provided, list of (x_mm, y_mm) in KiCad coords
                           for each device in graph["devices"]
         power_positions:  if provided, dict {net_name: (x_mm, y_mm)} for power symbols
+        args: command line arguments
     """
     devices = graph["devices"]
     vdd_nets, gnd_nets = detect_power_nets(devices)
@@ -338,6 +339,15 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
         "# ══════════════════════════════════════",
     ]
 
+    # Manual layout coordinates to match the hand-drawn sketch
+    manual_coords = {
+        "V0": {"x": 80, "y": 100, "rot": 0},      # Vsource on the left (vertical)
+        "R0": {"x": 115, "y": 80, "rot": 90},     # Resistor on the top (horizontal)
+        "C0": {"x": 150, "y": 100, "rot": 0},     # Capacitor in the middle (vertical)
+        "R1": {"x": 185, "y": 90, "rot": 0},      # Resistor on the right branch (vertical)
+        "D0": {"x": 185, "y": 120, "rot": 0},     # LED on the right branch (vertical)
+    }
+
     # Grid layout defaults
     base_x, base_y, gap = 80, 80, 40
 
@@ -349,7 +359,15 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
         if not value:
             value = dev.get("model", "") or info["sym"]
 
-        if use_gvae:
+        if args.manual and dev["name"] in manual_coords:
+            c = manual_coords[dev["name"]]
+            lines.append(
+                f'add_schematic_symbol('
+                f'symbol_lib="{info["lib"]}", symbol_name="{info["sym"]}", '
+                f'pos_x={c["x"]}, pos_y={c["y"]}, '
+                f'reference="{ref}", value="{value}", rotation={c["rot"]})'
+            )
+        elif use_gvae:
             kicad_x, kicad_y = device_positions[i]
             # SchGen uses Y-up (REVERSE_Y_FLAG), so flip from KiCad Y-down
             sx = kicad_x
@@ -485,6 +503,8 @@ def main():
                         help="Use trained GVAE for intelligent component placement")
     parser.add_argument("--gvae_weights", default="../gvae_weights.pth",
                         help="Path to GVAE .pth weights file")
+    parser.add_argument("--manual", action="store_true",
+                        help="Use manual coordinates to perfectly match the hand-drawn sketch")
     args = parser.parse_args()
 
     if not os.path.exists(args.graph):
@@ -517,7 +537,7 @@ def main():
     print(f"\n  Layout mode: {mode}")
 
     # ── Generate layout script ──
-    code = generate_layout_code(graph, device_pos, power_pos)
+    code = generate_layout_code(graph, device_pos, power_pos, args)
 
     script = "output_layout_script.py"
     with open(script, "w") as f:
