@@ -344,7 +344,7 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
         "V0": {"x": 80, "y": 100, "rot": 0},      # Vsource on the left (vertical)
         "R0": {"x": 115, "y": 120, "rot": 90},     # Resistor on the top (horizontal)
         "C0": {"x": 150, "y": 100, "rot": 0},     # Capacitor in the middle (vertical)
-        "R1": {"x": 185, "y": 110, "rot": 0},      # Resistor on the right branch (vertical)
+        "R1": {"x": 185, "y": 110, "rot": 180},      # Resistor on the right branch (vertical, rotated 180 to align pins)
         "D0": {"x": 185, "y": 80, "rot": 270},     # LED on the right branch (vertical, pointing down)
     }
 
@@ -448,6 +448,17 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
         "# ══════════════════════════════════════",
     ]
 
+    # Map reference name to its X coordinate to sort connections logically from left to right
+    ref_x_map = {}
+    for i, dev in enumerate(devices):
+        ref = ref_map[dev["name"]]
+        if args and args.manual and dev["name"] in manual_coords:
+            ref_x_map[ref] = manual_coords[dev["name"]]["x"]
+        elif use_gvae:
+            ref_x_map[ref] = device_positions[i][0]
+        else:
+            ref_x_map[ref] = base_x + i * gap
+
     for net_name in sorted(net_map):
         conns = net_map[net_name]
         pin_list = []
@@ -460,21 +471,30 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
                 continue
             pin_list.append((ref, kicad_pin))
 
-        # Attach power symbols
+        # Attach power symbols (placed at left, so give them a small X value)
         if net_name in vdd_pwr:
-            pin_list.append((vdd_pwr[net_name], "1"))
+            ref = vdd_pwr[net_name]
+            ref_x_map[ref] = base_x - 30
+            pin_list.append((ref, "1"))
         if net_name in gnd_pwr:
-            pin_list.append((gnd_pwr[net_name], "1"))
+            ref = gnd_pwr[net_name]
+            ref_x_map[ref] = base_x - 30
+            pin_list.append((ref, "1"))
 
         if len(pin_list) < 2:
             continue
 
+        # Sort pin list by X position (left to right)
+        pin_list.sort(key=lambda item: ref_x_map.get(item[0], 0))
+
         lines.append(f"# Net {net_name}")
-        anchor_ref, anchor_pin = pin_list[0]
-        for ref, pin in pin_list[1:]:
+        # Daisy-chain connection (connect adjacent components from left to right)
+        for idx in range(len(pin_list) - 1):
+            ref_a, pin_a = pin_list[idx]
+            ref_b, pin_b = pin_list[idx + 1]
             lines.append(
-                f'connect_pins("{anchor_ref}", "{anchor_pin}", '
-                f'"{ref}", "{pin}")'
+                f'connect_pins("{ref_a}", "{pin_a}", '
+                f'"{ref_b}", "{pin_b}")'
             )
 
     # ── Write wires ──
