@@ -43,17 +43,18 @@ def run_py(schematic_code: Path):
 
 def make_kicad_sch() -> str:
     return '''(kicad_sch
-    (version 20221018)
-    (generator "eeschema")
-    (generator_version "7.0")
-    (uuid "00000000-0000-0000-0000-000000000000")
-    (paper "A4")
-    (lib_symbols)
-    (sheet_instances
-        (path "/"
-            (page "1")
-        )
-    )
+\t(version 20260306)
+\t(generator "eeschema")
+\t(generator_version "10.0")
+\t(uuid 748e538f-73a8-45c8-8c10-199653322132)
+\t(paper "A4")
+\t(lib_symbols)
+\t(sheet_instances
+\t\t(path "/"
+\t\t\t(page "1")
+\t\t)
+\t)
+\t(embedded_fonts no)
 )
 '''
 
