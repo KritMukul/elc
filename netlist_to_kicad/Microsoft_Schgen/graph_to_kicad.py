@@ -360,7 +360,25 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
         if not value:
             value = dev.get("model", "") or info["sym"]
 
-        if args.manual and dev["name"] in manual_coords:
+        # Support detection coordinates dict format
+        if device_positions and isinstance(device_positions, dict) and dev["name"] in device_positions:
+            c = device_positions[dev["name"]]
+            # Use symbol override if present (e.g. mapping unknown -> inductor)
+            lib_name = c["sym"]["lib"] if c.get("sym") else info["lib"]
+            sym_name = c["sym"]["sym"] if c.get("sym") else info["sym"]
+            sx = c["x"]
+            sy = A4_HEIGHT - c["y"]
+            lines.append(
+                f'add_schematic_symbol('
+                f'symbol_lib="{lib_name}", symbol_name="{sym_name}", '
+                f'pos_x={sx:.2f}, pos_y={sy:.2f}, '
+                f'reference="{ref}", value="{value}", rotation={c["rot"]})'
+            )
+            # Update info_map with overwritten pin definitions if present
+            if c.get("sym"):
+                info_map[dev["name"]] = c["sym"]
+
+        elif args.manual and dev["name"] in manual_coords:
             c = manual_coords[dev["name"]]
             lines.append(
                 f'add_schematic_symbol('
@@ -393,8 +411,27 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
     pwr_n = 1
     vdd_pwr, gnd_pwr = {}, {}
 
-    # Skip power symbols entirely in manual mode to maintain a clean closed loop like the hand drawing
-    if not (args and args.manual):
+    # If we have detection-based coordinates:
+    # Use the detected GND position if available and connect it to the GND net (gnd_nets)
+    if device_positions and "GND_COORD" in device_positions:
+        gnd_c = device_positions["GND_COORD"]
+        lines += [
+            "",
+            "# ══════════════════════════════════════",
+            "#  Power Symbols (from detections)",
+            "# ══════════════════════════════════════",
+        ]
+        for net in sorted(gnd_nets):
+            pwr_ref = f"#PWR{pwr_n:02d}"
+            gnd_pwr[net] = pwr_ref
+            sx, sy = gnd_c["x"], A4_HEIGHT - gnd_c["y"]
+            lines.append(
+                f'add_schematic_symbol(symbol_lib="power", symbol_name="GND", '
+                f'pos_x={sx:.2f}, pos_y={sy:.2f}, '
+                f'reference="{pwr_ref}", value="GND", rotation=0)'
+            )
+            pwr_n += 1
+    elif not (args and args.manual):
         lines += [
             "",
             "# ══════════════════════════════════════",
@@ -453,7 +490,9 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
     ref_x_map = {}
     for i, dev in enumerate(devices):
         ref = ref_map[dev["name"]]
-        if args and args.manual and dev["name"] in manual_coords:
+        if device_positions and isinstance(device_positions, dict) and dev["name"] in device_positions:
+            ref_x_map[ref] = device_positions[dev["name"]]["x"]
+        elif args and args.manual and dev["name"] in manual_coords:
             ref_x_map[ref] = manual_coords[dev["name"]]["x"]
         elif use_gvae:
             ref_x_map[ref] = device_positions[i][0]
@@ -528,6 +567,8 @@ def main():
                         help="Path to GVAE .pth weights file")
     parser.add_argument("--manual", action="store_true",
                         help="Use manual coordinates to perfectly match the hand-drawn sketch")
+    parser.add_argument("--detections", default=None,
+                        help="Path to detections.txt file containing bounding boxes")
     args = parser.parse_args()
 
     if not os.path.exists(args.graph):
@@ -539,7 +580,109 @@ def main():
     # ── Position prediction ──
     device_pos, power_pos = None, None
 
-    if args.use_gvae:
+    if args.detections:
+        if not os.path.exists(args.detections):
+            print(f"Error: detections file '{args.detections}' not found.")
+            sys.exit(1)
+        
+        import re
+        print(f"  Parsing detections from '{args.detections}' ...")
+        detections = []
+        # Matches: "1 capacitor.unpolarized (395, 458, 504, 512) 0.966"
+        pattern = re.compile(r"^\d+\s+([a-zA-Z\.\_]+)\s+\((-?\d+),\s*(-?\d+),\s*(-?\d+),\s*(-?\d+)\)")
+        with open(args.detections, "r") as f:
+            for line in f:
+                m = pattern.match(line.strip())
+                if m:
+                    cls_name = m.group(1)
+                    x1, y1, x2, y2 = map(int, m.group(2, 3, 4, 5))
+                    cx = (x1 + x2) / 2.0
+                    cy = (y1 + y2) / 2.0
+                    w = x2 - x1
+                    h = y2 - y1
+                    detections.append({"class": cls_name, "x": cx, "y": cy, "w": w, "h": h})
+        
+        valid_classes = {"capacitor.unpolarized", "resistor", "voltage.dc", "inductor", "gnd", "probe.voltage", "probe.current"}
+        comp_dets = [d for d in detections if d["class"] in valid_classes]
+        
+        if comp_dets:
+            min_x = min(d["x"] for d in comp_dets)
+            max_x = max(d["x"] for d in comp_dets)
+            min_y = min(d["y"] for d in comp_dets)
+            max_y = max(d["y"] for d in comp_dets)
+            
+            range_x = (max_x - min_x) if max_x != min_x else 1.0
+            range_y = (max_y - min_y) if max_y != min_y else 1.0
+            
+            # Map detection coordinates to A4 center region: X=[60, 220], Y=[60, 180]
+            for d in comp_dets:
+                d["kx"] = 60.0 + ((d["x"] - min_x) / range_x) * 160.0
+                d["ky"] = 60.0 + ((d["y"] - min_y) / range_y) * 120.0
+
+            # Match graph devices to detections
+            def get_similarity(device_type, device_name, det_class):
+                if device_type in ("cap", "capacitor") and det_class == "capacitor.unpolarized":
+                    return 1.0
+                if device_type in ("res", "resistor") and det_class == "resistor":
+                    return 1.0
+                if device_type == "vsource" and det_class in ("voltage.dc", "probe.voltage"):
+                    return 1.0
+                if device_type == "unknown" and device_name.upper().startswith("X2") and det_class == "inductor":
+                    return 1.0
+                if device_type == "unknown" and device_name.upper().startswith("X3") and det_class in ("voltage.dc", "probe.voltage"):
+                    return 1.0
+                return 0.0
+
+            device_pos = {}
+            used_dets = set()
+            
+            for dev in graph["devices"]:
+                dev_name = dev["name"]
+                dev_type = dev["type"]
+                best_det = None
+                best_score = -1.0
+                
+                for idx, det in enumerate(comp_dets):
+                    if idx in used_dets:
+                        continue
+                    score = get_similarity(dev_type, dev_name, det["class"])
+                    if score > best_score:
+                        best_score = score
+                        best_det = idx
+                        
+                if best_score > 0.5 and best_det is not None:
+                    used_dets.add(best_det)
+                    det = comp_dets[best_det]
+                    
+                    # Heuristically determine rotation
+                    rot = 0
+                    if det["class"] in ("resistor", "capacitor.unpolarized", "inductor"):
+                        # If width > 1.2 * height, it is horizontal
+                        if det["w"] > 1.2 * det["h"]:
+                            rot = 90
+                    
+                    sym_override = None
+                    if det["class"] == "inductor":
+                        sym_override = {"lib": "Device", "sym": "L", "pins": {"P": "1", "N": "2"}}
+                    elif det["class"] == "voltage.dc" or det["class"] == "probe.voltage":
+                        if dev_type == "unknown": # X3
+                            sym_override = {"lib": "Device", "sym": "Battery", "pins": {"P": "+", "N": "-"}}
+                    
+                    device_pos[dev_name] = {
+                        "x": det["kx"],
+                        "y": det["ky"],
+                        "rot": rot,
+                        "sym": sym_override
+                    }
+                    print(f"    Mapped {dev_name} ({dev_type}) to {det['class']} at ({det['kx']:.1f}, {det['ky']:.1f}), rot={rot}")
+            
+            # Find GND coordinate
+            gnd_det = next((d for d in comp_dets if d["class"] == "gnd"), None)
+            if gnd_det:
+                device_pos["GND_COORD"] = {"x": gnd_det["kx"], "y": gnd_det["ky"]}
+                print(f"    Mapped GND to ({gnd_det['kx']:.1f}, {gnd_det['ky']:.1f})")
+
+    elif args.use_gvae:
         if not os.path.exists(args.gvae_weights):
             print(f"Warning: GVAE weights '{args.gvae_weights}' not found. "
                   f"Falling back to grid layout.")

@@ -1,114 +1,129 @@
 {
-  "nets": [
-    {
-      "name": "N1",
-      "role": "internal",
-      "external": false
-    },
-    {
-      "name": "N2",
-      "role": "internal",
-      "external": false
-    },
-    {
-      "name": "N3",
-      "role": "internal",
-      "external": false
-    },
-    {
-      "name": "N4",
-      "role": "internal",
-      "external": false
-    }
-  ],
-  "devices": [
-    {
-      "name": "C0",
-      "type": "cap",
-      "model": "",
-      "pins": [
+    "nets": [
         {
-          "role": "P",
-          "net": "N1"
+            "name": "N2",
+            "role": "internal",
+            "external": false
         },
         {
-          "role": "N",
-          "net": "N4"
-        }
-      ],
-      "params": {
-        "value": "22u"
-      }
-    },
-    {
-      "name": "D0",
-      "type": "diode",
-      "model": "LED",
-      "pins": [
-        {
-          "role": "A",
-          "net": "N3"
+            "name": "N3",
+            "role": "internal",
+            "external": false
         },
         {
-          "role": "K",
-          "net": "N4"
+            "name": "N4",
+            "role": "internal",
+            "external": false
         }
-      ],
-      "params": {}
-    },
-    {
-      "name": "V0",
-      "type": "vsource",
-      "model": "dc",
-      "pins": [
+    ],
+    "devices": [
         {
-          "role": "P",
-          "net": "N2"
+            "name": "C1",
+            "type": "cap",
+            "model": "",
+            "pins": [
+                {
+                    "role": "P",
+                    "net": "N3"
+                },
+                {
+                    "role": "N",
+                    "net": "N4"
+                }
+            ],
+            "params": {
+                "value": ""
+            }
         },
         {
-          "role": "N",
-          "net": "N4"
-        }
-      ],
-      "params": {
-        "value": "9"
-      }
-    },
-    {
-      "name": "R0",
-      "type": "res",
-      "model": "",
-      "pins": [
-        {
-          "role": "P",
-          "net": "N2"
+            "name": "X2",
+            "type": "unknown",
+            "model": "",
+            "pins": [
+                {
+                    "role": "P",
+                    "net": "N2"
+                },
+                {
+                    "role": "N",
+                    "net": "N4"
+                }
+            ],
+            "params": {
+                "value": ""
+            }
         },
         {
-          "role": "N",
-          "net": "N1"
-        }
-      ],
-      "params": {
-        "value": "1k"
-      }
-    },
-    {
-      "name": "R1",
-      "type": "res",
-      "model": "",
-      "pins": [
-        {
-          "role": "P",
-          "net": "N1"
+            "name": "R1",
+            "type": "res",
+            "model": "",
+            "pins": [
+                {
+                    "role": "P",
+                    "net": "N2"
+                },
+                {
+                    "role": "N",
+                    "net": "N4"
+                }
+            ],
+            "params": {
+                "value": ""
+            }
         },
         {
-          "role": "N",
-          "net": "N3"
+            "name": "V1",
+            "type": "vsource",
+            "model": "",
+            "pins": [
+                {
+                    "role": "P",
+                    "net": "N2"
+                },
+                {
+                    "role": "N",
+                    "net": "N3"
+                }
+            ],
+            "params": {
+                "value": ""
+            }
+        },
+        {
+            "name": "V2",
+            "type": "vsource",
+            "model": "",
+            "pins": [
+                {
+                    "role": "P",
+                    "net": "N2"
+                },
+                {
+                    "role": "N",
+                    "net": "N3"
+                }
+            ],
+            "params": {
+                "value": ""
+            }
+        },
+        {
+            "name": "X3",
+            "type": "unknown",
+            "model": "",
+            "pins": [
+                {
+                    "role": "P",
+                    "net": "N2"
+                },
+                {
+                    "role": "N",
+                    "net": "N3"
+                }
+            ],
+            "params": {
+                "value": ""
+            }
         }
-      ],
-      "params": {
-        "value": "2.2k"
-      }
-    }
-  ]
+    ]
 }
