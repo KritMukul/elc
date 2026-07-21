@@ -1082,8 +1082,11 @@ def connect_two_points(start_pos: list, end_pos: list):
     Connect two points on the schematic. Directly draws a Manhattan wire if not straight.
     """
     if start_pos[0] != end_pos[0] and start_pos[1] != end_pos[1]:
-        # Directly draw a manhattan wire using the unflipped coordinates
-        draw_manhattan_wire(start_pos, end_pos, bent_down=True)
+        # Smart bent direction: bend UP (bent_down=False) for top half connections, bend DOWN (bent_down=True) for bottom half
+        bent_down = True
+        if start_pos[1] > 105 or end_pos[1] > 105:
+            bent_down = False
+        draw_manhattan_wire(start_pos, end_pos, bent_down=bent_down)
         return
 
     if REVERSE_Y_FLAG:

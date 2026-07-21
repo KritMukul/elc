@@ -340,12 +340,13 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
     ]
 
     # Manual layout coordinates to match the hand-drawn sketch (Y-inverted due to SchGen REVERSE_Y)
+    # Bottom pins of V0, C0, D0 are aligned near y=80 to create a straight bottom rail
     manual_coords = {
-        "V0": {"x": 80, "y": 100, "rot": 0},      # Vsource on the left (vertical)
-        "R0": {"x": 115, "y": 120, "rot": 90},     # Resistor on the top (horizontal)
-        "C0": {"x": 150, "y": 100, "rot": 0},     # Capacitor in the middle (vertical)
-        "R1": {"x": 185, "y": 110, "rot": 180},      # Resistor on the right branch (vertical, rotated 180 to align pins)
-        "D0": {"x": 185, "y": 80, "rot": 270},     # LED on the right branch (vertical, pointing down)
+        "V0": {"x": 80, "y": 85, "rot": 0},       # Vsource on the left (vertical, bottom pin at ~80)
+        "R0": {"x": 115, "y": 120, "rot": 90},     # Resistor on the top (horizontal, at y=120)
+        "C0": {"x": 150, "y": 84, "rot": 0},       # Capacitor in the middle (vertical, bottom pin at ~80)
+        "R1": {"x": 185, "y": 110, "rot": 180},    # Resistor on the right branch (vertical, top pin at ~115)
+        "D0": {"x": 185, "y": 85, "rot": 270},     # LED on the right branch (vertical, bottom pin at ~80)
     }
 
     # Grid layout defaults
