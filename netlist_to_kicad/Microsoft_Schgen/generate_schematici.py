@@ -59,6 +59,7 @@ NOTE:
 7. Label Placement: "DO NOT place labels (like VDD, GND, +BATT) at the exact same coordinate as a component's center. Labels must be offset by at least 15 units from any component."
 8. Power Rails: "You MUST use standard power net names like 'VDD', 'VCC', or 'GND' instead of generic names like '#PWR1' or '#PWR2'."
 9. Grid Layout Instruction: "Do not stack components tightly. Calculate positions using a strict grid, e.g., pos_x = 50 * i + 100, pos_y = 50 * j + 100."
+10. Allowed Symbols: "You MUST strictly use standard KiCad symbol names from the 'Device' library (e.g., 'R' for resistor, 'C' for capacitor, 'L' for inductor, 'D' for diode, 'Battery' or 'VDC' for voltage source). NEVER use 'analogtobi' or hallucinated names."
 """
 
     messages = [
