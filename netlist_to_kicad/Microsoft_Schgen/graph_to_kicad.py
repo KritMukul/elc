@@ -339,13 +339,13 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
         "# ══════════════════════════════════════",
     ]
 
-    # Manual layout coordinates to match the hand-drawn sketch
+    # Manual layout coordinates to match the hand-drawn sketch (Y-inverted due to SchGen REVERSE_Y)
     manual_coords = {
         "V0": {"x": 80, "y": 100, "rot": 0},      # Vsource on the left (vertical)
-        "R0": {"x": 115, "y": 80, "rot": 90},     # Resistor on the top (horizontal)
+        "R0": {"x": 115, "y": 120, "rot": 90},     # Resistor on the top (horizontal)
         "C0": {"x": 150, "y": 100, "rot": 0},     # Capacitor in the middle (vertical)
-        "R1": {"x": 185, "y": 90, "rot": 0},      # Resistor on the right branch (vertical)
-        "D0": {"x": 185, "y": 120, "rot": 0},     # LED on the right branch (vertical)
+        "R1": {"x": 185, "y": 110, "rot": 0},      # Resistor on the right branch (vertical)
+        "D0": {"x": 185, "y": 80, "rot": 270},     # LED on the right branch (vertical, pointing down)
     }
 
     # Grid layout defaults
