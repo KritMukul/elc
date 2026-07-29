@@ -378,7 +378,20 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
             if c.get("sym"):
                 info_map[dev["name"]] = c["sym"]
 
-        elif args.manual and dev["name"] in manual_coords:
+        elif args and getattr(args, "sina", False) and "bbox" in dev:
+            bbox = dev["bbox"]
+            cx = (bbox[0] + bbox[2]) / 2.0
+            cy = (bbox[1] + bbox[3]) / 2.0
+            scale = 0.2
+            sx = 20 + cx * scale
+            sy = A4_HEIGHT - (20 + cy * scale)
+            lines.append(
+                f'add_schematic_symbol('
+                f'symbol_lib="{info["lib"]}", symbol_name="{info["sym"]}", '
+                f'pos_x={sx:.2f}, pos_y={sy:.2f}, '
+                f'reference="{ref}", value="{value}", rotation=0)'
+            )
+        elif args and getattr(args, "manual", False) and dev["name"] in manual_coords:
             c = manual_coords[dev["name"]]
             lines.append(
                 f'add_schematic_symbol('
@@ -431,7 +444,7 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
                 f'reference="{pwr_ref}", value="GND", rotation=0)'
             )
             pwr_n += 1
-    elif not (args and args.manual):
+    elif not (args and (args.manual or args.sina)):
         lines += [
             "",
             "# ══════════════════════════════════════",
@@ -499,43 +512,56 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
         else:
             ref_x_map[ref] = base_x + i * gap
 
-    for net_name in sorted(net_map):
-        conns = net_map[net_name]
-        pin_list = []
+    if args and getattr(args, "sina", False):
+        lines.append("# SINA explicit wires")
+        lines.append("import modules.kicad_sch_interface as intf")
+        for net in graph.get("nets", []):
+            for wire in net.get("wires", []):
+                x1, y1, x2, y2 = wire
+                scale = 0.2
+                sx1 = 20 + x1 * scale
+                sy1 = A4_HEIGHT - (20 + y1 * scale)
+                sx2 = 20 + x2 * scale
+                sy2 = A4_HEIGHT - (20 + y2 * scale)
+                lines.append(f"append_kicad_wire_raw(intf.sch_filename, ({sx1:.2f}, {sy1:.2f}), ({sx2:.2f}, {sy2:.2f}))")
+    else:
+        for net_name in sorted(net_map):
+            conns = net_map[net_name]
+            pin_list = []
 
-        for dev_name, role in conns:
-            ref = ref_map[dev_name]
-            kicad_pin = info_map[dev_name]["pins"].get(role)
-            if kicad_pin is None:
-                print(f"  Warning: unknown pin role '{role}' for {dev_name}, skipping.")
+            for dev_name, role in conns:
+                ref = ref_map[dev_name]
+                kicad_pin = info_map[dev_name]["pins"].get(role)
+                if kicad_pin is None:
+                    print(f"  Warning: unknown pin role '{role}' for {dev_name}, skipping.")
+                    continue
+                pin_list.append((ref, kicad_pin))
+
+            # Attach power symbols (placed at left, so give them a small X value)
+            if net_name in vdd_pwr:
+                ref = vdd_pwr[net_name]
+                ref_x_map[ref] = base_x - 30
+                pin_list.append((ref, "1"))
+            if net_name in gnd_pwr:
+                ref = gnd_pwr[net_name]
+                ref_x_map[ref] = base_x - 30
+                pin_list.append((ref, "1"))
+
+            if len(pin_list) < 2:
                 continue
-            pin_list.append((ref, kicad_pin))
 
-        # Attach power symbols (placed at left, so give them a small X value)
-        if net_name in vdd_pwr:
-            ref = vdd_pwr[net_name]
-            ref_x_map[ref] = base_x - 30
-            pin_list.append((ref, "1"))
-        if net_name in gnd_pwr:
-            ref = gnd_pwr[net_name]
-            ref_x_map[ref] = base_x - 30
-            pin_list.append((ref, "1"))
+            # Sort pin list by X position (left to right)
+            pin_list.sort(key=lambda item: ref_x_map.get(item[0], 0))
 
-        if len(pin_list) < 2:
-            continue
-
-        # Sort pin list by X position (left to right)
-        pin_list.sort(key=lambda item: ref_x_map.get(item[0], 0))
-
-        lines.append(f"# Net {net_name}")
-        # Daisy-chain connection (connect adjacent components from left to right)
-        for idx in range(len(pin_list) - 1):
-            ref_a, pin_a = pin_list[idx]
-            ref_b, pin_b = pin_list[idx + 1]
-            lines.append(
-                f'connect_pins("{ref_a}", "{pin_a}", '
-                f'"{ref_b}", "{pin_b}")'
-            )
+            lines.append(f"# Net {net_name}")
+            # Daisy-chain connection (connect adjacent components from left to right)
+            for idx in range(len(pin_list) - 1):
+                ref_a, pin_a = pin_list[idx]
+                ref_b, pin_b = pin_list[idx + 1]
+                lines.append(
+                    f'connect_pins("{ref_a}", "{pin_a}", '
+                    f'"{ref_b}", "{pin_b}")'
+                )
 
     # ── Write wires ──
     lines += [
@@ -565,6 +591,8 @@ def main():
                         help="Use trained GVAE for intelligent component placement")
     parser.add_argument("--gvae_weights", default="../gvae_weights.pth",
                         help="Path to GVAE .pth weights file")
+    parser.add_argument("--sina", action="store_true",
+                        help="Process SINA pipeline output with explicit coordinates and wires")
     parser.add_argument("--manual", action="store_true",
                         help="Use manual coordinates to perfectly match the hand-drawn sketch")
     parser.add_argument("--detections", default=None,
