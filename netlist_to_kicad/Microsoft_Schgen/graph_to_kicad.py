@@ -393,16 +393,28 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
 
         elif args and getattr(args, "sina", False) and "bbox" in dev:
             bbox = dev["bbox"]
+            w = bbox[2] - bbox[0]
+            h = bbox[3] - bbox[1]
             cx = (bbox[0] + bbox[2]) / 2.0
             cy = (bbox[1] + bbox[3]) / 2.0
             scale = 0.2
             sx = 20 + cx * scale
             sy = A4_HEIGHT - (20 + cy * scale)
+            
+            rot = 0
+            # Auto-rotate based on bbox aspect ratio
+            if info["sym"] in ("R", "C", "L", "D"):
+                if h > w * 1.1:
+                    rot = 90
+            elif info["sym"] == "Battery":
+                if w > h * 1.1:
+                    rot = 90
+                    
             lines.append(
                 f'add_schematic_symbol('
                 f'symbol_lib="{info["lib"]}", symbol_name="{info["sym"]}", '
                 f'pos_x={sx:.2f}, pos_y={sy:.2f}, '
-                f'reference="{ref}", value="{value}", rotation=0)'
+                f'reference="{ref}", value="{value}", rotation={rot})'
             )
         elif args and getattr(args, "manual", False) and dev["name"] in manual_coords:
             c = manual_coords[dev["name"]]
