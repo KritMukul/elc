@@ -114,7 +114,20 @@ def _define_gvae():
 
 def load_graph(path: str) -> dict:
     with open(path) as f:
-        return json.load(f)
+        data = json.load(f)
+        
+    # Normalize SINA types to match DEVICE_MAP
+    for dev in data.get("devices", []):
+        t = dev.get("type", "").lower()
+        if t in ("current_src", "current_source"):
+            t = "isource"
+        elif t in ("voltage_src", "voltage_source"):
+            t = "vsource"
+        elif t == "ground":
+            t = "gnd"
+        dev["type"] = t
+        
+    return data
 
 
 def get_device_info(dev: dict) -> dict:
