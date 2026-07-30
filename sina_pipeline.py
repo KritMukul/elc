@@ -8,12 +8,12 @@ import numpy as np
 try:
     from ultralytics import YOLO
 except ImportError:
-    print("Warning: ultralytics not installed. YOLO component detection will fail.")
+    YOLO = None
 
 try:
     import easyocr
 except ImportError:
-    print("Warning: easyocr not installed. Text extraction will fail.")
+    easyocr = None
 
 try:
     from skimage.morphology import skeletonize
@@ -24,17 +24,14 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="SINA Image-to-Netlist & Layout Pipeline")
     parser.add_argument("--image_dir", type=str, required=True, help="Directory containing schematic images")
     parser.add_argument("--output_dir", type=str, default="sina_output", help="Directory to save JSON graphs")
-    parser.add_argument("--yolo_weights", type=str, default="yolo_weights.pt", help="Path to trained YOLOv11/v8 model")
-    parser.add_argument("--use_vlm", action="store_true", help="Enable VLM for reference designator verification (Placeholder)")
+    parser.add_argument("--yolo_weights", type=str, default=None, help="Path to trained YOLOv11/v8 model (optional)")
+    parser.add_argument("--use_vlm", action="store_true", help="Enable VLM verification (Placeholder)")
+    parser.add_argument("--no_ocr", action="store_true", help="Skip OCR text extraction")
     return parser.parse_args()
 
 def extract_line_segments_from_skeleton(skeleton, min_length=10):
-    """
-    Given a boolean skeleton image, extracts line segments.
-    Uses Probabilistic Hough Transform as a simple approximation.
-    """
+    """Extract line segments from a skeleton using Hough Transform."""
     skel_img = (skeleton * 255).astype(np.uint8)
-    # Adjust parameters depending on image resolution
     lines = cv2.HoughLinesP(skel_img, 1, np.pi/180, threshold=15, minLineLength=min_length, maxLineGap=10)
     segments = []
     if lines is not None:
@@ -44,24 +41,170 @@ def extract_line_segments_from_skeleton(skeleton, min_length=10):
     return segments
 
 def get_pin_role(bbox, px, py):
-    """
-    Heuristically determine pin role based on which side of the bbox the wire intersects.
-    bbox: [x1, y1, x2, y2]
-    px, py: intersection point
-    """
+    """Determine pin role based on which side of the bbox the wire intersects."""
     x1, y1, x2, y2 = bbox
     cx, cy = (x1 + x2) / 2, (y1 + y2) / 2
-    
-    # Very simple heuristic: left=P, right=N, top=P, bottom=N (depends on component type normally)
-    # For a more robust system, this needs component-specific pin mappings.
     if abs(px - x1) < abs(px - x2) and abs(px - cx) > abs(py - cy):
-        return "P" # Left
+        return "P"
     elif abs(px - x2) < abs(px - x1) and abs(px - cx) > abs(py - cy):
-        return "N" # Right
+        return "N"
     elif abs(py - y1) < abs(py - y2):
-        return "P" # Top
+        return "P"
     else:
-        return "N" # Bottom
+        return "N"
+
+
+def classify_component_by_shape(contour, bbox, aspect_ratio, area):
+    """
+    Heuristically classify a detected component based on its shape properties.
+    This is a rough approximation — accuracy improves with YOLO.
+    """
+    w = bbox[2] - bbox[0]
+    h = bbox[3] - bbox[1]
+    
+    # Compute solidity (filled area / convex hull area)
+    hull = cv2.convexHull(contour)
+    hull_area = cv2.contourArea(hull)
+    solidity = area / hull_area if hull_area > 0 else 0
+    
+    # Compute circularity
+    perimeter = cv2.arcLength(contour, True)
+    circularity = 4 * np.pi * area / (perimeter * perimeter) if perimeter > 0 else 0
+    
+    # Classification heuristics for common schematic symbols
+    if aspect_ratio > 2.5 or aspect_ratio < 0.4:
+        # Very elongated: likely resistor or inductor
+        return "resistor"
+    elif 0.7 < circularity < 1.0 and solidity > 0.8:
+        # Round and solid: likely a node/junction or voltage source
+        return "vsource"
+    elif solidity < 0.5:
+        # Low solidity (lots of holes/gaps): could be a complex symbol like transistor
+        return "unknown"
+    elif 0.8 < aspect_ratio < 1.2:
+        # Roughly square: could be capacitor or generic component
+        return "capacitor"
+    else:
+        return "unknown"
+
+
+def detect_components_contour(gray, binary):
+    """
+    Detect components using contour analysis on the binary image.
+    Components are compact blobs; wires are long thin lines.
+    
+    Strategy:
+    1. Find all contours in the binary image
+    2. For each contour, compute bounding box, area, aspect ratio
+    3. Filter: components are compact (low aspect ratio deviation from 1)
+       and have moderate area. Wires are very thin or very long.
+    4. Use morphological operations to separate touching components
+    """
+    h, w = binary.shape
+    img_area = h * w
+    
+    # Morphological closing to connect broken component parts
+    kernel_close = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+    closed = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel_close, iterations=2)
+    
+    # Find contours
+    contours, hierarchy = cv2.findContours(closed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    
+    components = []
+    
+    # Adaptive thresholds based on image size
+    min_area = max(50, img_area * 0.001)   # At least 0.1% of image
+    max_area = img_area * 0.15              # At most 15% of image
+    min_dim = max(8, min(h, w) * 0.03)     # At least 3% of smallest dimension
+    max_aspect = 6.0                        # Max aspect ratio (higher = more wire-like)
+    
+    for contour in contours:
+        area = cv2.contourArea(contour)
+        if area < min_area or area > max_area:
+            continue
+        
+        x, y, bw, bh = cv2.boundingRect(contour)
+        
+        # Skip very small detections
+        if bw < min_dim and bh < min_dim:
+            continue
+        
+        aspect_ratio = max(bw, bh) / (min(bw, bh) + 1e-6)
+        
+        # Extent: ratio of contour area to bounding box area
+        extent = area / (bw * bh + 1e-6)
+        
+        # Filter out wire-like shapes (very elongated AND thin)
+        if aspect_ratio > max_aspect and min(bw, bh) < min_dim * 1.5:
+            continue  # This is likely a wire segment, not a component
+        
+        # Filter out tiny noise
+        if bw * bh < min_area * 0.5:
+            continue
+        
+        # Classify the component type
+        bbox = [x, y, x + bw, y + bh]
+        comp_type = classify_component_by_shape(contour, bbox, aspect_ratio, area)
+        
+        components.append({
+            "name": f"U{len(components)}",
+            "type": comp_type,
+            "bbox": bbox,
+            "conf": round(extent, 3),  # Use extent as a proxy confidence
+            "pins": [],
+            "_area": area,
+            "_aspect": round(aspect_ratio, 2),
+        })
+    
+    # Remove overlapping detections (non-maximum suppression)
+    components = nms_components(components, iou_threshold=0.5)
+    
+    # Re-index names
+    for i, comp in enumerate(components):
+        comp["name"] = f"U{i}"
+        # Remove internal fields
+        comp.pop("_area", None)
+        comp.pop("_aspect", None)
+    
+    return components
+
+
+def nms_components(components, iou_threshold=0.5):
+    """Simple non-maximum suppression for overlapping component detections."""
+    if not components:
+        return []
+    
+    # Sort by area (larger first — prefer larger detections)
+    components.sort(key=lambda c: c["_area"], reverse=True)
+    
+    keep = []
+    for comp in components:
+        overlap = False
+        for kept in keep:
+            iou = compute_iou(comp["bbox"], kept["bbox"])
+            if iou > iou_threshold:
+                overlap = True
+                break
+        if not overlap:
+            keep.append(comp)
+    
+    return keep
+
+
+def compute_iou(box1, box2):
+    """Compute Intersection over Union between two bboxes [x1,y1,x2,y2]."""
+    x1 = max(box1[0], box2[0])
+    y1 = max(box1[1], box2[1])
+    x2 = min(box1[2], box2[2])
+    y2 = min(box1[3], box2[3])
+    
+    inter = max(0, x2 - x1) * max(0, y2 - y1)
+    area1 = (box1[2] - box1[0]) * (box1[3] - box1[1])
+    area2 = (box2[2] - box2[0]) * (box2[3] - box2[1])
+    union = area1 + area2 - inter
+    
+    return inter / union if union > 0 else 0
+
 
 def process_image(img_path, yolo_model, reader, output_dir):
     print(f"Processing {img_path}...")
@@ -72,8 +215,13 @@ def process_image(img_path, yolo_model, reader, output_dir):
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
-    # 1. Component Detection (YOLO)
+    # Binarize (white background, black components/wires)
+    _, binary = cv2.threshold(gray, 200, 255, cv2.THRESH_BINARY_INV)
+    
+    # 1. Component Detection
     components = []
+    
+    # Try YOLO first
     if yolo_model:
         results = yolo_model(img, verbose=False)[0]
         for box in results.boxes:
@@ -82,25 +230,30 @@ def process_image(img_path, yolo_model, reader, output_dir):
             cls_id = int(box.cls[0])
             cls_name = results.names[cls_id]
             components.append({
-                "name": f"U{len(components)}", # Placeholder name, will be updated by OCR
+                "name": f"U{len(components)}",
                 "type": cls_name,
                 "bbox": [x1, y1, x2, y2],
                 "conf": conf,
-                "pins": [] # To be populated in connectivity stage
+                "pins": []
             })
-
+    
+    # Fallback: contour-based detection if YOLO found nothing
+    if not components:
+        components = detect_components_contour(gray, binary)
+        if components:
+            print(f"  Contour detector found {len(components)} components")
+    
     # 2. Text Extraction (OCR)
     texts = []
     if reader:
         ocr_results = reader.readtext(gray)
         for (bbox, text, prob) in ocr_results:
-            # bbox is a list of 4 points: [tl, tr, br, bl]
             x_coords = [p[0] for p in bbox]
             y_coords = [p[1] for p in bbox]
             x1, y1, x2, y2 = int(min(x_coords)), int(min(y_coords)), int(max(x_coords)), int(max(y_coords))
             texts.append({"text": text, "bbox": [x1, y1, x2, y2]})
 
-    # Map text to components (Basic spatial heuristic: nearest component)
+    # Map text to nearest component
     for comp in components:
         cx = (comp["bbox"][0] + comp["bbox"][2]) / 2
         cy = (comp["bbox"][1] + comp["bbox"][3]) / 2
@@ -110,12 +263,10 @@ def process_image(img_path, yolo_model, reader, output_dir):
             tcx = (txt["bbox"][0] + txt["bbox"][2]) / 2
             tcy = (txt["bbox"][1] + txt["bbox"][3]) / 2
             dist = np.hypot(cx - tcx, cy - tcy)
-            if dist < min_dist and dist < 100: # Distance threshold
+            if dist < min_dist and dist < 100:
                 min_dist = dist
                 best_text = txt["text"]
         if best_text:
-            # Very naive assumption: text might be refdes (e.g. R1) or value (e.g. 10k)
-            # A real VLM would parse this contextually.
             if any(char.isdigit() for char in best_text):
                 if best_text[0].isalpha():
                     comp["name"] = best_text
@@ -123,44 +274,37 @@ def process_image(img_path, yolo_model, reader, output_dir):
                     comp["params"] = {"value": best_text}
 
     # 3. Connectivity Inference
-    # Binarize to get wires (assuming white background, black wires)
-    _, binary = cv2.threshold(gray, 200, 255, cv2.THRESH_BINARY_INV)
-    
-    # Mask out components and texts
+    # Mask out detected components and text from the wire mask
     wire_mask = binary.copy()
     for comp in components:
         x1, y1, x2, y2 = comp["bbox"]
-        # Expand slightly to break connections inside component body
-        cv2.rectangle(wire_mask, (max(0, x1-5), max(0, y1-5)), (min(wire_mask.shape[1], x2+5), min(wire_mask.shape[0], y2+5)), 0, -1)
+        cv2.rectangle(wire_mask, (max(0, x1-5), max(0, y1-5)),
+                      (min(wire_mask.shape[1], x2+5), min(wire_mask.shape[0], y2+5)), 0, -1)
     
     for txt in texts:
         x1, y1, x2, y2 = txt["bbox"]
-        cv2.rectangle(wire_mask, (max(0, x1-2), max(0, y1-2)), (min(wire_mask.shape[1], x2+2), min(wire_mask.shape[0], y2+2)), 0, -1)
+        cv2.rectangle(wire_mask, (max(0, x1-2), max(0, y1-2)),
+                      (min(wire_mask.shape[1], x2+2), min(wire_mask.shape[0], y2+2)), 0, -1)
 
-    # Connected Component Labeling
+    # Connected Component Labeling on remaining pixels (wires)
     num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(wire_mask, connectivity=8)
     
     nets = []
-    # Identify which net intersects with which component
     for label in range(1, num_labels):
-        if stats[label, cv2.CC_STAT_AREA] < 20: # Filter noise
+        if stats[label, cv2.CC_STAT_AREA] < 20:
             continue
             
         net_name = f"N{label}"
         nets.append({"name": net_name})
         
-        # Extract wiring arrangement for this net
         net_mask = (labels == label).astype(np.uint8)
         
-        # Skeletonize
+        # Skeletonize and extract wire segments
         skeleton = skeletonize(net_mask > 0)
         wire_segments = extract_line_segments_from_skeleton(skeleton)
-        
-        # Add wires to the net definition for KiCad export
         nets[-1]["wires"] = wire_segments
         
-        # Check intersections with components
-        # We dilate the net mask slightly to overlap with the component bounding boxes
+        # Check which components this net touches
         dilated_net = cv2.dilate(net_mask, np.ones((11,11), np.uint8))
         
         for comp in components:
@@ -170,14 +314,12 @@ def process_image(img_path, yolo_model, reader, output_dir):
             
             intersection = cv2.bitwise_and(dilated_net, comp_mask)
             if np.any(intersection):
-                # Find the center of the intersection to determine pin role
                 ys, xs = np.where(intersection > 0)
                 px, py = np.mean(xs), np.mean(ys)
-                
                 role = get_pin_role(comp["bbox"], px, py)
                 comp["pins"].append({"role": role, "net": net_name})
 
-    # 4. Schematic Recreation Export
+    # 4. Export
     output_graph = {
         "source_file": os.path.basename(img_path),
         "nets": nets,
@@ -189,35 +331,48 @@ def process_image(img_path, yolo_model, reader, output_dir):
     with open(out_file, "w") as f:
         json.dump(output_graph, f, indent=4)
         
-    print(f"Saved {out_file}")
+    print(f"  Saved {out_file} ({len(components)} devices, {len(nets)} nets)")
 
 def main():
     args = parse_arguments()
     os.makedirs(args.output_dir, exist_ok=True)
     
-    # Initialize models
+    # Initialize YOLO (optional)
     yolo_model = None
-    if os.path.exists(args.yolo_weights):
+    if args.yolo_weights and os.path.exists(args.yolo_weights) and YOLO:
         try:
             yolo_model = YOLO(args.yolo_weights)
+            # Quick test: if the model produces zero detections, warn the user
+            print(f"YOLO model loaded from {args.yolo_weights}")
         except Exception as e:
             print(f"Failed to load YOLO model: {e}")
-    else:
-        print(f"YOLO weights not found at {args.yolo_weights}. Proceeding without component detection.")
+    
+    if not yolo_model:
+        print("No YOLO model — using contour-based component detection fallback.")
 
+    # Initialize OCR (optional)
     reader = None
-    try:
-        reader = easyocr.Reader(['en'])
-    except Exception as e:
-        print(f"Failed to initialize EasyOCR: {e}")
-        
+    if not args.no_ocr and easyocr:
+        try:
+            reader = easyocr.Reader(['en'], gpu=True)
+        except Exception as e:
+            print(f"Failed to initialize EasyOCR: {e}")
+    
     # Process images
     image_extensions = {".png", ".jpg", ".jpeg"}
-    for filename in os.listdir(args.image_dir):
-        ext = os.path.splitext(filename)[1].lower()
-        if ext in image_extensions:
-            img_path = os.path.join(args.image_dir, filename)
-            process_image(img_path, yolo_model, reader, args.output_dir)
+    files = sorted([f for f in os.listdir(args.image_dir)
+                    if os.path.splitext(f)[1].lower() in image_extensions])
+    
+    print(f"Found {len(files)} images to process.\n")
+    
+    for i, filename in enumerate(files):
+        img_path = os.path.join(args.image_dir, filename)
+        process_image(img_path, yolo_model, reader, args.output_dir)
+        
+        if (i + 1) % 100 == 0:
+            print(f"  Progress: {i+1}/{len(files)}")
+
+    print(f"\nDone! Processed {len(files)} images. Output in {args.output_dir}/")
 
 if __name__ == "__main__":
     main()
