@@ -342,7 +342,7 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
     info_map = {d["name"]: get_device_info(d) for d in devices}
 
     use_gvae = device_positions is not None
-    A4_HEIGHT = 297.0  # mm — for Y-flip from KiCad coords to SchGen coords
+    A4_HEIGHT = 210.0  # mm — for Y-flip from KiCad coords to SchGen coords (SchGen flips around 210)
 
     lines = [
         "from modules.kicad_sch_interface import *",
@@ -532,10 +532,11 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
             for wire in net.get("wires", []):
                 x1, y1, x2, y2 = wire
                 scale = 0.2
+                # KiCad Y is down. Image Y is down. Map directly.
                 sx1 = 20 + x1 * scale
-                sy1 = A4_HEIGHT - (20 + y1 * scale)
+                sy1 = 20 + y1 * scale
                 sx2 = 20 + x2 * scale
-                sy2 = A4_HEIGHT - (20 + y2 * scale)
+                sy2 = 20 + y2 * scale
                 lines.append(f"append_kicad_wire_raw(intf.sch_filename, ({sx1:.2f}, {sy1:.2f}), ({sx2:.2f}, {sy2:.2f}))")
     else:
         for net_name in sorted(net_map):
