@@ -114,20 +114,7 @@ def _define_gvae():
 
 def load_graph(path: str) -> dict:
     with open(path) as f:
-        data = json.load(f)
-        
-    # Normalize SINA types to match DEVICE_MAP
-    for dev in data.get("devices", []):
-        t = dev.get("type", "").lower()
-        if t in ("current_src", "current_source"):
-            t = "isource"
-        elif t in ("voltage_src", "voltage_source"):
-            t = "vsource"
-        elif t == "ground":
-            t = "gnd"
-        dev["type"] = t
-        
-    return data
+        return json.load(f)
 
 
 def get_device_info(dev: dict) -> dict:
@@ -336,20 +323,13 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
     net_map = defaultdict(list)
     for dev in devices:
         for pin in dev["pins"]:
-            role = pin["role"]
-            if role in ("top", "left"):
-                info = get_device_info(dev)
-                role = "1" if "1" in info["pins"].values() else ("A" if "A" in info["pins"].values() else "P")
-            elif role in ("bottom", "right"):
-                info = get_device_info(dev)
-                role = "2" if "2" in info["pins"].values() else ("K" if "K" in info["pins"].values() else "N")
-            net_map[pin["net"]].append((dev["name"], role))
+            net_map[pin["net"]].append((dev["name"], pin["role"]))
 
     ref_map  = assign_references(devices)
     info_map = {d["name"]: get_device_info(d) for d in devices}
 
     use_gvae = device_positions is not None
-    A4_HEIGHT = 210.0  # mm — for Y-flip from KiCad coords to SchGen coords (SchGen flips around 210)
+    A4_HEIGHT = 297.0  # mm — for Y-flip from KiCad coords to SchGen coords
 
     lines = [
         "from modules.kicad_sch_interface import *",
@@ -400,28 +380,16 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
 
         elif args and getattr(args, "sina", False) and "bbox" in dev:
             bbox = dev["bbox"]
-            w = bbox[2] - bbox[0]
-            h = bbox[3] - bbox[1]
             cx = (bbox[0] + bbox[2]) / 2.0
             cy = (bbox[1] + bbox[3]) / 2.0
             scale = 0.2
-            sx = round((20 + cx * scale) / 1.27) * 1.27
-            sy = round((A4_HEIGHT - (20 + cy * scale)) / 1.27) * 1.27
-            
-            rot = 0
-            # Auto-rotate based on bbox aspect ratio
-            if info["sym"] in ("R", "C", "L", "D"):
-                if h > w:
-                    rot = 90
-            elif info["sym"] == "Battery":
-                if w > h:
-                    rot = 90
-                    
+            sx = 20 + cx * scale
+            sy = A4_HEIGHT - (20 + cy * scale)
             lines.append(
                 f'add_schematic_symbol('
                 f'symbol_lib="{info["lib"]}", symbol_name="{info["sym"]}", '
                 f'pos_x={sx:.2f}, pos_y={sy:.2f}, '
-                f'reference="{ref}", value="{value}", rotation={rot})'
+                f'reference="{ref}", value="{value}", rotation=0)'
             )
         elif args and getattr(args, "manual", False) and dev["name"] in manual_coords:
             c = manual_coords[dev["name"]]
@@ -544,18 +512,17 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
         else:
             ref_x_map[ref] = base_x + i * gap
 
-    if False:  # Disable raw wires, use connect_pins instead
+    if args and getattr(args, "sina", False):
         lines.append("# SINA explicit wires")
         lines.append("import modules.kicad_sch_interface as intf")
         for net in graph.get("nets", []):
             for wire in net.get("wires", []):
                 x1, y1, x2, y2 = wire
                 scale = 0.2
-                # KiCad Y is down. Image Y is down. Map directly.
                 sx1 = 20 + x1 * scale
-                sy1 = 20 + y1 * scale
+                sy1 = A4_HEIGHT - (20 + y1 * scale)
                 sx2 = 20 + x2 * scale
-                sy2 = 20 + y2 * scale
+                sy2 = A4_HEIGHT - (20 + y2 * scale)
                 lines.append(f"append_kicad_wire_raw(intf.sch_filename, ({sx1:.2f}, {sy1:.2f}), ({sx2:.2f}, {sy2:.2f}))")
     else:
         for net_name in sorted(net_map):

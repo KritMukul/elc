@@ -206,18 +206,6 @@ def compute_iou(box1, box2):
     return inter / union if union > 0 else 0
 
 
-def get_pin_role(bbox, px, py):
-    x1, y1, x2, y2 = bbox
-    cx = (x1 + x2) / 2
-    cy = (y1 + y2) / 2
-    dx = px - cx
-    dy = py - cy
-    if abs(dx) > abs(dy):
-        return "right" if dx > 0 else "left"
-    else:
-        return "bottom" if dy > 0 else "top"
-
-
 def process_image(img_path, yolo_model, reader, output_dir):
     print(f"Processing {img_path}...")
     img = cv2.imread(img_path)
@@ -290,8 +278,8 @@ def process_image(img_path, yolo_model, reader, output_dir):
     wire_mask = binary.copy()
     for comp in components:
         x1, y1, x2, y2 = comp["bbox"]
-        cv2.rectangle(wire_mask, (max(0, x1), max(0, y1)),
-                      (min(wire_mask.shape[1], x2), min(wire_mask.shape[0], y2)), 0, -1)
+        cv2.rectangle(wire_mask, (max(0, x1-5), max(0, y1-5)),
+                      (min(wire_mask.shape[1], x2+5), min(wire_mask.shape[0], y2+5)), 0, -1)
     
     for txt in texts:
         x1, y1, x2, y2 = txt["bbox"]
@@ -317,7 +305,7 @@ def process_image(img_path, yolo_model, reader, output_dir):
         nets[-1]["wires"] = wire_segments
         
         # Check which components this net touches
-        dilated_net = cv2.dilate(net_mask, np.ones((25,25), np.uint8))
+        dilated_net = cv2.dilate(net_mask, np.ones((11,11), np.uint8))
         
         for comp in components:
             x1, y1, x2, y2 = comp["bbox"]
