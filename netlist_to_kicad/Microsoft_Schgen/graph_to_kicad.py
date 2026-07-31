@@ -336,7 +336,14 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
     net_map = defaultdict(list)
     for dev in devices:
         for pin in dev["pins"]:
-            net_map[pin["net"]].append((dev["name"], pin["role"]))
+            role = pin["role"]
+            if role in ("top", "left"):
+                info = get_device_info(dev)
+                role = "1" if "1" in info["pins"].values() else ("A" if "A" in info["pins"].values() else "P")
+            elif role in ("bottom", "right"):
+                info = get_device_info(dev)
+                role = "2" if "2" in info["pins"].values() else ("K" if "K" in info["pins"].values() else "N")
+            net_map[pin["net"]].append((dev["name"], role))
 
     ref_map  = assign_references(devices)
     info_map = {d["name"]: get_device_info(d) for d in devices}
@@ -398,16 +405,16 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
             cx = (bbox[0] + bbox[2]) / 2.0
             cy = (bbox[1] + bbox[3]) / 2.0
             scale = 0.2
-            sx = 20 + cx * scale
-            sy = A4_HEIGHT - (20 + cy * scale)
+            sx = round((20 + cx * scale) / 1.27) * 1.27
+            sy = round((A4_HEIGHT - (20 + cy * scale)) / 1.27) * 1.27
             
             rot = 0
             # Auto-rotate based on bbox aspect ratio
             if info["sym"] in ("R", "C", "L", "D"):
-                if h > w * 1.1:
+                if h > w:
                     rot = 90
             elif info["sym"] == "Battery":
-                if w > h * 1.1:
+                if w > h:
                     rot = 90
                     
             lines.append(
@@ -537,7 +544,7 @@ def generate_layout_code(graph: dict, device_positions=None, power_positions=Non
         else:
             ref_x_map[ref] = base_x + i * gap
 
-    if args and getattr(args, "sina", False):
+    if False:  # Disable raw wires, use connect_pins instead
         lines.append("# SINA explicit wires")
         lines.append("import modules.kicad_sch_interface as intf")
         for net in graph.get("nets", []):

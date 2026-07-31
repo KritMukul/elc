@@ -206,6 +206,18 @@ def compute_iou(box1, box2):
     return inter / union if union > 0 else 0
 
 
+def get_pin_role(bbox, px, py):
+    x1, y1, x2, y2 = bbox
+    cx = (x1 + x2) / 2
+    cy = (y1 + y2) / 2
+    dx = px - cx
+    dy = py - cy
+    if abs(dx) > abs(dy):
+        return "right" if dx > 0 else "left"
+    else:
+        return "bottom" if dy > 0 else "top"
+
+
 def process_image(img_path, yolo_model, reader, output_dir):
     print(f"Processing {img_path}...")
     img = cv2.imread(img_path)
