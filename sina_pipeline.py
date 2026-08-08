@@ -321,31 +321,27 @@ def process_image(img_path, yolo_model, reader, output_dir):
 
 import math
 
-def point_to_box_dist(px, py, box):
-    x1, y1, x2, y2 = box
-    dx = max(x1 - px, 0, px - x2)
-    dy = max(y1 - py, 0, py - y2)
-    return math.hypot(dx, dy)
+import math
 
-def extend_wire_to_box(x, y, box):
-    """Extend point (x,y) to the nearest edge of the box."""
-    x1, y1, x2, y2 = box
-    if x < x1: ex = x1
-    elif x > x2: ex = x2
-    else: ex = x
-        
-    if y < y1: ey = y1
-    elif y > y2: ey = y2
-    else: ey = y
-    
-    return int(ex), int(ey)
+def point_to_segment_dist(px, py, x1, y1, x2, y2):
+    """Distance from point (px,py) to line segment (x1,y1)-(x2,y2)."""
+    l2 = (x2 - x1)**2 + (y2 - y1)**2
+    if l2 == 0:
+        return math.hypot(px - x1, py - y1), (x1, y1)
+    t = max(0, min(1, ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) / l2))
+    proj_x = x1 + t * (x2 - x1)
+    proj_y = y1 + t * (y2 - y1)
+    return math.hypot(px - proj_x, py - proj_y), (proj_x, proj_y)
 
 def fix_graph_connectivity(graph):
     components = graph["devices"]
     nets = graph["nets"]
     
-    # 1. Merge close nets
+    # 1. Merge collinear or close nets
     MERGE_DIST = 35.0
+    COLLINEAR_MERGE_DIST = 200.0
+    ALIGN_THRESH = 15.0 # Max pixel difference in X or Y to be considered collinear
+    
     while True:
         merged = False
         for i in range(len(nets)):
@@ -361,8 +357,39 @@ def fix_graph_connectivity(graph):
                         pts_b = [(wb[0], wb[1]), (wb[2], wb[3])]
                         for pa in pts_a:
                             for pb in pts_b:
-                                if math.hypot(pa[0]-pb[0], pa[1]-pb[1]) < MERGE_DIST:
+                                dist = math.hypot(pa[0]-pb[0], pa[1]-pb[1])
+                                
+                                # Close distance merge
+                                if dist < MERGE_DIST:
                                     should_merge = True
+                                    
+                                # Collinear horizontal merge
+                                elif dist < COLLINEAR_MERGE_DIST and abs(pa[1] - pb[1]) < ALIGN_THRESH:
+                                    # Ensure no component is between them horizontally
+                                    min_x, max_x = min(pa[0], pb[0]), max(pa[0], pb[0])
+                                    blocked = False
+                                    for comp in components:
+                                        bx1, by1, bx2, by2 = comp["bbox"]
+                                        if by1 < pa[1] < by2 and min_x < bx1 and bx2 < max_x:
+                                            blocked = True
+                                            break
+                                    if not blocked:
+                                        should_merge = True
+                                        
+                                # Collinear vertical merge
+                                elif dist < COLLINEAR_MERGE_DIST and abs(pa[0] - pb[0]) < ALIGN_THRESH:
+                                    min_y, max_y = min(pa[1], pb[1]), max(pa[1], pb[1])
+                                    blocked = False
+                                    for comp in components:
+                                        bx1, by1, bx2, by2 = comp["bbox"]
+                                        if bx1 < pa[0] < bx2 and min_y < by1 and by2 < max_y:
+                                            blocked = True
+                                            break
+                                    if not blocked:
+                                        should_merge = True
+
+                                if should_merge:
+                                    # Add a bridging wire
                                     net_a["wires"].append([pa[0], pa[1], pb[0], pb[1]])
                                     break
                             if should_merge: break
@@ -370,6 +397,7 @@ def fix_graph_connectivity(graph):
                     if should_merge: break
                 
                 if should_merge:
+                    # Merge B into A
                     net_a.setdefault("wires", []).extend(net_b.get("wires", []))
                     for comp in components:
                         for pin in comp.get("pins", []):
@@ -381,40 +409,47 @@ def fix_graph_connectivity(graph):
             if merged: break
         if not merged: break
             
-    # 2. Extend wires to touch components
+    # 2. Draw explicit connections from components to their assigned nets
     for comp in components:
-        box = comp["bbox"]
+        x1, y1, x2, y2 = comp["bbox"]
+        # Component center
+        cx, cy = (x1 + x2) / 2.0, (y1 + y2) / 2.0
+        
         for pin in comp.get("pins", []):
             net_name = pin["net"]
             net = next((n for n in nets if n["name"] == net_name), None)
             if not net: continue
             
-            min_dist = float('inf')
-            best_wire_idx = -1
-            best_pt_idx = -1 
+            # Find the closest point on any wire in this net to the component center
+            min_d = float('inf')
+            best_proj = None
             
-            for wi, wire in enumerate(net.get("wires", [])):
+            for wire in net.get("wires", []):
                 if len(wire) < 4: continue
-                d1 = point_to_box_dist(wire[0], wire[1], box)
-                d2 = point_to_box_dist(wire[2], wire[3], box)
-                
-                if d1 < min_dist:
-                    min_dist = d1
-                    best_wire_idx = wi
-                    best_pt_idx = 0
-                if d2 < min_dist:
-                    min_dist = d2
-                    best_wire_idx = wi
-                    best_pt_idx = 1
+                d, proj = point_to_segment_dist(cx, cy, wire[0], wire[1], wire[2], wire[3])
+                if d < min_d:
+                    min_d = d
+                    best_proj = proj
                     
-            if best_wire_idx != -1 and min_dist < 40:
-                wire = net["wires"][best_wire_idx]
-                if best_pt_idx == 0:
-                    ex, ey = extend_wire_to_box(wire[0], wire[1], box)
-                    net["wires"].append([wire[0], wire[1], ex, ey])
+            # If we found a point and it's somewhat nearby, draw a line from the edge of the bbox to that point
+            if best_proj and min_d < 200:
+                px, py = best_proj
+                
+                # Intersect line (cx,cy)->(px,py) with the bounding box so the wire starts exactly at the edge
+                if abs(px - cx) > abs(py - cy):
+                    # Intersects vertical edge
+                    edge_x = x1 if px < cx else x2
+                    edge_y = cy + (py - cy) * (edge_x - cx) / (px - cx + 1e-6)
                 else:
-                    ex, ey = extend_wire_to_box(wire[2], wire[3], box)
-                    net["wires"].append([wire[2], wire[3], ex, ey])
+                    # Intersects horizontal edge
+                    edge_y = y1 if py < cy else y2
+                    edge_x = cx + (px - cx) * (edge_y - cy) / (py - cy + 1e-6)
+                    
+                edge_x = max(x1, min(x2, edge_x))
+                edge_y = max(y1, min(y2, edge_y))
+                
+                if math.hypot(px - edge_x, py - edge_y) > 2:
+                    net["wires"].append([int(edge_x), int(edge_y), int(px), int(py)])
                     
     return graph
 
