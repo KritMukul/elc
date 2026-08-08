@@ -319,12 +319,115 @@ def process_image(img_path, yolo_model, reader, output_dir):
                 role = get_pin_role(comp["bbox"], px, py)
                 comp["pins"].append({"role": role, "net": net_name})
 
+import math
+
+def point_to_box_dist(px, py, box):
+    x1, y1, x2, y2 = box
+    dx = max(x1 - px, 0, px - x2)
+    dy = max(y1 - py, 0, py - y2)
+    return math.hypot(dx, dy)
+
+def extend_wire_to_box(x, y, box):
+    """Extend point (x,y) to the nearest edge of the box."""
+    x1, y1, x2, y2 = box
+    if x < x1: ex = x1
+    elif x > x2: ex = x2
+    else: ex = x
+        
+    if y < y1: ey = y1
+    elif y > y2: ey = y2
+    else: ey = y
+    
+    return int(ex), int(ey)
+
+def fix_graph_connectivity(graph):
+    components = graph["devices"]
+    nets = graph["nets"]
+    
+    # 1. Merge close nets
+    MERGE_DIST = 35.0
+    while True:
+        merged = False
+        for i in range(len(nets)):
+            for j in range(i + 1, len(nets)):
+                net_a = nets[i]
+                net_b = nets[j]
+                
+                should_merge = False
+                for wa in net_a.get("wires", []):
+                    for wb in net_b.get("wires", []):
+                        if len(wa) < 4 or len(wb) < 4: continue
+                        pts_a = [(wa[0], wa[1]), (wa[2], wa[3])]
+                        pts_b = [(wb[0], wb[1]), (wb[2], wb[3])]
+                        for pa in pts_a:
+                            for pb in pts_b:
+                                if math.hypot(pa[0]-pb[0], pa[1]-pb[1]) < MERGE_DIST:
+                                    should_merge = True
+                                    net_a["wires"].append([pa[0], pa[1], pb[0], pb[1]])
+                                    break
+                            if should_merge: break
+                        if should_merge: break
+                    if should_merge: break
+                
+                if should_merge:
+                    net_a.setdefault("wires", []).extend(net_b.get("wires", []))
+                    for comp in components:
+                        for pin in comp.get("pins", []):
+                            if pin["net"] == net_b["name"]:
+                                pin["net"] = net_a["name"]
+                    nets.pop(j)
+                    merged = True
+                    break
+            if merged: break
+        if not merged: break
+            
+    # 2. Extend wires to touch components
+    for comp in components:
+        box = comp["bbox"]
+        for pin in comp.get("pins", []):
+            net_name = pin["net"]
+            net = next((n for n in nets if n["name"] == net_name), None)
+            if not net: continue
+            
+            min_dist = float('inf')
+            best_wire_idx = -1
+            best_pt_idx = -1 
+            
+            for wi, wire in enumerate(net.get("wires", [])):
+                if len(wire) < 4: continue
+                d1 = point_to_box_dist(wire[0], wire[1], box)
+                d2 = point_to_box_dist(wire[2], wire[3], box)
+                
+                if d1 < min_dist:
+                    min_dist = d1
+                    best_wire_idx = wi
+                    best_pt_idx = 0
+                if d2 < min_dist:
+                    min_dist = d2
+                    best_wire_idx = wi
+                    best_pt_idx = 1
+                    
+            if best_wire_idx != -1 and min_dist < 40:
+                wire = net["wires"][best_wire_idx]
+                if best_pt_idx == 0:
+                    ex, ey = extend_wire_to_box(wire[0], wire[1], box)
+                    net["wires"].append([wire[0], wire[1], ex, ey])
+                else:
+                    ex, ey = extend_wire_to_box(wire[2], wire[3], box)
+                    net["wires"].append([wire[2], wire[3], ex, ey])
+                    
+    return graph
+
+
     # 4. Export
     output_graph = {
         "source_file": os.path.basename(img_path),
         "nets": nets,
         "devices": components
     }
+    
+    # Fix connectivity issues (split nets, disconnected bounding boxes)
+    output_graph = fix_graph_connectivity(output_graph)
     
     base_name = os.path.splitext(os.path.basename(img_path))[0]
     out_file = os.path.join(output_dir, f"{base_name}_graph.json")
