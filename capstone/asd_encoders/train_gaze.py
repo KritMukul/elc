@@ -4,11 +4,10 @@ import argparse
 import os
 
 import numpy as np
-import pandas as pd
 import torch
 import torch.nn as nn
 import yaml
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import KFold
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
@@ -19,32 +18,19 @@ from utils.metrics import compute_all_metrics, print_metrics
 from utils.seed import set_seed
 
 
-def get_participant_labels(raw_root, metadata_csv, img_size, cache_dir):
-    """Unique participants and their label - one entry each, not one per record.
+def get_stimulus_ids(raw_root, img_size, cache_dir):
+    """The unique stimulus ids - the only cross-validation group this data supports.
 
-    build_gaze_index emits a record per metadata row. Splitting those records
-    directly (rather than the participants behind them) lets a participant with
-    more than one row land on both sides of the fold, and GazeDataset filters by
-    participant membership - so every one of that participant's images would be
-    served to both loaders. train_eeg.py and train_gait.py avoid this only
-    because globbing subject directories happens to yield unique names.
+    Saliency4ASD does not identify a viewer across stimuli, so folds are built
+    over stimulus images. Every stimulus carries both an ASD and a TD scanpath
+    file, so class balance holds on both sides of any partition and no
+    stratification is needed; splitting the *records* instead would put the same
+    stimulus (and the same viewers) on both sides.
     """
-    index = build_gaze_index(raw_root, metadata_csv, img_size=img_size, cache_dir=cache_dir)
-
-    by_participant = {}
-    for r in index:
-        pid, label = r["participant"], r["label"]
-        if by_participant.setdefault(pid, label) != label:
-            raise ValueError(
-                f"Participant {pid} carries conflicting labels in {metadata_csv}: "
-                f"{by_participant[pid]} vs {label}"
-            )
-
-    participants = sorted(by_participant)
-    labels = [by_participant[p] for p in participants]
-    if len(participants) < len(index):
-        print(f"Collapsed {len(index)} gaze records into {len(participants)} unique participants.")
-    return np.array(participants), np.array(labels)
+    index = build_gaze_index(raw_root, img_size=img_size, cache_dir=cache_dir)
+    stimuli = sorted({r["stimulus"] for r in index})
+    print(f"{len(index)} gaze scanpaths over {len(stimuli)} stimulus images.")
+    return np.array(stimuli)
 
 
 def run_epoch(model, loader, optimizer, criterion, device, scaler, train=True):
@@ -92,25 +78,24 @@ def main(cfg_path):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     os.makedirs(cfg["train"]["checkpoint_dir"], exist_ok=True)
 
-    participants, labels = get_participant_labels(cfg["raw_root"], cfg["metadata_csv"],
-                                                    cfg["img_size"], cfg["cache_dir"])
+    stimuli = get_stimulus_ids(cfg["raw_root"], cfg["img_size"], cfg["cache_dir"])
 
-    skf = StratifiedKFold(n_splits=cfg["train"]["n_folds"], shuffle=True,
-                           random_state=cfg["train"]["seed"])
+    kf = KFold(n_splits=cfg["train"]["n_folds"], shuffle=True,
+               random_state=cfg["train"]["seed"])
 
     fold_metrics = []
-    for fold, (train_idx, val_idx) in enumerate(skf.split(participants, labels)):
+    for fold, (train_idx, val_idx) in enumerate(kf.split(stimuli)):
         print(f"\n===== Gaze Fold {fold + 1}/{cfg['train']['n_folds']} =====")
-        train_p = set(participants[train_idx])
-        val_p = set(participants[val_idx])
+        train_p = set(stimuli[train_idx].tolist())
+        val_p = set(stimuli[val_idx].tolist())
         assert train_p.isdisjoint(val_p), (
-            f"Participant leak in fold {fold}: {sorted(train_p & val_p)}"
+            f"Stimulus leak in fold {fold}: {sorted(train_p & val_p)}"
         )
 
-        train_ds = GazeDataset(cfg["raw_root"], cfg["metadata_csv"], train_p,
+        train_ds = GazeDataset(cfg["raw_root"], train_p,
                                 img_size=cfg["img_size"], cache_dir=cfg["cache_dir"],
                                 train=True, augment=True)
-        val_ds = GazeDataset(cfg["raw_root"], cfg["metadata_csv"], val_p,
+        val_ds = GazeDataset(cfg["raw_root"], val_p,
                               img_size=cfg["img_size"], cache_dir=cfg["cache_dir"],
                               train=False, augment=False)
 

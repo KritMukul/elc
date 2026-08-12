@@ -37,9 +37,10 @@ def all_subject_ids(modality, cfg):
 
     if modality == "gaze":
         from preprocessing.gaze_preprocess import build_gaze_index
-        index = build_gaze_index(cfg["raw_root"], cfg["metadata_csv"],
-                                 img_size=cfg["img_size"], cache_dir=cfg["cache_dir"])
-        return {r["participant"] for r in index}
+        index = build_gaze_index(cfg["raw_root"], img_size=cfg["img_size"],
+                                 cache_dir=cfg["cache_dir"])
+        # gaze groups by stimulus image, not by viewer - see gaze_preprocess.py
+        return {str(r["stimulus"]) for r in index}
 
     subject_dirs = sorted(glob.glob(os.path.join(cfg["dataset_root"], "[PS]*")))
     return {os.path.basename(d) for d in subject_dirs}
@@ -71,7 +72,7 @@ def build_model_and_dataset(modality, cfg, ckpt, device, subjects):
                         out_dim=cfg["model"]["out_dim"], dropout=cfg["model"]["dropout"],
                         freeze_blocks=cfg["model"]["freeze_blocks"]).to(device)
         model.load_state_dict(ckpt["model_state"])
-        ds = GazeDataset(cfg["raw_root"], cfg["metadata_csv"], subjects,
+        ds = GazeDataset(cfg["raw_root"], subjects,
                          img_size=cfg["img_size"], cache_dir=cfg["cache_dir"],
                          train=False, augment=False)
 

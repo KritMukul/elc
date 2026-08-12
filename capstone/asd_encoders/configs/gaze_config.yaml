@@ -1,5 +1,5 @@
-raw_root: "/path/to/raw/eye_tracking_autism"
-metadata_csv: "/path/to/raw/eye_tracking_autism/Metadata_Participants.csv"
+# Saliency4ASD TrainingData folder - must contain ASD/, TD/ and Images/
+raw_root: "/path/to/Saliency4ASD/TrainingDataset/TrainingData"
 cache_dir: "cache/gaze"
 img_size: 224
 

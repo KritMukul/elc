@@ -8,11 +8,18 @@ from data.augmentations import GazeAugment
 
 
 class GazeDataset(Dataset):
-    def __init__(self, raw_root, metadata_csv, participants, img_size=224,
+    """Scanpath images, filtered to a set of stimulus ids.
+
+    The stimulus is the split group: Saliency4ASD does not identify viewers
+    across stimuli, so it is the only group the data supports. See
+    preprocessing/gaze_preprocess.py for what that costs.
+    """
+
+    def __init__(self, raw_root, stimuli, img_size=224,
                  cache_dir="cache/gaze", train=True, augment=True):
-        full_index = build_gaze_index(raw_root, metadata_csv, img_size=img_size,
-                                       cache_dir=cache_dir)
-        self.index = [r for r in full_index if r["participant"] in participants]
+        full_index = build_gaze_index(raw_root, img_size=img_size, cache_dir=cache_dir)
+        stimuli = {int(s) for s in stimuli}
+        self.index = [r for r in full_index if r["stimulus"] in stimuli]
         self.img_size = img_size
         self.aug = GazeAugment(img_size=img_size, p=0.5, train=(train and augment))
 
@@ -21,9 +28,10 @@ class GazeDataset(Dataset):
 
     def __getitem__(self, idx):
         rec = self.index[idx]
-        if rec.get("image_path") and rec["image_path"] is not None:
-            img = cv2.imread(rec["image_path"])
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        if rec.get("image_path"):
+            img = cv2.imread(rec["image_path"], cv2.IMREAD_COLOR)
+            if img is None:
+                raise RuntimeError(f"Could not read cached gaze image {rec['image_path']}")
         else:
             img = rec["_array"]
 
@@ -33,5 +41,6 @@ class GazeDataset(Dataset):
         return {
             "x": torch.from_numpy(img).float(),
             "label": torch.tensor(rec["label"], dtype=torch.long),
-            "subject": rec["participant"],
+            # the fusion stage groups by this key - for gaze that is the stimulus
+            "subject": str(rec["stimulus"]),
         }
