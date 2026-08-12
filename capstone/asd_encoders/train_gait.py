@@ -30,8 +30,16 @@ def infer_n_joints(dataset_root, tasks, win_frames, overlap, cache_dir):
     from preprocessing.gait_preprocess import build_gait_index
     index = build_gait_index(dataset_root, tasks=tasks, win_frames=win_frames,
                               overlap=overlap, cache_dir=cache_dir)
+    if not index:
+        raise SystemExit(
+            f"No mocap data found under dataset_root={dataset_root!r}.\n"
+            f"  Looked for: {os.path.join(dataset_root, '[PS]*', '<task>', 'mdata_*.mat')}\n"
+            f"  tasks={list(tasks)}\n"
+            "  dataset_root must be the folder that directly contains the P*/S* subject\n"
+            "  directories, each holding a walk/ or dance/ subfolder of mdata_*.mat files."
+        )
     example = np.load(index[0]["cache_path"])
-    return example.shape[2] 
+    return example.shape[2]
 
 
 def run_epoch(model, loader, optimizer, criterion, device, scaler, train=True):
@@ -80,6 +88,12 @@ def main(cfg_path):
     os.makedirs(cfg["train"]["checkpoint_dir"], exist_ok=True)
 
     subjects, labels = get_subject_labels(cfg["dataset_root"])
+    if not subjects:
+        raise SystemExit(
+            f"No subject directories under dataset_root={cfg['dataset_root']!r}.\n"
+            f"  Looked for: {os.path.join(cfg['dataset_root'], '[PS]*')}\n"
+            "  Subject folders must start with P (ASD -> label 1) or S (control -> label 0)."
+        )
     subjects, labels = np.array(subjects), np.array(labels)
 
     n_joints = infer_n_joints(cfg["dataset_root"], cfg["tasks"], cfg["win_frames"],

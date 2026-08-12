@@ -25,7 +25,7 @@ def get_subject_labels(dataset_root):
     return subjects, labels
 
 
-def infer_n_channels(dataset_root, tasks, sfreq, win_sec, overlap, cache_dir, fallback=None):
+def infer_n_channels(dataset_root, tasks, sfreq, win_sec, overlap, cache_dir):
     """Read the real montage size off the cached windows instead of trusting the config.
 
     Mirrors infer_n_joints() in train_gait.py. The .mat files decide how many
@@ -37,12 +37,13 @@ def infer_n_channels(dataset_root, tasks, sfreq, win_sec, overlap, cache_dir, fa
     index = build_eeg_index(dataset_root, tasks=tasks, sfreq=sfreq,
                             win_sec=win_sec, overlap=overlap, cache_dir=cache_dir)
     if not index:
-        if fallback is None:
-            raise RuntimeError(
-                f"No EEG windows found under {dataset_root} for tasks={tasks}; "
-                "cannot infer channel count."
-            )
-        return fallback
+        raise SystemExit(
+            f"No EEG data found under dataset_root={dataset_root!r}.\n"
+            f"  Looked for: {os.path.join(dataset_root, '[PS]*', '<task>', 'eeg_*.mat')}\n"
+            f"  tasks={list(tasks)}\n"
+            "  dataset_root must be the folder that directly contains the P*/S* subject\n"
+            "  directories, each holding a walk/ or dance/ subfolder of eeg_*.mat files."
+        )
     example = np.load(index[0]["cache_path"])
     return example.shape[1]   # cached windows are [n_windows, channels, time]
 
@@ -93,12 +94,17 @@ def main(cfg_path):
     os.makedirs(cfg["train"]["checkpoint_dir"], exist_ok=True)
 
     subjects, labels = get_subject_labels(cfg["dataset_root"])
+    if not subjects:
+        raise SystemExit(
+            f"No subject directories under dataset_root={cfg['dataset_root']!r}.\n"
+            f"  Looked for: {os.path.join(cfg['dataset_root'], '[PS]*')}\n"
+            "  Subject folders must start with P (ASD -> label 1) or S (control -> label 0)."
+        )
     subjects, labels = np.array(subjects), np.array(labels)
 
     n_channels = infer_n_channels(cfg["dataset_root"], cfg["tasks"], cfg["sfreq"],
-                                  cfg["win_sec"], cfg["overlap"], cfg["cache_dir"],
-                                  fallback=cfg["model"]["n_channels"])
-    print(f"Detected {n_channels} EEG channels from the recordings.")
+                                  cfg["win_sec"], cfg["overlap"], cfg["cache_dir"])
+    print(f"{len(subjects)} subjects, {n_channels} EEG channels detected.")
 
     skf = StratifiedKFold(n_splits=cfg["train"]["n_folds"], shuffle=True,
                            random_state=cfg["train"]["seed"])
