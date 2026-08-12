@@ -17,7 +17,8 @@ train:
   weight_decay: 1.0e-4
   label_smoothing: 0.1
   early_stop_patience: 12
-  n_folds: 5               
+  n_folds: 5
+  seed: 42
   amp: true
   num_workers: 4
   checkpoint_dir: "checkpoints/gaze"

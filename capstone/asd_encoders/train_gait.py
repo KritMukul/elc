@@ -94,6 +94,9 @@ def main(cfg_path):
         print(f"\n===== Gait Fold {fold + 1}/{cfg['train']['n_folds']} =====")
         train_subjects = set(subjects[train_idx])
         val_subjects = set(subjects[val_idx])
+        assert train_subjects.isdisjoint(val_subjects), (
+            f"Subject leak in fold {fold}: {sorted(train_subjects & val_subjects)}"
+        )
 
         train_ds = GaitDataset(cfg["dataset_root"], train_subjects, tasks=cfg["tasks"],
                                 win_frames=cfg["win_frames"], overlap=cfg["overlap"],
@@ -132,7 +135,9 @@ def main(cfg_path):
 
             if val_metrics["f1"] > best_f1:
                 best_f1, patience = val_metrics["f1"], 0
-                torch.save({"model_state": model.state_dict(), "cfg": cfg, "n_joints": n_joints}, best_path)
+                torch.save({"model_state": model.state_dict(), "cfg": cfg, "n_joints": n_joints,
+                            "val_subjects": sorted(str(s) for s in val_subjects)},
+                           best_path)
             else:
                 patience += 1
                 if patience >= cfg["train"]["early_stop_patience"]:

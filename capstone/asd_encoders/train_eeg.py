@@ -25,6 +25,28 @@ def get_subject_labels(dataset_root):
     return subjects, labels
 
 
+def infer_n_channels(dataset_root, tasks, sfreq, win_sec, overlap, cache_dir, fallback=None):
+    """Read the real montage size off the cached windows instead of trusting the config.
+
+    Mirrors infer_n_joints() in train_gait.py. The .mat files decide how many
+    channels there are (see load_concatenated_eeg, which takes min_ch across
+    blocks); hardcoding it in the YAML only turns a mismatch into a confusing
+    RuntimeError deep inside PatchEmbeddingConv.
+    """
+    from preprocessing.eeg_preprocess import build_eeg_index
+    index = build_eeg_index(dataset_root, tasks=tasks, sfreq=sfreq,
+                            win_sec=win_sec, overlap=overlap, cache_dir=cache_dir)
+    if not index:
+        if fallback is None:
+            raise RuntimeError(
+                f"No EEG windows found under {dataset_root} for tasks={tasks}; "
+                "cannot infer channel count."
+            )
+        return fallback
+    example = np.load(index[0]["cache_path"])
+    return example.shape[1]   # cached windows are [n_windows, channels, time]
+
+
 def run_epoch(model, loader, optimizer, criterion, device, scaler, train=True):
     model.train() if train else model.eval()
     total_loss, all_true, all_pred, all_prob = 0.0, [], [], []
@@ -73,6 +95,11 @@ def main(cfg_path):
     subjects, labels = get_subject_labels(cfg["dataset_root"])
     subjects, labels = np.array(subjects), np.array(labels)
 
+    n_channels = infer_n_channels(cfg["dataset_root"], cfg["tasks"], cfg["sfreq"],
+                                  cfg["win_sec"], cfg["overlap"], cfg["cache_dir"],
+                                  fallback=cfg["model"]["n_channels"])
+    print(f"Detected {n_channels} EEG channels from the recordings.")
+
     skf = StratifiedKFold(n_splits=cfg["train"]["n_folds"], shuffle=True,
                            random_state=cfg["train"]["seed"])
 
@@ -80,7 +107,10 @@ def main(cfg_path):
     for fold, (train_idx, val_idx) in enumerate(skf.split(subjects, labels)):
         print(f"\n===== EEG Fold {fold + 1}/{cfg['train']['n_folds']} =====")
         train_subjects = set(subjects[train_idx])
-        val_subjects = set(subjects[val_idx])  
+        val_subjects = set(subjects[val_idx])
+        assert train_subjects.isdisjoint(val_subjects), (
+            f"Subject leak in fold {fold}: {sorted(train_subjects & val_subjects)}"
+        )
 
         train_ds = EEGDataset(cfg["dataset_root"], train_subjects, tasks=cfg["tasks"],
                                sfreq=cfg["sfreq"], win_sec=cfg["win_sec"], overlap=cfg["overlap"],
@@ -96,7 +126,7 @@ def main(cfg_path):
                                  shuffle=False, num_workers=cfg["train"]["num_workers"],
                                  pin_memory=True)
 
-        model = EEGConformer(n_channels=cfg["model"]["n_channels"],
+        model = EEGConformer(n_channels=n_channels,
                               conv_emb_dim=cfg["model"]["conv_emb_dim"],
                               n_layers=cfg["model"]["n_layers"],
                               n_heads=cfg["model"]["n_heads"],
@@ -123,7 +153,10 @@ def main(cfg_path):
 
             if val_metrics["f1"] > best_f1:
                 best_f1, patience = val_metrics["f1"], 0
-                torch.save({"model_state": model.state_dict(), "cfg": cfg}, best_path)
+                torch.save({"model_state": model.state_dict(), "cfg": cfg,
+                            "n_channels": n_channels,
+                            "val_subjects": sorted(str(s) for s in val_subjects)},
+                           best_path)
             else:
                 patience += 1
                 if patience >= cfg["train"]["early_stop_patience"]:

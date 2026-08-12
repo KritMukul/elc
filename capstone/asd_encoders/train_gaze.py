@@ -20,9 +20,30 @@ from utils.seed import set_seed
 
 
 def get_participant_labels(raw_root, metadata_csv, img_size, cache_dir):
+    """Unique participants and their label - one entry each, not one per record.
+
+    build_gaze_index emits a record per metadata row. Splitting those records
+    directly (rather than the participants behind them) lets a participant with
+    more than one row land on both sides of the fold, and GazeDataset filters by
+    participant membership - so every one of that participant's images would be
+    served to both loaders. train_eeg.py and train_gait.py avoid this only
+    because globbing subject directories happens to yield unique names.
+    """
     index = build_gaze_index(raw_root, metadata_csv, img_size=img_size, cache_dir=cache_dir)
-    participants = [r["participant"] for r in index]
-    labels = [r["label"] for r in index]
+
+    by_participant = {}
+    for r in index:
+        pid, label = r["participant"], r["label"]
+        if by_participant.setdefault(pid, label) != label:
+            raise ValueError(
+                f"Participant {pid} carries conflicting labels in {metadata_csv}: "
+                f"{by_participant[pid]} vs {label}"
+            )
+
+    participants = sorted(by_participant)
+    labels = [by_participant[p] for p in participants]
+    if len(participants) < len(index):
+        print(f"Collapsed {len(index)} gaze records into {len(participants)} unique participants.")
     return np.array(participants), np.array(labels)
 
 
@@ -82,6 +103,9 @@ def main(cfg_path):
         print(f"\n===== Gaze Fold {fold + 1}/{cfg['train']['n_folds']} =====")
         train_p = set(participants[train_idx])
         val_p = set(participants[val_idx])
+        assert train_p.isdisjoint(val_p), (
+            f"Participant leak in fold {fold}: {sorted(train_p & val_p)}"
+        )
 
         train_ds = GazeDataset(cfg["raw_root"], cfg["metadata_csv"], train_p,
                                 img_size=cfg["img_size"], cache_dir=cfg["cache_dir"],
@@ -125,7 +149,9 @@ def main(cfg_path):
 
             if val_metrics["f1"] > best_f1:
                 best_f1, patience = val_metrics["f1"], 0
-                torch.save({"model_state": model.state_dict(), "cfg": cfg}, best_path)
+                torch.save({"model_state": model.state_dict(), "cfg": cfg,
+                            "val_subjects": sorted(str(p) for p in val_p)},
+                           best_path)
             else:
                 patience += 1
                 if patience >= cfg["train"]["early_stop_patience"]:

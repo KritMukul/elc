@@ -17,9 +17,13 @@ train:
   weight_decay: 1.0e-4
   label_smoothing: 0.1
   early_stop_patience: 20
-  n_folds: 5
+  n_folds: 5               # subject-disjoint folds; EEG+gait split jointly (shared cohort)
   seed: 42
   checkpoint_dir: "checkpoints/fusion"
 
+# Only 'label_matched_random' is implemented; anything else is rejected at startup.
 pairing_strategy: "label_matched_random"
+
+# Triplets are synthesised per fold, separately on each side of the subject
+# split. The val side gets 25% of this count, preserving the old 80/20 ratio.
 n_synthetic_samples_per_class: 2000
