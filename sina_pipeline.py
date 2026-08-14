@@ -20,17 +20,22 @@ try:
     from skimage.morphology import skeletonize
 except ImportError:
     # OpenCV ships a thinning implementation in opencv-contrib; failing that,
-    # the raw mask is thin enough for the Hough pass. Either way the pipeline
+    # the raw mask goes to the Hough pass unthinned. Either way the pipeline
     # keeps running instead of dying at the first net.
+    _THINNING = getattr(getattr(cv2, "ximgproc", None), "thinning", None)
+
     def skeletonize(mask):
         """Thin a boolean wire mask to single-pixel lines."""
         img = (np.asarray(mask) > 0).astype(np.uint8) * 255
-        thinning = getattr(getattr(cv2, "ximgproc", None), "thinning", None)
-        if thinning is not None:
-            return thinning(img) > 0
-        return img > 0
+        return (_THINNING(img) if _THINNING is not None else img) > 0
 
-    print("Warning: scikit-image not installed — using the OpenCV thinning fallback.")
+    if _THINNING is not None:
+        print("Warning: scikit-image not installed — using OpenCV thinning instead.")
+    else:
+        print("Warning: neither scikit-image nor opencv-contrib is installed, so "
+              "wires are not thinned before line fitting. Net *connectivity* is "
+              "unaffected, but the stored wire segments will be rough. "
+              "pip install scikit-image to fix.")
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="SINA Image-to-Netlist & Layout Pipeline")
@@ -566,18 +571,33 @@ def main():
     args = parse_arguments()
     os.makedirs(args.output_dir, exist_ok=True)
     
-    # Initialize YOLO (optional)
+    # Initialize YOLO.
+    #
+    # Asking for weights and silently getting the contour fallback instead is
+    # the worst outcome: the run still "succeeds" and still writes a graph, but
+    # the components are whatever the blob heuristics guessed. The three ways
+    # this used to fail — no ultralytics, wrong path, unloadable file — all
+    # collapsed into one vague "No YOLO model" line, so say which, and stop.
     yolo_model = None
-    if args.yolo_weights and os.path.exists(args.yolo_weights) and YOLO:
+    if args.yolo_weights:
+        if YOLO is None:
+            print(f"Error: --yolo_weights {args.yolo_weights} was given but "
+                  f"ultralytics is not installed (pip install ultralytics).")
+            sys.exit(1)
+        if not os.path.exists(args.yolo_weights):
+            print(f"Error: --yolo_weights file not found: {args.yolo_weights}")
+            print(f"       (resolved from {os.getcwd()})")
+            sys.exit(1)
         try:
             yolo_model = YOLO(args.yolo_weights)
-            # Quick test: if the model produces zero detections, warn the user
-            print(f"YOLO model loaded from {args.yolo_weights}")
         except Exception as e:
-            print(f"Failed to load YOLO model: {e}")
-    
-    if not yolo_model:
-        print("No YOLO model — using contour-based component detection fallback.")
+            print(f"Error: could not load {args.yolo_weights}: {e}")
+            sys.exit(1)
+        print(f"YOLO model loaded from {args.yolo_weights}")
+    else:
+        print("No --yolo_weights given — using the contour-based fallback "
+              "detector. It finds component boxes but guesses their type "
+              "poorly; pass trained weights for real classification.")
 
     # Initialize OCR (optional)
     reader = None
