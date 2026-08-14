@@ -2,6 +2,7 @@ import os
 import sys
 import cv2
 import json
+import math
 import argparse
 import numpy as np
 
@@ -18,7 +19,18 @@ except ImportError:
 try:
     from skimage.morphology import skeletonize
 except ImportError:
-    print("Warning: scikit-image not installed. Skeletonization will fail.")
+    # OpenCV ships a thinning implementation in opencv-contrib; failing that,
+    # the raw mask is thin enough for the Hough pass. Either way the pipeline
+    # keeps running instead of dying at the first net.
+    def skeletonize(mask):
+        """Thin a boolean wire mask to single-pixel lines."""
+        img = (np.asarray(mask) > 0).astype(np.uint8) * 255
+        thinning = getattr(getattr(cv2, "ximgproc", None), "thinning", None)
+        if thinning is not None:
+            return thinning(img) > 0
+        return img > 0
+
+    print("Warning: scikit-image not installed — using the OpenCV thinning fallback.")
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="SINA Image-to-Netlist & Layout Pipeline")
@@ -31,12 +43,12 @@ def parse_arguments():
 
 def extract_line_segments_from_skeleton(skeleton, min_length=10):
     """Extract line segments from a skeleton using Hough Transform."""
-    skel_img = (skeleton * 255).astype(np.uint8)
+    skel_img = (np.asarray(skeleton) * 255).astype(np.uint8)
     lines = cv2.HoughLinesP(skel_img, 1, np.pi/180, threshold=15, minLineLength=min_length, maxLineGap=10)
     segments = []
     if lines is not None:
-        for line in lines:
-            x1, y1, x2, y2 = line[0]
+        # OpenCV returns (N, 1, 4) on some builds and (N, 4) on others.
+        for x1, y1, x2, y2 in np.asarray(lines).reshape(-1, 4):
             segments.append([int(x1), int(y1), int(x2), int(y2)])
     return segments
 
@@ -107,8 +119,16 @@ def detect_components_contour(gray, binary):
     kernel_close = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
     closed = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel_close, iterations=2)
     
-    # Find contours
-    contours, hierarchy = cv2.findContours(closed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # Find contours.
+    #
+    # RETR_LIST, not RETR_EXTERNAL: every schematic exported with its drawing
+    # sheet has a page border, and that border is one big outermost contour
+    # enclosing the whole circuit. RETR_EXTERNAL returns only that border and
+    # discards every symbol inside it, so the detector found nothing at all on
+    # any bordered image. RETR_LIST keeps the nested contours; the size filters
+    # below drop the border itself and NMS collapses the inner/outer pair each
+    # stroke produces.
+    contours, hierarchy = cv2.findContours(closed, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     
     components = []
     
@@ -117,6 +137,7 @@ def detect_components_contour(gray, binary):
     max_area = img_area * 0.15              # At most 15% of image
     min_dim = max(8, min(h, w) * 0.03)     # At least 3% of smallest dimension
     max_aspect = 6.0                        # Max aspect ratio (higher = more wire-like)
+    min_extent = 0.15                       # Min contour area / bbox area (wires score far lower)
     
     for contour in contours:
         area = cv2.contourArea(contour)
@@ -137,11 +158,20 @@ def detect_components_contour(gray, binary):
         # Filter out wire-like shapes (very elongated AND thin)
         if aspect_ratio > max_aspect and min(bw, bh) < min_dim * 1.5:
             continue  # This is likely a wire segment, not a component
-        
+
         # Filter out tiny noise
         if bw * bh < min_area * 0.5:
             continue
-        
+
+        # Filter out whole wire networks. A run of wires that bends is neither
+        # thin nor elongated once you take its bounding box — an L-shaped rail
+        # gets a big near-square box and sails through the checks above — but
+        # the contour it traces barely encloses any of that box, while a symbol
+        # outline encloses nearly all of its own. Measured on the rails above:
+        # symbols land near 0.97, wire networks between 0.03 and 0.10.
+        if extent < min_extent:
+            continue
+
         # Classify the component type
         bbox = [x, y, x + bw, y + bh]
         comp_type = classify_component_by_shape(contour, bbox, aspect_ratio, area)
@@ -274,13 +304,23 @@ def process_image(img_path, yolo_model, reader, output_dir):
                     comp["params"] = {"value": best_text}
 
     # 3. Connectivity Inference
+    #
+    # The erase margin below and the dilation radius used to spot pin contacts
+    # have to be read together: erasing the box clears the wire for `erase` px
+    # around it, so a net only registers as touching the component again if the
+    # dilation reaches back further than that. They used to be the same 5 px,
+    # which left every contact exactly on the boundary — one anti-aliased pixel
+    # either way decided whether a pin existed, and most nets came back empty.
+    erase = 5
+    bridge = max(10, int(0.02 * min(gray.shape)))     # comfortably beyond `erase`
+
     # Mask out detected components and text from the wire mask
     wire_mask = binary.copy()
     for comp in components:
         x1, y1, x2, y2 = comp["bbox"]
-        cv2.rectangle(wire_mask, (max(0, x1-5), max(0, y1-5)),
-                      (min(wire_mask.shape[1], x2+5), min(wire_mask.shape[0], y2+5)), 0, -1)
-    
+        cv2.rectangle(wire_mask, (max(0, x1-erase), max(0, y1-erase)),
+                      (min(wire_mask.shape[1], x2+erase), min(wire_mask.shape[0], y2+erase)), 0, -1)
+
     for txt in texts:
         x1, y1, x2, y2 = txt["bbox"]
         cv2.rectangle(wire_mask, (max(0, x1-2), max(0, y1-2)),
@@ -290,38 +330,106 @@ def process_image(img_path, yolo_model, reader, output_dir):
     num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(wire_mask, connectivity=8)
     
     nets = []
+    # Where each net touched each component — resolved into terminals afterwards,
+    # once every net is known, so the roles can be made distinct.
+    touches = [[] for _ in components]
+
     for label in range(1, num_labels):
         if stats[label, cv2.CC_STAT_AREA] < 20:
             continue
-            
+
         net_name = f"N{label}"
         nets.append({"name": net_name})
-        
+
         net_mask = (labels == label).astype(np.uint8)
-        
+
         # Skeletonize and extract wire segments
         skeleton = skeletonize(net_mask > 0)
         wire_segments = extract_line_segments_from_skeleton(skeleton)
         nets[-1]["wires"] = wire_segments
-        
+
         # Check which components this net touches
-        dilated_net = cv2.dilate(net_mask, np.ones((11,11), np.uint8))
-        
-        for comp in components:
+        dilated_net = cv2.dilate(net_mask, np.ones((2*bridge+1, 2*bridge+1), np.uint8))
+
+        for ci, comp in enumerate(components):
             x1, y1, x2, y2 = comp["bbox"]
             comp_mask = np.zeros_like(net_mask)
             cv2.rectangle(comp_mask, (x1, y1), (x2, y2), 1, -1)
-            
+
             intersection = cv2.bitwise_and(dilated_net, comp_mask)
             if np.any(intersection):
                 ys, xs = np.where(intersection > 0)
-                px, py = np.mean(xs), np.mean(ys)
-                role = get_pin_role(comp["bbox"], px, py)
-                comp["pins"].append({"role": role, "net": net_name})
+                touches[ci].append((net_name, float(np.mean(xs)), float(np.mean(ys))))
 
-import math
+    for ci, comp in enumerate(components):
+        comp["pins"] = assign_pin_roles(comp, touches[ci])
 
-import math
+    # 4. Export
+    output_graph = {
+        "source_file": os.path.basename(img_path),
+        "nets": nets,
+        "devices": components
+    }
+
+    # Fix connectivity issues (split nets, disconnected bounding boxes)
+    output_graph = fix_graph_connectivity(output_graph)
+
+    base_name = os.path.splitext(os.path.basename(img_path))[0]
+    out_file = os.path.join(output_dir, f"{base_name}_graph.json")
+    with open(out_file, "w") as f:
+        json.dump(output_graph, f, indent=4)
+
+    print(f"  Saved {out_file} ({len(components)} devices, {len(nets)} nets)")
+    return output_graph
+
+
+def assign_pin_roles(comp, touches, max_terminals=2):
+    """
+    Turn raw "this net touched the bounding box" hits into distinct terminals.
+
+    Every net that grazes a box used to be appended as its own pin, each tagged
+    P or N independently by get_pin_role(). Two nets could therefore both come
+    back as "P", and the KiCad emitter would then map both onto pin 1 and short
+    them together — and a two-terminal part could end up carrying three nets.
+
+    Sorting the hits along whichever axis they actually spread over gives each
+    net its own end of the part, and anything past the terminal count is dropped
+    rather than silently shorted.
+    """
+    if not touches:
+        return []
+
+    # One net touching a box in several places is still one terminal — keep the
+    # hit furthest from the box centre, which is the one nearest a real pin.
+    x1, y1, x2, y2 = comp["bbox"]
+    cx, cy = (x1 + x2) / 2.0, (y1 + y2) / 2.0
+    per_net = {}
+    for net, px, py in touches:
+        d = math.hypot(px - cx, py - cy)
+        if net not in per_net or d > per_net[net][0]:
+            per_net[net] = (d, px, py)
+    hits = [(net, px, py) for net, (_, px, py) in per_net.items()]
+
+    if len(hits) == 1:
+        return [{"role": get_pin_role(comp["bbox"], hits[0][1], hits[0][2]),
+                 "net": hits[0][0]}]
+
+    # Terminals lie along whichever axis the hits are spread over.
+    spread_x = max(h[1] for h in hits) - min(h[1] for h in hits)
+    spread_y = max(h[2] for h in hits) - min(h[2] for h in hits)
+    if abs(spread_x - spread_y) < 1e-6:
+        horizontal = (x2 - x1) >= (y2 - y1)
+    else:
+        horizontal = spread_x > spread_y
+
+    hits.sort(key=(lambda h: h[1]) if horizontal else (lambda h: h[2]))
+    if len(hits) > max_terminals:
+        # Keep the two extremes; the ones in between are stray mask contacts.
+        hits = [hits[0], hits[-1]]
+
+    roles = ["P", "N"]
+    return [{"role": roles[i], "net": h[0]} for i, h in enumerate(hits[:max_terminals])]
+
 
 def point_to_segment_dist(px, py, x1, y1, x2, y2):
     """Distance from point (px,py) to line segment (x1,y1)-(x2,y2)."""
@@ -453,23 +561,6 @@ def fix_graph_connectivity(graph):
                     
     return graph
 
-
-    # 4. Export
-    output_graph = {
-        "source_file": os.path.basename(img_path),
-        "nets": nets,
-        "devices": components
-    }
-    
-    # Fix connectivity issues (split nets, disconnected bounding boxes)
-    output_graph = fix_graph_connectivity(output_graph)
-    
-    base_name = os.path.splitext(os.path.basename(img_path))[0]
-    out_file = os.path.join(output_dir, f"{base_name}_graph.json")
-    with open(out_file, "w") as f:
-        json.dump(output_graph, f, indent=4)
-        
-    print(f"  Saved {out_file} ({len(components)} devices, {len(nets)} nets)")
 
 def main():
     args = parse_arguments()

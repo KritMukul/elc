@@ -117,30 +117,30 @@ def main():
     print("Step 4: Converting detected graph to KiCad schematic")
     print("=" * 60)
     
-    graph_to_kicad_script = os.path.join("netlist_to_kicad", "Microsoft_Schgen", "graph_to_kicad.py")
-    
-    # We pass the --sina flag to graph_to_kicad to indicate explicit wires and coordinate systems
-    
-    # We must run this from the Microsoft_Schgen directory because it relies on local imports and init_project.py
-    schgen_dir = os.path.join("netlist_to_kicad", "Microsoft_Schgen")
+    # sina_to_kicad rebuilds the wiring from the netlist and checks every net is
+    # a single electrical node before writing, so a non-zero exit here means the
+    # schematic really is broken rather than merely ugly.
     detected_graph_abs = os.path.abspath(detected_graph_file)
     kicad_proj_abs = os.path.abspath(kicad_proj_dir)
-    
-    cmd4_adjusted = [
-        sys.executable, "graph_to_kicad.py",
+    os.makedirs(kicad_proj_abs, exist_ok=True)
+    sch_path = os.path.join(kicad_proj_abs,
+                            os.path.basename(kicad_proj_abs) + ".kicad_sch")
+
+    cmd4 = [
+        sys.executable, "sina_to_kicad.py",
         "--graph", detected_graph_abs,
-        "--project_name", kicad_proj_abs,
-        "--sina"
+        "--output", sch_path,
+        "--verify",
     ]
-    
-    result = subprocess.run(cmd4_adjusted, cwd=schgen_dir)
+
+    result = subprocess.run(cmd4)
     if result.returncode != 0:
-        print("Error during KiCad generation.")
+        print("Error during KiCad generation — see the net report above.")
         sys.exit(1)
-        
+
     print("\n" + "=" * 60)
     print(f"SUCCESS! Pipeline completed.")
-    print(f"The final KiCad project is located at: {kicad_proj_abs}")
+    print(f"The final KiCad schematic is at: {sch_path}")
     print("=" * 60)
 
 if __name__ == "__main__":

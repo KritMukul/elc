@@ -286,7 +286,22 @@ def export_kicad_to_image(sch_path, output_image, img_w=1280, img_h=960):
     except (FileNotFoundError, subprocess.TimeoutExpired):
         pass
 
-    # Fallback: render a simple schematic image using OpenCV
+    # Fallback: a blank bordered page.
+    #
+    # This is a placeholder, not a schematic — it contains no components and no
+    # wires, so anything reading it back (SINA, YOLO training) gets nothing.
+    # It used to be written silently, which made a dead pipeline look like a
+    # working one, so say so loudly and exactly once.
+    global _WARNED_PLACEHOLDER
+    if not _WARNED_PLACEHOLDER:
+        _WARNED_PLACEHOLDER = True
+        print("  WARNING: writing BLANK placeholder images, not real schematics.")
+        print("           Real rendering needs kicad-cli on PATH plus an SVG")
+        print("           rasteriser (pip install cairosvg, or ImageMagick), and")
+        print("           this call site passes sch_path=None so nothing is")
+        print("           exported regardless. Downstream detection will find"
+              " nothing.")
+
     try:
         import cv2
         import numpy as np
@@ -298,6 +313,9 @@ def export_kicad_to_image(sch_path, output_image, img_w=1280, img_h=960):
         return True
     except ImportError:
         return False
+
+
+_WARNED_PLACEHOLDER = False
 
 
 def main():
