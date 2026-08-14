@@ -91,7 +91,7 @@ DEVICE_MAP = {
     "diode":        {"lib_id": "Device:D",         "prefix": "D",  "axis": "H", "pins": ["1", "2"]},
     "led":          {"lib_id": "Device:LED",       "prefix": "D",  "axis": "H", "pins": ["1", "2"]},
     "vsource":      {"lib_id": "Device:Battery",   "prefix": "BT", "axis": "V", "pins": ["1", "2"]},
-    "isource":      {"lib_id": "Device:Battery",   "prefix": "BT", "axis": "V", "pins": ["1", "2"]},
+    "isource":      {"lib_id": "Simulation_SPICE:IDC", "prefix": "I", "axis": "V", "pins": ["1", "2"]},
     "nmos":         {"lib_id": "Device:Q_NMOS",    "prefix": "Q",  "axis": "V", "pins": ["G", "D", "S"]},
     "pmos":         {"lib_id": "Device:Q_PMOS",    "prefix": "Q",  "axis": "V", "pins": ["G", "D", "S"]},
     "npn":          {"lib_id": "Device:Q_NPN",     "prefix": "Q",  "axis": "V", "pins": ["B", "C", "E"]},
@@ -109,8 +109,12 @@ TYPE_ALIASES = {
     "d": "diode", "diode.light_emitting": "led", "diode.zener": "diode",
     "lamp": "led",
     "voltage.dc": "vsource", "voltage.ac": "vsource", "vdc": "vsource",
-    "v": "vsource", "battery": "vsource", "source": "vsource",
-    "probe.voltage": "vsource", "current.dc": "isource", "i": "isource",
+    "v": "vsource", "battery": "vsource", "voltage_src": "vsource",
+    "voltage_source": "vsource", "probe.voltage": "vsource",
+    "current.dc": "isource", "i": "isource", "idc": "isource",
+    "current_src": "isource", "current_source": "isource",
+    "dependent_source": "isource", "vccs": "isource",
+    "gnd": "gnd", "ground": "gnd", "vss": "gnd", "earth": "gnd",
     "mosfet": "nmos", "nfet": "nmos", "transistor.mosfet": "nmos",
     "pfet": "pmos", "m": "nmos",
     "bjt": "npn", "transistor.bjt": "npn", "q": "npn",
@@ -127,17 +131,24 @@ ROLE_ORDER = {
 }
 
 
-def canonical_type(raw: str) -> str:
-    """Fold an arbitrary detector/parser class name onto a DEVICE_MAP key."""
+def canonical_type(raw: str):
+    """
+    Fold an arbitrary detector/parser class name onto a DEVICE_MAP key.
+
+    Returns None when nothing matches, so the caller can say so out loud. This
+    used to fall through to "resistor" silently, which is how a detected current
+    source and a ground symbol both turned into resistors in a schematic that
+    otherwise verified clean — eight resistors where the netlist had six.
+    """
     t = (raw or "").strip().lower().replace(" ", "_").replace("-", "_")
-    if t in DEVICE_MAP:
+    if t in DEVICE_MAP or t == "gnd":
         return t
     if t in TYPE_ALIASES:
         return TYPE_ALIASES[t]
     for alias, canon in TYPE_ALIASES.items():          # substring fallback
         if alias in t and len(alias) > 2:
             return canon
-    return "resistor"       # unknown blob → 2-terminal placeholder
+    return None
 
 
 def is_ground_net(name: str) -> bool:
@@ -368,10 +379,27 @@ def normalize_graph(graph: dict, verbose=True) -> tuple:
     counters = defaultdict(int)
     devices = []
     net_to_pins = defaultdict(list)
+    ground_nets = set()
     warnings = []
 
     for dev in raw_devices:
         ctype = canonical_type(dev.get("type", ""))
+        if ctype is None:
+            warnings.append(
+                f"{dev.get('name', '?')}: unrecognised type "
+                f"'{dev.get('type')}' — drawing it as a resistor"
+            )
+            ctype = "resistor"
+
+        # A detected ground symbol is not a part to place, it is a statement
+        # about the net it sits on. Marking the net gets a power:GND at every
+        # pin of it, and KiCad ties all of those together globally.
+        if ctype == "gnd":
+            for pin in dev.get("pins", []):
+                if pin.get("net") is not None:
+                    ground_nets.add(pin["net"])
+            continue
+
         info = DEVICE_MAP[ctype]
         n_term = len(info["pins"])
 
@@ -442,8 +470,10 @@ def normalize_graph(graph: dict, verbose=True) -> tuple:
             "terminals": terminals,
         })
 
-    # Nets with a single pin cannot be routed — they are dangling by definition.
-    dangling = [n for n, pins in net_to_pins.items() if len(pins) < 2]
+    # A net carrying a ground symbol needs no second device pin — the power
+    # symbol is its other end — so those are not dangling.
+    dangling = [n for n, pins in net_to_pins.items()
+                if len(pins) < 2 and n not in ground_nets]
     for n in dangling:
         warnings.append(f"net {n} has only {len(net_to_pins[n])} pin — left unrouted")
 
@@ -451,7 +481,7 @@ def normalize_graph(graph: dict, verbose=True) -> tuple:
         for w in warnings:
             print(f"  ! {w}")
 
-    return devices, dict(net_to_pins)
+    return devices, dict(net_to_pins), ground_nets
 
 
 def infer_axis(dev: dict, bbox, nets_by_name: dict) -> str:
@@ -993,7 +1023,7 @@ class _UnionFind:
 
 
 def verify_connectivity(net_segments, junctions, pin_points, net_to_pins,
-                        ground_points=()):
+                        ground_points=(), ground_nets=()):
     """
     Re-derive connectivity the way KiCad does and check it against the netlist.
 
@@ -1028,6 +1058,12 @@ def verify_connectivity(net_segments, junctions, pin_points, net_to_pins,
 
     results, ok = [], True
     for net, pins in sorted(net_to_pins.items()):
+        if net in ground_nets and pins:
+            # A ground net does not need a second device pin: the power symbol
+            # on each of its pins is the other end, and KiCad ties every GND
+            # symbol on the sheet together by name.
+            results.append((net, "OK", f"{len(pins)} pin(s) to GND"))
+            continue
         if len(pins) < 2:
             results.append((net, "DANGLING", f"{len(pins)} pin"))
             continue
@@ -1125,7 +1161,7 @@ def build_schematic(graph: dict, output_path: str, title="SINA circuit",
             "kicad_sch_api is required: pip install kicad-sch-api"
         )
 
-    devices, net_to_pins = normalize_graph(graph, verbose=verbose)
+    devices, net_to_pins, detected_grounds = normalize_graph(graph, verbose=verbose)
     if not devices:
         raise ValueError("graph contains no devices")
 
@@ -1161,7 +1197,7 @@ def build_schematic(graph: dict, output_path: str, title="SINA circuit",
     # every pin to every other one buries the schematic and gives the router its
     # hardest job for no benefit. Power symbols of the same name are connected
     # globally by KiCad, so a short stub to a GND symbol does the whole job.
-    ground_nets = {n for n in net_to_pins if is_ground_net(n)}
+    ground_nets = {n for n in net_to_pins if is_ground_net(n)} | detected_grounds
     ground_points = []
     gnd_stubs = []
     gnd_counter = 0
@@ -1237,7 +1273,7 @@ def build_schematic(graph: dict, output_path: str, title="SINA circuit",
             sch.add_label(text=net, position=(q((x1 + x2) / 2), q((y1 + y2) / 2)))
 
     ok, results = verify_connectivity(net_segments, junctions, pin_points,
-                                      net_to_pins, ground_points)
+                                      net_to_pins, ground_points, ground_nets)
 
     out_dir = os.path.dirname(os.path.abspath(output_path))
     if out_dir:
