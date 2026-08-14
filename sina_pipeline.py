@@ -376,8 +376,10 @@ def process_image(img_path, yolo_model, reader, output_dir):
         "devices": components
     }
 
-    # Fix connectivity issues (split nets, disconnected bounding boxes)
-    output_graph = fix_graph_connectivity(output_graph)
+    # Rejoin nets the component mask cut apart
+    nets_before = len(nets)
+    output_graph = fix_graph_connectivity(output_graph, erase=erase)
+    report_netlist_health(output_graph, nets_before)
 
     base_name = os.path.splitext(os.path.basename(img_path))[0]
     out_file = os.path.join(output_dir, f"{base_name}_graph.json")
@@ -386,6 +388,42 @@ def process_image(img_path, yolo_model, reader, output_dir):
 
     print(f"  Saved {out_file} ({len(components)} devices, {len(nets)} nets)")
     return output_graph
+
+
+def report_netlist_health(graph, nets_before):
+    """
+    Shout when the extracted netlist is obviously not a circuit.
+
+    Both of these used to pass silently and only surfaced much later as a
+    nonsense schematic: over-eager net merging chaining every node into one, and
+    devices whose two terminals ended up on the same net (a part shorted to
+    itself carries no current and is not what the drawing showed).
+    """
+    devices = graph["devices"]
+    pins = [(d, p) for d in devices for p in d.get("pins", [])]
+    if not pins:
+        print("  ! no pin-to-net assignments were found — the netlist is empty")
+        return
+
+    per_net = {}
+    for d, p in pins:
+        per_net.setdefault(p["net"], []).append(d["name"])
+
+    nets_after = len(graph["nets"])
+    if nets_before and nets_after < nets_before / 2:
+        print(f"  ! merging collapsed {nets_before} nets into {nets_after} — "
+              f"that is a lot; check the overlay before trusting this netlist")
+
+    biggest, members = max(per_net.items(), key=lambda kv: len(kv[1]))
+    if len(members) > 0.6 * len(pins) and len(per_net) > 1:
+        print(f"  ! net {biggest} holds {len(members)} of {len(pins)} pins — "
+              f"nets are probably shorted together, not separate nodes")
+
+    shorted = [d["name"] for d in devices
+               if len(d.get("pins", [])) > 1
+               and len({p["net"] for p in d["pins"]}) == 1]
+    if shorted:
+        print(f"  ! both terminals on one net for: {', '.join(shorted)}")
 
 
 def assign_pin_roles(comp, touches, max_terminals=2):
@@ -446,69 +484,65 @@ def point_to_segment_dist(px, py, x1, y1, x2, y2):
     proj_y = y1 + t * (y2 - y1)
     return math.hypot(px - proj_x, py - proj_y), (proj_x, proj_y)
 
-def fix_graph_connectivity(graph):
+def fix_graph_connectivity(graph, erase=5):
+    """
+    Close plain drawing gaps between wire fragments. Nothing more.
+
+    Connected-component labelling on the masked image already gives the nets;
+    the only repair it genuinely needs is for hairline breaks — a thresholding
+    or JPEG artefact, or the erase margin nicking a wire end — where two ends of
+    one conductor sit a few pixels apart.
+
+    Anything more ambitious does not survive contact with a real schematic. The
+    previous rule merged any two wire ends within 200 px that were roughly
+    collinear, and on a dense drawing nearly every pair qualified and the merges
+    chained: a hybrid-pi model collapsed from ten nets into one net of nineteen
+    pins, shorting every device to itself.
+
+    Restricting that to "collinear with a component between them" — the
+    signature of a rail the mask cut in half — does not work either, because it
+    describes two situations that are geometrically identical: a rail passing
+    behind an unrelated part, and the two terminals of a part sitting inline
+    with its own wires. Merging the second shorts the component out. There is no
+    way to tell them apart from geometry, so no guess is made.
+
+    The cost is that a rail genuinely cut by the mask stays split, which shows
+    up as extra nets — visible and fixable. That is a far better failure than a
+    silent short, which looks like a valid netlist all the way to KiCad.
+
+    `erase` must match the margin process_image masked the boxes with, since
+    that is what sets how wide a legitimate gap can be.
+    """
     components = graph["devices"]
     nets = graph["nets"]
-    
-    # 1. Merge collinear or close nets
-    MERGE_DIST = 35.0
-    COLLINEAR_MERGE_DIST = 200.0
-    ALIGN_THRESH = 15.0 # Max pixel difference in X or Y to be considered collinear
-    
+
+    gap_tol = 2 * erase + 4          # widest gap a nicked wire end can leave
+
+    def endpoints(net):
+        pts = []
+        for w in net.get("wires", []):
+            if len(w) >= 4:
+                pts.append((w[0], w[1]))
+                pts.append((w[2], w[3]))
+        return pts
+
     while True:
         merged = False
         for i in range(len(nets)):
             for j in range(i + 1, len(nets)):
                 net_a = nets[i]
                 net_b = nets[j]
-                
-                should_merge = False
-                for wa in net_a.get("wires", []):
-                    for wb in net_b.get("wires", []):
-                        if len(wa) < 4 or len(wb) < 4: continue
-                        pts_a = [(wa[0], wa[1]), (wa[2], wa[3])]
-                        pts_b = [(wb[0], wb[1]), (wb[2], wb[3])]
-                        for pa in pts_a:
-                            for pb in pts_b:
-                                dist = math.hypot(pa[0]-pb[0], pa[1]-pb[1])
-                                
-                                # Close distance merge
-                                if dist < MERGE_DIST:
-                                    should_merge = True
-                                    
-                                # Collinear horizontal merge
-                                elif dist < COLLINEAR_MERGE_DIST and abs(pa[1] - pb[1]) < ALIGN_THRESH:
-                                    # Ensure no component is between them horizontally
-                                    min_x, max_x = min(pa[0], pb[0]), max(pa[0], pb[0])
-                                    blocked = False
-                                    for comp in components:
-                                        bx1, by1, bx2, by2 = comp["bbox"]
-                                        if by1 < pa[1] < by2 and min_x < bx1 and bx2 < max_x:
-                                            blocked = True
-                                            break
-                                    if not blocked:
-                                        should_merge = True
-                                        
-                                # Collinear vertical merge
-                                elif dist < COLLINEAR_MERGE_DIST and abs(pa[0] - pb[0]) < ALIGN_THRESH:
-                                    min_y, max_y = min(pa[1], pb[1]), max(pa[1], pb[1])
-                                    blocked = False
-                                    for comp in components:
-                                        bx1, by1, bx2, by2 = comp["bbox"]
-                                        if bx1 < pa[0] < bx2 and min_y < by1 and by2 < max_y:
-                                            blocked = True
-                                            break
-                                    if not blocked:
-                                        should_merge = True
 
-                                if should_merge:
-                                    # Add a bridging wire
-                                    net_a["wires"].append([pa[0], pa[1], pb[0], pb[1]])
-                                    break
-                            if should_merge: break
-                        if should_merge: break
-                    if should_merge: break
-                
+                should_merge = False
+                for pa in endpoints(net_a):
+                    for pb in endpoints(net_b):
+                        if math.hypot(pa[0] - pb[0], pa[1] - pb[1]) <= gap_tol:
+                            net_a["wires"].append([pa[0], pa[1], pb[0], pb[1]])
+                            should_merge = True
+                            break
+                    if should_merge:
+                        break
+
                 if should_merge:
                     # Merge B into A
                     net_a.setdefault("wires", []).extend(net_b.get("wires", []))
