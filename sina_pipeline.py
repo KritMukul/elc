@@ -333,14 +333,27 @@ def process_image(img_path, yolo_model, reader, output_dir):
 
     # Connected Component Labeling on remaining pixels (wires)
     num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(wire_mask, connectivity=8)
-    
+
+    # Smallest wire fragment worth keeping, in pixels of ink.
+    #
+    # This was 20, which quietly threw away the short link between two parts
+    # drawn close together: erasing both boxes with their margins leaves only
+    # (gap - 2*erase) px of wire, so parts 15 px apart leave a 5 px stub of
+    # about 12 px of ink. Measured on that layout, 20 splits them into separate
+    # nets and 6 keeps them as one.
+    #
+    # Going low is cheap because a fragment that reaches fewer than two
+    # components cannot connect anything: it becomes a net with no pins or one
+    # pin, which is dropped or reported as dangling further down.
+    min_net_area = 6
+
     nets = []
     # Where each net touched each component — resolved into terminals afterwards,
     # once every net is known, so the roles can be made distinct.
     touches = [[] for _ in components]
 
     for label in range(1, num_labels):
-        if stats[label, cv2.CC_STAT_AREA] < 20:
+        if stats[label, cv2.CC_STAT_AREA] < min_net_area:
             continue
 
         net_name = f"N{label}"
