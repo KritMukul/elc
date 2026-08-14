@@ -79,23 +79,33 @@ GROUND_NET_NAMES = {"0", "gnd", "ground", "vss", "agnd", "dgnd"}
 #  axis  = which way the pins point at rotation 0 in the KiCad library.
 #          "V" = pins above/below the body, "H" = pins left/right.
 #          R/C/L/Battery are drawn vertically, D/LED horizontally.
+#  body  = how the drawn symbol's bounding box relates to the direction current
+#          flows through it, which is what lets a detection box say which way a
+#          part is turned:
+#            "along"  the body is stretched along the current path — a zigzag
+#                     resistor lying down gives a wide box
+#            "across" the body is stretched across it — a capacitor conducting
+#                     left to right is drawn as two *vertical* plates, so it
+#                     gives a tall, narrow box. Batteries stack the same way.
+#          Getting this backwards puts a capacitor across the rail it should
+#          hang from: C_mu at 12 x 33 px is horizontal, not vertical.
 #  pins  = KiCad pin identifiers in terminal order. Verified against the
 #          installed KiCad 10 Device library (Q_NMOS_GDS, which the old
 #          DEVICE_MAP used, does not exist there — it is Q_NMOS).
 
 DEVICE_MAP = {
-    "resistor":     {"lib_id": "Device:R_US",      "prefix": "R",  "axis": "V", "pins": ["1", "2"]},
-    "capacitor":    {"lib_id": "Device:C",         "prefix": "C",  "axis": "V", "pins": ["1", "2"]},
-    "capacitor_p":  {"lib_id": "Device:C_Polarized", "prefix": "C", "axis": "V", "pins": ["1", "2"]},
-    "inductor":     {"lib_id": "Device:L",         "prefix": "L",  "axis": "V", "pins": ["1", "2"]},
-    "diode":        {"lib_id": "Device:D",         "prefix": "D",  "axis": "H", "pins": ["1", "2"]},
-    "led":          {"lib_id": "Device:LED",       "prefix": "D",  "axis": "H", "pins": ["1", "2"]},
-    "vsource":      {"lib_id": "Device:Battery",   "prefix": "BT", "axis": "V", "pins": ["1", "2"]},
-    "isource":      {"lib_id": "Simulation_SPICE:IDC", "prefix": "I", "axis": "V", "pins": ["1", "2"]},
-    "nmos":         {"lib_id": "Device:Q_NMOS",    "prefix": "Q",  "axis": "V", "pins": ["G", "D", "S"]},
-    "pmos":         {"lib_id": "Device:Q_PMOS",    "prefix": "Q",  "axis": "V", "pins": ["G", "D", "S"]},
-    "npn":          {"lib_id": "Device:Q_NPN",     "prefix": "Q",  "axis": "V", "pins": ["B", "C", "E"]},
-    "pnp":          {"lib_id": "Device:Q_PNP",     "prefix": "Q",  "axis": "V", "pins": ["B", "C", "E"]},
+    "resistor":     {"lib_id": "Device:R_US",      "prefix": "R",  "axis": "V", "body": "along",  "pins": ["1", "2"]},
+    "capacitor":    {"lib_id": "Device:C",         "prefix": "C",  "axis": "V", "body": "across", "pins": ["1", "2"]},
+    "capacitor_p":  {"lib_id": "Device:C_Polarized", "prefix": "C", "axis": "V", "body": "across", "pins": ["1", "2"]},
+    "inductor":     {"lib_id": "Device:L",         "prefix": "L",  "axis": "V", "body": "along",  "pins": ["1", "2"]},
+    "diode":        {"lib_id": "Device:D",         "prefix": "D",  "axis": "H", "body": "along",  "pins": ["1", "2"]},
+    "led":          {"lib_id": "Device:LED",       "prefix": "D",  "axis": "H", "body": "along",  "pins": ["1", "2"]},
+    "vsource":      {"lib_id": "Device:Battery",   "prefix": "BT", "axis": "V", "body": "across", "pins": ["1", "2"]},
+    "isource":      {"lib_id": "Simulation_SPICE:IDC", "prefix": "I", "axis": "V", "body": "along", "pins": ["1", "2"]},
+    "nmos":         {"lib_id": "Device:Q_NMOS",    "prefix": "Q",  "axis": "V", "body": "along",  "pins": ["G", "D", "S"]},
+    "pmos":         {"lib_id": "Device:Q_PMOS",    "prefix": "Q",  "axis": "V", "body": "along",  "pins": ["G", "D", "S"]},
+    "npn":          {"lib_id": "Device:Q_NPN",     "prefix": "Q",  "axis": "V", "body": "along",  "pins": ["B", "C", "E"]},
+    "pnp":          {"lib_id": "Device:Q_PNP",     "prefix": "Q",  "axis": "V", "body": "along",  "pins": ["B", "C", "E"]},
 }
 
 # Everything SINA / YOLO / the SPICE parser might call a part, folded onto the
@@ -407,7 +417,8 @@ def normalize_graph(graph: dict, verbose=True) -> tuple:
         ref = f'{info["prefix"]}{counters[info["prefix"]]}'
 
         bbox = dev.get("bbox")
-        axis = infer_axis(dev, bbox or [0, 0, 10, 10], nets_by_name)
+        axis = infer_axis(dev, bbox or [0, 0, 10, 10], nets_by_name,
+                          body=info.get("body", "along"))
 
         # ── collect the distinct nets this device touches ──
         seen, attached = set(), []
@@ -484,28 +495,33 @@ def normalize_graph(graph: dict, verbose=True) -> tuple:
     return devices, dict(net_to_pins), ground_nets
 
 
-def infer_axis(dev: dict, bbox, nets_by_name: dict) -> str:
+def infer_axis(dev: dict, bbox, nets_by_name: dict, body="along") -> str:
     """
     Decide whether a part should sit horizontally or vertically.
 
-    An elongated bounding box settles it on its own — it is a direct measurement
-    of how the symbol was drawn, so a box two and a half times taller than it is
-    wide is a vertical part and nothing else needs asking. Only a roughly square
-    box is ambiguous, and there the wire nodes SINA stores break the tie:
-    whichever way the attached nets approach is the way the pins must point.
+    An elongated detection box settles it, once read through the symbol's shape.
+    A zigzag resistor is stretched *along* the current path, so a tall box means
+    a vertical part. A capacitor is stretched *across* it — conducting left to
+    right it is drawn as two vertical plates — so a tall box means a horizontal
+    part. Same measurement, opposite conclusion; `body` says which applies.
 
-    Consulting the wires first got this backwards. A capacitor drawn 12 x 33 px
-    came out horizontal because its nets happened to approach from the side,
-    which put it across the rail it was supposed to hang from.
+    Measured on one hybrid-pi drawing: r_pi/r_o/r_ex all 14 x ~37 px and
+    vertical, C_mu 12 x 33 px and horizontal.
+
+    Only a roughly square box is genuinely ambiguous, and there the wire nodes
+    SINA stores break the tie: whichever way the attached nets approach is the
+    way the pins must point. That is exactly the case YOLO produces for the
+    horizontal resistors here, whose boxes come back 24 x 24.
     """
     x1, y1, x2, y2 = bbox
     cx, cy = (x1 + x2) / 2.0, (y1 + y2) / 2.0
 
     w, h = x2 - x1, y2 - y1
-    if w > h * 1.4:
-        return "H"
-    if h > w * 1.4:
-        return "V"
+    long_axis = "H" if w > h * 1.4 else ("V" if h > w * 1.4 else None)
+    if long_axis:
+        if body == "across":
+            return "V" if long_axis == "H" else "H"
+        return long_axis
 
     horiz = vert = 0
     for pin in dev.get("pins", []):
@@ -532,7 +548,10 @@ def infer_axis(dev: dict, bbox, nets_by_name: dict) -> str:
     if vert > horiz:
         return "V"
 
-    return "H" if w > h else "V"
+    fallback = "H" if w > h else "V"
+    if body == "across":
+        fallback = "V" if fallback == "H" else "H"
+    return fallback
 
 
 # ═══════════════════════════════════════════════════════════════════
