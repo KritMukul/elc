@@ -84,7 +84,7 @@ GROUND_NET_NAMES = {"0", "gnd", "ground", "vss", "agnd", "dgnd"}
 #          DEVICE_MAP used, does not exist there — it is Q_NMOS).
 
 DEVICE_MAP = {
-    "resistor":     {"lib_id": "Device:R",         "prefix": "R",  "axis": "V", "pins": ["1", "2"]},
+    "resistor":     {"lib_id": "Device:R_US",      "prefix": "R",  "axis": "V", "pins": ["1", "2"]},
     "capacitor":    {"lib_id": "Device:C",         "prefix": "C",  "axis": "V", "pins": ["1", "2"]},
     "capacitor_p":  {"lib_id": "Device:C_Polarized", "prefix": "C", "axis": "V", "pins": ["1", "2"]},
     "inductor":     {"lib_id": "Device:L",         "prefix": "L",  "axis": "V", "pins": ["1", "2"]},
@@ -488,12 +488,24 @@ def infer_axis(dev: dict, bbox, nets_by_name: dict) -> str:
     """
     Decide whether a part should sit horizontally or vertically.
 
-    Uses the wire nodes SINA already stores: whichever way the attached nets
-    approach the bounding box is the way the pins have to point. Falls back to
-    the bbox aspect ratio when the wires are inconclusive.
+    An elongated bounding box settles it on its own — it is a direct measurement
+    of how the symbol was drawn, so a box two and a half times taller than it is
+    wide is a vertical part and nothing else needs asking. Only a roughly square
+    box is ambiguous, and there the wire nodes SINA stores break the tie:
+    whichever way the attached nets approach is the way the pins must point.
+
+    Consulting the wires first got this backwards. A capacitor drawn 12 x 33 px
+    came out horizontal because its nets happened to approach from the side,
+    which put it across the rail it was supposed to hang from.
     """
     x1, y1, x2, y2 = bbox
     cx, cy = (x1 + x2) / 2.0, (y1 + y2) / 2.0
+
+    w, h = x2 - x1, y2 - y1
+    if w > h * 1.4:
+        return "H"
+    if h > w * 1.4:
+        return "V"
 
     horiz = vert = 0
     for pin in dev.get("pins", []):
@@ -520,8 +532,7 @@ def infer_axis(dev: dict, bbox, nets_by_name: dict) -> str:
     if vert > horiz:
         return "V"
 
-    w, h = x2 - x1, y2 - y1
-    return "H" if w > h * 1.25 else "V"
+    return "H" if w > h else "V"
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -680,6 +691,7 @@ def _path_segments(points):
 
 DIRS = ((1, 0), (-1, 0), (0, 1), (0, -1))
 TURN_PENALTY = 4            # prefer long straight runs over staircases
+LANE_PENALTY = 2            # prefer a lane no other net is already using
 SEARCH_PAD = 20             # lattice cells of slack around the routed area
 
 
@@ -738,6 +750,7 @@ def _occupancy(foreign):
               on their wire, which is a T-connection and therefore a short
     """
     nodes, along, noturn = set(), set(), set()
+    busy_rows, busy_cols = set(), set()
     for seg in foreign:
         cells = _walk_cells(seg)
         nodes.add(cells[0])
@@ -745,10 +758,15 @@ def _occupancy(foreign):
         noturn.update(cells)
         for a, b in zip(cells, cells[1:]):
             along.add(frozenset((a, b)))
-    return nodes, along, noturn - nodes
+            if a[1] == b[1]:
+                busy_rows.add(a[1])
+            else:
+                busy_cols.add(a[0])
+    return nodes, along, noturn - nodes, busy_rows, busy_cols
 
 
-def _maze_route(starts, targets, blocked, blocked_edges, no_turn, bounds):
+def _maze_route(starts, targets, blocked, blocked_edges, no_turn, bounds,
+                busy_rows=(), busy_cols=()):
     """
     Cheapest lattice path from any start cell to any target cell.
 
@@ -799,6 +817,11 @@ def _maze_route(starts, targets, blocked, blocked_edges, no_turn, bounds):
             if frozenset((cell, nxt)) in blocked_edges:
                 continue
             step = 1 + (TURN_PENALTY if nd != d else 0)
+            # Sharing a line with another net is legal but hard to read: two
+            # rails on the same row, separated only by a gap, look like one
+            # wire. Nudge the route onto its own lane when one is free.
+            if (dj == 0 and nxt[1] in busy_rows) or (di == 0 and nxt[0] in busy_cols):
+                step += LANE_PENALTY
             ncost = cost + step
             if ncost < best.get((nxt, nd), float("inf")):
                 best[(nxt, nd)] = ncost
@@ -834,7 +857,7 @@ def route_net(stub_points, boxes, blocked_cells=None, foreign=()):
 
     if blocked_cells is None:
         blocked_cells = _blocked_cells(boxes)
-    foreign_nodes, foreign_edges, no_turn = _occupancy(foreign)
+    foreign_nodes, foreign_edges, no_turn, busy_rows, busy_cols = _occupancy(foreign)
     blocked = blocked_cells | foreign_nodes
 
     segments = []
@@ -851,10 +874,12 @@ def route_net(stub_points, boxes, blocked_cells=None, foreign=()):
                   min(max(i_vals) + SEARCH_PAD, idx(SHEET_W) - 2),
                   min(max(j_vals) + SEARCH_PAD, idx(SHEET_H) - 2))
 
-        path = _maze_route([stub], reached, blocked, foreign_edges, no_turn, bounds)
+        path = _maze_route([stub], reached, blocked, foreign_edges, no_turn,
+                           bounds, busy_rows, busy_cols)
         if path is None:      # retry with the whole sheet before giving up
             path = _maze_route([stub], reached, blocked, foreign_edges, no_turn,
-                               (2, 2, idx(SHEET_W) - 2, idx(SHEET_H) - 2))
+                               (2, 2, idx(SHEET_W) - 2, idx(SHEET_H) - 2),
+                               busy_rows, busy_cols)
         if path is None:
             # Nothing legal exists — draw it anyway so the net is visible and
             # let the verifier report it rather than dropping it silently.
