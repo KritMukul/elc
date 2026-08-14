@@ -351,6 +351,7 @@ def process_image(img_path, yolo_model, reader, output_dir):
     # Where each net touched each component — resolved into terminals afterwards,
     # once every net is known, so the roles can be made distinct.
     touches = [[] for _ in components]
+    net_area = {}          # how much wire each net carries, for that resolution
 
     for label in range(1, num_labels):
         if stats[label, cv2.CC_STAT_AREA] < min_net_area:
@@ -358,6 +359,7 @@ def process_image(img_path, yolo_model, reader, output_dir):
 
         net_name = f"N{label}"
         nets.append({"name": net_name})
+        net_area[net_name] = int(stats[label, cv2.CC_STAT_AREA])
 
         net_mask = (labels == label).astype(np.uint8)
 
@@ -380,7 +382,7 @@ def process_image(img_path, yolo_model, reader, output_dir):
                 touches[ci].append((net_name, float(np.mean(xs)), float(np.mean(ys))))
 
     for ci, comp in enumerate(components):
-        comp["pins"] = assign_pin_roles(comp, touches[ci])
+        comp["pins"] = assign_pin_roles(comp, touches[ci], net_area=net_area)
 
     # 4. Export
     output_graph = {
@@ -456,7 +458,7 @@ def terminal_count(comp_type: str) -> int:
     return 2
 
 
-def assign_pin_roles(comp, touches, max_terminals=None):
+def assign_pin_roles(comp, touches, max_terminals=None, net_area=None):
     """
     Turn raw "this net touched the bounding box" hits into distinct terminals.
 
@@ -468,6 +470,13 @@ def assign_pin_roles(comp, touches, max_terminals=None):
     The terminal count comes from the class name rather than being fixed at two,
     which silently cost a detected MOSFET its third connection: three nets
     reached it and one was thrown away as a stray contact.
+
+    When more nets reach a part than it has terminals, the surplus is decided by
+    how much wire each net actually carries, not by which contact sits furthest
+    out. A rail is a large connected component; a stray fragment beside a pin is
+    a handful of pixels, and picking geometric extremes let such a fragment take
+    a terminal from the rail behind it — that is what put r_mu and C_mu in
+    series instead of in parallel. `net_area` maps net name to its pixel count.
 
     Roles are read off the geometry. For a two-terminal part the hits spread
     along one axis and the extremes are its ends. For a three-terminal part the
@@ -493,6 +502,11 @@ def assign_pin_roles(comp, touches, max_terminals=None):
         if net not in per_net or d > per_net[net][0]:
             per_net[net] = (d, px, py)
     hits = [(net, px, py) for net, (_, px, py) in per_net.items()]
+
+    # More nets than terminals: keep the ones carrying the most wire.
+    if len(hits) > max_terminals and net_area:
+        hits.sort(key=lambda h: -net_area.get(h[0], 0))
+        hits = hits[:max_terminals]
 
     if max_terminals == 1:
         best = max(hits, key=lambda h: math.hypot(h[1] - cx, h[2] - cy))
