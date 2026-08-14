@@ -426,7 +426,24 @@ def report_netlist_health(graph, nets_before):
         print(f"  ! both terminals on one net for: {', '.join(shorted)}")
 
 
-def assign_pin_roles(comp, touches, max_terminals=2):
+# How many terminals a detected class actually has. Matched as a substring of
+# the lowercased class name, so "Transistor_MOSFET" and "nmos" both find 3.
+THREE_TERMINAL = ("mos", "transistor", "fet", "bjt", "npn", "pnp", "triode",
+                  "thyristor", "scr")
+ONE_TERMINAL = ("gnd", "ground", "vss", "vdd", "vcc", "terminal", "port")
+
+
+def terminal_count(comp_type: str) -> int:
+    """How many pins a part of this class can carry."""
+    t = (comp_type or "").strip().lower()
+    if any(k in t for k in THREE_TERMINAL):
+        return 3
+    if any(k in t for k in ONE_TERMINAL):
+        return 1
+    return 2
+
+
+def assign_pin_roles(comp, touches, max_terminals=None):
     """
     Turn raw "this net touched the bounding box" hits into distinct terminals.
 
@@ -435,12 +452,23 @@ def assign_pin_roles(comp, touches, max_terminals=2):
     back as "P", and the KiCad emitter would then map both onto pin 1 and short
     them together — and a two-terminal part could end up carrying three nets.
 
-    Sorting the hits along whichever axis they actually spread over gives each
-    net its own end of the part, and anything past the terminal count is dropped
-    rather than silently shorted.
+    The terminal count comes from the class name rather than being fixed at two,
+    which silently cost a detected MOSFET its third connection: three nets
+    reached it and one was thrown away as a stray contact.
+
+    Roles are read off the geometry. For a two-terminal part the hits spread
+    along one axis and the extremes are its ends. For a three-terminal part the
+    control terminal is the one offset along the *other* axis — the gate of a
+    MOSFET drawn upright sits out to the side while drain and source sit above
+    and below it — so that hit becomes G and the remaining two become D and S
+    top to bottom. That assumes the usual upright orientation; a part drawn
+    sideways will get its roles permuted.
     """
     if not touches:
         return []
+
+    if max_terminals is None:
+        max_terminals = terminal_count(comp.get("type", ""))
 
     # One net touching a box in several places is still one terminal — keep the
     # hit furthest from the box centre, which is the one nearest a real pin.
@@ -453,9 +481,16 @@ def assign_pin_roles(comp, touches, max_terminals=2):
             per_net[net] = (d, px, py)
     hits = [(net, px, py) for net, (_, px, py) in per_net.items()]
 
+    if max_terminals == 1:
+        best = max(hits, key=lambda h: math.hypot(h[1] - cx, h[2] - cy))
+        return [{"role": "P", "net": best[0]}]
+
     if len(hits) == 1:
         return [{"role": get_pin_role(comp["bbox"], hits[0][1], hits[0][2]),
                  "net": hits[0][0]}]
+
+    if max_terminals >= 3 and len(hits) >= 3:
+        return _assign_three_terminal(hits, cx, cy)
 
     # Terminals lie along whichever axis the hits are spread over.
     spread_x = max(h[1] for h in hits) - min(h[1] for h in hits)
@@ -472,6 +507,28 @@ def assign_pin_roles(comp, touches, max_terminals=2):
 
     roles = ["P", "N"]
     return [{"role": roles[i], "net": h[0]} for i, h in enumerate(hits[:max_terminals])]
+
+
+def _assign_three_terminal(hits, cx, cy):
+    """
+    Split three contacts into gate, drain and source by where they sit.
+
+    A MOSFET drawn upright has its gate out to one side and drain and source
+    above and below, so the contact whose offset from the centre is dominated by
+    the horizontal axis is the gate; of the other two, the higher one is the
+    drain. The role names match what the KiCad emitter's ROLE_ORDER expects.
+    """
+    scored = [(h, abs(h[1] - cx) - abs(h[2] - cy)) for h in hits]
+    gate = max(scored, key=lambda s: s[1])[0]
+    rest = sorted((h for h in hits if h is not gate), key=lambda h: h[2])
+    if len(rest) < 2:                       # degenerate, fall back to two ends
+        return [{"role": "G", "net": gate[0]}] + \
+               [{"role": "D", "net": h[0]} for h in rest]
+    return [
+        {"role": "G", "net": gate[0]},
+        {"role": "D", "net": rest[0][0]},   # smaller y = higher on the page
+        {"role": "S", "net": rest[-1][0]},
+    ]
 
 
 def point_to_segment_dist(px, py, x1, y1, x2, y2):
