@@ -1,9 +1,19 @@
-dataset_root: "/path/to/dataset/Dataset"
+dataset_root: "dataset/eeg+gait"
 cache_dir: "cache/eeg"
 tasks: ["walk", "dance"]
-sfreq: 250
+
+# eegData_<condition>.set inside each subject/task folder
+condition: "all"
+
+sfreq: 250          # target rate; recordings are resampled to it if they differ
 win_sec: 4.0
 overlap: 0.5
+
+# The .set files are already EEGLAB-preprocessed, so only the steps their
+# header says are missing get applied. Set force_filter to re-filter anyway.
+force_filter: false
+# 5*std amplitude clipping - null disables it (already-cleaned data rarely wants it)
+clip_sd: null
 
 model:
   n_channels: 16        

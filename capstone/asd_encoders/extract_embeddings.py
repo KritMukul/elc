@@ -49,7 +49,7 @@ def all_subject_ids(modality, cfg):
 def build_model_and_dataset(modality, cfg, ckpt, device, subjects):
     """Rebuild the trained encoder and a dataset restricted to `subjects`."""
     if modality == "eeg":
-        from data.eeg_dataset import EEGDataset
+        from data.eeg_dataset import EEGDataset, kwargs_from_cfg as eeg_kwargs_from_cfg
         from models.eeg_conformer import EEGConformer
         # channel count comes from the checkpoint (train_eeg.py infers it from
         # the recordings); the YAML value is only a fallback for old checkpoints
@@ -61,9 +61,8 @@ def build_model_and_dataset(modality, cfg, ckpt, device, subjects):
                              out_dim=cfg["model"]["out_dim"],
                              dropout=cfg["model"]["dropout"]).to(device)
         model.load_state_dict(ckpt["model_state"])
-        ds = EEGDataset(cfg["dataset_root"], subjects, tasks=cfg["tasks"],
-                        sfreq=cfg["sfreq"], win_sec=cfg["win_sec"], overlap=cfg["overlap"],
-                        cache_dir=cfg["cache_dir"], train=False, augment=False)
+        ds = EEGDataset(cfg["dataset_root"], subjects, train=False, augment=False,
+                        **eeg_kwargs_from_cfg(cfg))
 
     elif modality == "gaze":
         from data.gaze_dataset import GazeDataset

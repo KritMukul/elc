@@ -11,6 +11,10 @@ tmp/
 # Datasets
 masala-chai-dataset-new/
 layout_training/data/
+capstone/asd_encoders/dataset/
+capstone/asd_encoders/data/recurrence_plots/
+capstone/asd_encoders/cache/
+capstone/asd_encoders/checkpoints/
 
 # Heavy Machine Learning Outputs & Checkpoints (Prevents GitHub 100MB limit errors)
 circuit_model_output/

@@ -12,7 +12,7 @@ from sklearn.model_selection import StratifiedKFold
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from data.eeg_dataset import EEGDataset
+from data.eeg_dataset import EEGDataset, kwargs_from_cfg as eeg_kwargs_from_cfg
 from models.eeg_conformer import EEGConformer
 from utils.metrics import compute_all_metrics, print_metrics
 from utils.seed import set_seed
@@ -25,24 +25,25 @@ def get_subject_labels(dataset_root):
     return subjects, labels
 
 
-def infer_n_channels(dataset_root, tasks, sfreq, win_sec, overlap, cache_dir):
+def infer_n_channels(cfg):
     """Read the real montage size off the cached windows instead of trusting the config.
 
-    Mirrors infer_n_joints() in train_gait.py. The .mat files decide how many
-    channels there are (see load_concatenated_eeg, which takes min_ch across
-    blocks); hardcoding it in the YAML only turns a mismatch into a confusing
-    RuntimeError deep inside PatchEmbeddingConv.
+    Mirrors infer_n_joints() in train_gait.py. The recording decides how many
+    channels there are; hardcoding it in the YAML only turns a mismatch into a
+    confusing RuntimeError deep inside PatchEmbeddingConv.
     """
     from preprocessing.eeg_preprocess import build_eeg_index
-    index = build_eeg_index(dataset_root, tasks=tasks, sfreq=sfreq,
-                            win_sec=win_sec, overlap=overlap, cache_dir=cache_dir)
+    kwargs = eeg_kwargs_from_cfg(cfg)
+    index = build_eeg_index(cfg["dataset_root"], **kwargs)
     if not index:
+        condition = kwargs["condition"]
         raise SystemExit(
-            f"No EEG data found under dataset_root={dataset_root!r}.\n"
-            f"  Looked for: {os.path.join(dataset_root, '[PS]*', '<task>', 'eeg_*.mat')}\n"
-            f"  tasks={list(tasks)}\n"
+            f"No EEG data found under dataset_root={cfg['dataset_root']!r}.\n"
+            f"  Looked for: {os.path.join(cfg['dataset_root'], '[PS]*', '<task>', '**', f'eegData_{condition}.set')}\n"
+            f"  tasks={list(kwargs['tasks'])}  condition={condition!r}\n"
             "  dataset_root must be the folder that directly contains the P*/S* subject\n"
-            "  directories, each holding a walk/ or dance/ subfolder of eeg_*.mat files."
+            "  directories, each holding a walk/ or dance/ subfolder with the .set file\n"
+            "  (at any depth below it)."
         )
     example = np.load(index[0]["cache_path"])
     return example.shape[1]   # cached windows are [n_windows, channels, time]
@@ -102,8 +103,8 @@ def main(cfg_path):
         )
     subjects, labels = np.array(subjects), np.array(labels)
 
-    n_channels = infer_n_channels(cfg["dataset_root"], cfg["tasks"], cfg["sfreq"],
-                                  cfg["win_sec"], cfg["overlap"], cfg["cache_dir"])
+    ds_kwargs = eeg_kwargs_from_cfg(cfg)
+    n_channels = infer_n_channels(cfg)
     print(f"{len(subjects)} subjects, {n_channels} EEG channels detected.")
 
     skf = StratifiedKFold(n_splits=cfg["train"]["n_folds"], shuffle=True,
@@ -118,12 +119,10 @@ def main(cfg_path):
             f"Subject leak in fold {fold}: {sorted(train_subjects & val_subjects)}"
         )
 
-        train_ds = EEGDataset(cfg["dataset_root"], train_subjects, tasks=cfg["tasks"],
-                               sfreq=cfg["sfreq"], win_sec=cfg["win_sec"], overlap=cfg["overlap"],
-                               cache_dir=cfg["cache_dir"], train=True, augment=True)
-        val_ds = EEGDataset(cfg["dataset_root"], val_subjects, tasks=cfg["tasks"],
-                             sfreq=cfg["sfreq"], win_sec=cfg["win_sec"], overlap=cfg["overlap"],
-                             cache_dir=cfg["cache_dir"], train=False, augment=False)
+        train_ds = EEGDataset(cfg["dataset_root"], train_subjects,
+                               train=True, augment=True, **ds_kwargs)
+        val_ds = EEGDataset(cfg["dataset_root"], val_subjects,
+                             train=False, augment=False, **ds_kwargs)
 
         train_loader = DataLoader(train_ds, batch_size=cfg["train"]["batch_size"],
                                    shuffle=True, num_workers=cfg["train"]["num_workers"],
